@@ -1,0 +1,9 @@
+body {
+  background: linear-gradient(180deg, var(--color-bg-main), var(--color-bg-dark));
+  font-family: var(--font-main);
+  color: white;
+}
+
+#root {
+  min-height: 100vh;
+}

@@ -1,0 +1,60 @@
+.home-container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.home-card {
+  height: 33.333vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.card-characters {
+  background-position: center top;
+}
+
+
+.home-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0.15)
+  );
+}
+
+.home-card-title {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  z-index: 1;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f5f0e6;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.home-card {
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.home-card:hover {
+  transform: scale(1.03);
+}
+
+.home-card:active {
+  transform: scale(1.04);
+}
+
+.home-card:hover::after {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0.2)
+  );
+}

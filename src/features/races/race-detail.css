@@ -1,0 +1,162 @@
+.race-detail-container {
+  min-height: 100dvh;
+  padding: 24px;
+  background: var(--color-bg-main);
+  font-family: var(--font-main);
+}
+
+/* ===== HEADER ===== */
+
+.race-header h1 {
+  font-size: 2.2rem;
+  color: var(--color-parchment-light);
+  margin: 0;
+}
+
+.race-header-line {
+  height: 2px;
+  width: 140px;
+  background: var(--color-parchment-border);
+  margin-top: 8px;
+}
+
+/* ===== INFO CARD (IMAGEM + DESCRIÇÃO) ===== */
+
+.race-info-card {
+  margin-top: 24px;
+  background: var(--color-parchment-light);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.race-info-image {
+  width: 120px;
+  height: 160px;
+  float: left;
+  margin-right: 16px;
+  margin-bottom: 8px;
+
+  background-size: cover;
+  background-position: top center;
+
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-parchment-border);
+}
+
+.race-info-content {
+  display: block;
+}
+
+
+.race-description {
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* ===== ATRIBUTOS ===== */
+
+.race-attributes {
+  margin-top: 24px;
+  background: var(--color-parchment-dark);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px 24px;
+}
+
+.attribute-item {
+  white-space: nowrap;
+}
+
+.attr-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+
+.attribute span {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ===== PERKS ===== */
+
+.race-perks {
+  margin-top: 32px;
+}
+
+.perk-search {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.perk-search input,
+.perk-search select {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: none;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+/* ===== LISTA DE PERKS ===== */
+
+.perk-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.perk-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.perk-list::-webkit-scrollbar-thumb {
+  background: var(--color-parchment-border);
+  border-radius: 6px;
+}
+
+/* ===== CARD DE PERK ===== */
+
+.perk-card {
+  background: var(--color-bg-dark);
+  padding: 14px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--color-parchment-light);
+}
+
+.perk-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.perk-card strong {
+  font-size: 0.95rem;
+}
+
+.perk-card small {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}

@@ -1,0 +1,21 @@
+:root {
+  --color-bg-main: #0b1026;
+  --color-bg-dark: #070b1a;
+
+  --color-parchment-light: #f5e6c8;
+  --color-parchment-dark: #e0cfa3;
+  --color-parchment-border: #8b6b3e;
+
+  --color-text-dark: #2b1e0f;
+  --color-text-muted: #6b5a3a;
+
+  --color-primary: #1f3c88;
+  --color-primary-dark: #162a5e;
+  --color-danger: #c0392b;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --font-main: 'Segoe UI', system-ui, sans-serif;
+}
