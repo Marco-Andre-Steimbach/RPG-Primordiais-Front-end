@@ -1,0 +1,87 @@
+.races-container {
+  height: 100dvh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.races-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.races-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.races-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #c9b37e, #8b6f3d);
+  border-radius: 8px;
+}
+
+.races-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #e0c98f, #a8874f);
+}
+
+.races-container {
+  scrollbar-width: thin;
+  scrollbar-color: #a8874f rgba(0, 0, 0, 0.15);
+}
+
+.race-card {
+  height: 280px;
+  flex-shrink: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.race-card-image {
+  height: 100%;
+  background-size: cover;
+  background-position: center 15%;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.race-card-image:hover {
+  transform: scale(1.06);
+  filter: brightness(1.05);
+}
+
+.race-card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0.15)
+  );
+}
+
+.race-card-title {
+  position: relative;
+  z-index: 1;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f5f0e6;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.race-card-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f5f0e6;
+  font-size: 1rem;
+  opacity: 1;
+  z-index: 0;
+}
+
+.race-card-image[style*='url'] .race-card-fallback {
+  display: none;
+}

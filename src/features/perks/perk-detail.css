@@ -1,0 +1,161 @@
+/* ===== CONTAINER ===== */
+
+.perk-detail-container {
+    min-height: 100dvh;
+    padding: 24px;
+    background: var(--color-bg-main);
+    font-family: var(--font-main);
+    color: var(--color-parchment-light);
+  }
+  
+  /* ===== HEADER ===== */
+  
+  .perk-header {
+    width: fit-content;
+  }
+  
+  .perk-header h1 {
+    font-size: 2.2rem;
+    margin: 0;
+  }
+  
+  .perk-header-line {
+    width: 100%;
+    height: 2px;
+    background: var(--color-parchment-border);
+    margin-top: 8px;
+  }
+  
+  /* ===== INFO CARD ===== */
+  
+  .perk-info-card {
+    margin-top: 24px;
+    background: var(--color-parchment-light);
+    color: var(--color-text-dark);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+  
+  .perk-description {
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+  
+  /* ===== META ===== */
+  
+  .perk-meta {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-parchment-border);
+  
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 24px;
+  }
+  
+  .perk-meta span {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  
+/* ===== ELEMENTOS (SEÇÃO INLINE) ===== */
+
+.perk-elements-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-parchment-border);
+  }
+  
+  .perk-elements-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    color: var(--color-text-dark);
+  }
+  
+  .perk-elements-inline {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .perk-element-tag {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+  }
+  
+  /* ===== ATRIBUTOS ===== */
+  
+  .perk-attributes {
+    margin-top: 24px;
+    background: var(--color-parchment-dark);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+  
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 16px;
+  }
+  
+  .perk-attribute {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  
+  /* ===== HABILIDADE ===== */
+
+.perk-ability {
+    margin-top: 24px;
+    background: var(--color-bg-dark);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    color: var(--color-parchment-light);
+  }
+  
+  .perk-ability .perk-title {
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  
+  .perk-ability .perk-description {
+    margin: 0 0 14px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+  
+  .perk-ability-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .perk-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+  
+    font-size: 0.85rem;
+  }
+  
+  .perk-stat span {
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+  
+  .perk-stat strong {
+    color: var(--color-parchment-light);
+    font-weight: 700;
+  }
+  
+  

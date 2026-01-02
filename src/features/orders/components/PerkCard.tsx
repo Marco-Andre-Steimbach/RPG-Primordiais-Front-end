@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import type { Perk } from '../races.types'
+import type { Perk } from '../orders.types'
 
 function PerkCard({ perk }: { perk: Perk }) {
   const navigate = useNavigate()
