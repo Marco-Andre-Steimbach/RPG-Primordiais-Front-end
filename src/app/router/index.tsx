@@ -9,6 +9,9 @@ import RaceDetailPage from '../../features/races/pages/RaceDetailPage'
 import PerkDetailPage from '../../features/perks/pages/PerkDetailPage'
 import OrdersPage from '../../features/orders/pages/OrdersPage'
 import OrderDetailPage from '../../features/orders/pages/OrderDetailPage'
+import ItemsPage from '../../features/items/pages/ItemsPage'
+import ItemsAllPage from '../../features/items/pages/ItemsAllPage'
+import WeaponsAllPage from '../../features/weapons/pages/WeaponsAllPage'
 
 function Router() {
   return (
@@ -23,6 +26,9 @@ function Router() {
         <Route path="/perks/:id" element={<PerkDetailPage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/orders/:id" element={<OrderDetailPage />} />
+        <Route path="/items" element={<ItemsPage />} />
+        <Route path="/items/all" element={<ItemsAllPage />} />
+        <Route path="/items/weapons" element={<WeaponsAllPage />} />
       </Routes>
     </BrowserRouter>
   )
