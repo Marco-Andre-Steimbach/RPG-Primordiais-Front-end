@@ -27,7 +27,7 @@ export type Character = {
   order_id: number | null
 }
 
-export type CharacterMeResponse = {
+export type CharactersMeResponse = {
   characters: Character[]
 }
 
@@ -37,7 +37,7 @@ export type CharacterBase = {
   description: string
   race_id: number | null
   order_id: number | null
-  mana_modifier: string
+  mana_modifier: ManaModifier
   created_by: number
   created_at: string
   updated_at: string
@@ -82,4 +82,17 @@ export type OrderResponse = {
   order: Order
 }
 
-
+export type CreateAbilityPayload = {
+  title: string
+  description: string
+  arcane_title: string | null
+  arcane_description: string | null
+  mana_cost: number
+  arcane_mana_cost: number | null
+  dice_formula: string
+  base_damage: number
+  bonus_speed: number
+  element_types: number[]
+  required_race_id: number | null
+  required_order_id: number | null
+}

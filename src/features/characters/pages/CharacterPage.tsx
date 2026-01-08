@@ -54,38 +54,45 @@ function CharacterPage() {
   return (
     <div className="character-page-container">
       {/* BLOCO PRINCIPAL */}
-      <div className="character-main-card">
-        <div className="character-header">
-          <div>
-            <h2>{character.character.name}</h2>
-            <span className="character-owner">
-              Criado por {character.owner}
-            </span>
-          </div>
+      <div className="character-header-card parchment">
+        <div className="character-header-title">
+          <h2>{character.character.name}</h2>
+          <span>Criado por {character.owner}</span>
         </div>
 
-        <div className="character-description">
+        <p className="character-description">
           {character.character.description}
-        </div>
+        </p>
       </div>
 
       {/* META */}
-      <div className="character-meta-card">
-        <div>
+      <div className="character-meta-grid">
+        <div className="character-meta-card parchment">
+          <img
+            src={`/assets/images/races/${character.character.race_id}.jpg`}
+            alt={raceName ?? ''}
+          />
           <span>Raça</span>
           <strong>{raceName ?? '—'}</strong>
         </div>
 
-        <div>
+        <div className="character-meta-card parchment">
+          <img
+            src={`/assets/images/orders/${character.character.order_id}.jpg`}
+            alt={orderName ?? ''}
+          />
           <span>Ordem</span>
           <strong>{orderName ?? '—'}</strong>
         </div>
-
-        <div>
-          <span>Modificador de mana</span>
-          <strong>{character.character.mana_modifier.toUpperCase()}</strong>
-        </div>
       </div>
+
+
+      {/* MODIFICADOR */}
+      <div className="character-mana-card parchment">
+        <span>Modificador de mana</span>
+        <strong>{character.character.mana_modifier.toUpperCase()}</strong>
+      </div>
+
 
       {/* HABILIDADES */}
       <div className="character-abilities">
@@ -115,9 +122,9 @@ function CharacterPage() {
       {isOwner && (
         <button
           className="character-owner-action"
-          onClick={() => navigate(`/character/${id}/edit`)}
+          onClick={() => navigate(`/character/${id}/ability`)}
         >
-          Editar personagem
+          Adicionar Habilidade
         </button>
       )}
     </div>

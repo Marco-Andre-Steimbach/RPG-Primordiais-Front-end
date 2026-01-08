@@ -31,7 +31,7 @@ function CharacterMePage() {
           <div
             key={character.id}
             className="character-card-small"
-            onClick={() => navigate(`/character/${character.id}`)}
+            onClick={() => navigate(`/characters/${character.id}`)}
           >
             <span>{character.name}</span>
           </div>
