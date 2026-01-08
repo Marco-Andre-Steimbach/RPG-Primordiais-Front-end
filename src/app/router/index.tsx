@@ -12,6 +12,9 @@ import OrderDetailPage from '../../features/orders/pages/OrderDetailPage'
 import ItemsPage from '../../features/items/pages/ItemsPage'
 import ItemsAllPage from '../../features/items/pages/ItemsAllPage'
 import WeaponsAllPage from '../../features/weapons/pages/WeaponsAllPage'
+import CharactersMenuPage from '../../features/characters/pages/CharactersMenuPage'
+import CharacterCreatePage from '../../features/characters/pages/CharacterCreatePage'
+import CharacterMePage from '../../features/characters/pages/CharacterMePage'
 
 function Router() {
   return (
@@ -29,6 +32,9 @@ function Router() {
         <Route path="/items" element={<ItemsPage />} />
         <Route path="/items/all" element={<ItemsAllPage />} />
         <Route path="/items/weapons" element={<WeaponsAllPage />} />
+        <Route path="/characters" element={<CharactersMenuPage />} />
+        <Route path="/characters/create" element={<CharacterCreatePage />} />
+        <Route path="/characters/my" element={<CharacterMePage />} />
       </Routes>
     </BrowserRouter>
   )
