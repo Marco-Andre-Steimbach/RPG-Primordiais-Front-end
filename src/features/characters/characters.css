@@ -476,7 +476,7 @@
     var(--color-parchment-light),
     var(--color-parchment-dark)
   );
-
+  padding: 1rem;
   border: 1px solid var(--color-parchment-border);
   border-radius: var(--radius-lg);
 
@@ -624,4 +624,50 @@
 
 .character-abilities {
   gap: 10px;
+}
+
+.field-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+}
+
+.elements-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.element-chip {
+  padding: 8px 12px;
+
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-parchment-border);
+  border-radius: var(--radius-sm);
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  color: var(--color-text-muted);
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.element-chip.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary-dark);
+}
+
+.element-chip:hover {
+  transform: scale(1.03);
 }

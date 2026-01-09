@@ -5,7 +5,8 @@ import type {
   CharacterByIdResponse,
   RaceResponse,
   OrderResponse,
-  CreateAbilityPayload
+  CreateAbilityPayload,
+  ElementType
 } from './characters.types'
 
 export function fetchRaces() {
@@ -47,5 +48,9 @@ export function createCharacterAbility(
     method: 'POST',
     body: JSON.stringify(payload)
   })
+}
+
+export function fetchElements() {
+  return apiFetch<{ elements: ElementType[] }>('/elements')
 }
 

@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   fetchCharacterById,
-  createCharacterAbility
+  createCharacterAbility,
+  fetchElements
 } from '../characters.service'
-import type { CharacterFull } from '../characters.types'
+import type { CharacterFull, ElementType } from '../characters.types'
 import '../characters.css'
 
 function CreateAbilityPage() {
@@ -12,6 +13,7 @@ function CreateAbilityPage() {
   const navigate = useNavigate()
 
   const [character, setCharacter] = useState<CharacterFull | null>(null)
+  const [elements, setElements] = useState<ElementType[]>([])
 
   const [form, setForm] = useState({
     title: '',
@@ -28,8 +30,13 @@ function CreateAbilityPage() {
 
   useEffect(() => {
     if (!id) return
+
     fetchCharacterById(Number(id)).then(res =>
       setCharacter(res.character)
+    )
+
+    fetchElements().then(res =>
+      setElements(res.elements)
     )
   }, [id])
 
@@ -52,7 +59,7 @@ function CreateAbilityPage() {
   async function handleSubmit() {
     if (!id || !character) return
 
-    await createCharacterAbility(Number(id), {
+    const payload = {
       title: form.title,
       description: form.description,
       arcane_title: form.arcane_title || null,
@@ -67,10 +74,13 @@ function CreateAbilityPage() {
       element_types: form.element_types,
       required_race_id: character.character.race_id,
       required_order_id: character.character.order_id
-    })
+    }
 
-    navigate(`/character/${id}`)
+    await createCharacterAbility(Number(id), payload)
+
+    navigate(`/characters/${id}`)
   }
+
 
   if (!character) return null
 
@@ -124,12 +134,16 @@ function CreateAbilityPage() {
 
       <div className="parchment">
         <strong>Dano</strong>
+
+        <span className="field-label">Fórmula</span>
         <input
           name="dice_formula"
+          placeholder="Ex: 2d8+4"
           value={form.dice_formula}
           onChange={handleChange}
         />
 
+        <span className="field-label">Dano Base</span>
         <input
           type="number"
           name="base_damage"
@@ -137,6 +151,7 @@ function CreateAbilityPage() {
           onChange={handleChange}
         />
 
+        <span className="field-label">Bônus de Velocidade</span>
         <input
           type="number"
           name="bonus_speed"
@@ -147,20 +162,22 @@ function CreateAbilityPage() {
 
       <div className="parchment">
         <strong>Elementos</strong>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {[1, 2, 3, 4, 5].map(el => (
-            <button
-              key={el}
-              type="button"
-              className="character-owner-action"
-              style={{
-                opacity: form.element_types.includes(el) ? 1 : 0.5
-              }}
-              onClick={() => toggleElement(el)}
-            >
-              Elemento {el}
-            </button>
-          ))}
+
+        <div className="elements-grid">
+          {elements.map(element => {
+            const active = form.element_types.includes(element.id)
+
+            return (
+              <button
+                key={element.id}
+                type="button"
+                className={`element-chip ${active ? 'active' : ''}`}
+                onClick={() => toggleElement(element.id)}
+              >
+                {element.name}
+              </button>
+            )
+          })}
         </div>
       </div>
 
