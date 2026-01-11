@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Weapon } from '../weapons.types'
-import { fetchWeaponById, fetchItemById, fetchElementById } from '../weapons.service'
+import { fetchWeaponById, fetchItemById } from '../weapons.service'
 import WeaponExpanded from './WeaponExpanded'
 
 type Props = {
@@ -12,7 +12,6 @@ type Props = {
 
 function WeaponCard({ weaponId, title, isOpen, onToggle }: Props) {
   const [weapon, setWeapon] = useState<Weapon | null>(null)
-  const [elementNames, setElementNames] = useState<string[]>([])
   const [itemValue, setItemValue] = useState<number | undefined>(undefined)
   const [strengthRequirement, setStrengthRequirement] = useState<number | undefined>(undefined)
 
@@ -26,11 +25,6 @@ function WeaponCard({ weaponId, title, isOpen, onToggle }: Props) {
 
       fetchItemById(w.item_id).then(itemRes => {
         setItemValue(itemRes.item.value)
-
-        const elements = itemRes.item.element_types ?? w.element_types
-
-        Promise.all(elements.map(id => fetchElementById(id)))
-          .then(results => setElementNames(results.map(r => r.element.name)))
       })
 
       setStrengthRequirement(Math.ceil(w.base_damage / 2))

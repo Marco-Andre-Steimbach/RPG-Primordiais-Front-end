@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+
 import {
   fetchCharacterById,
   fetchRaceById,
   fetchOrderById
 } from '../characters.service'
+
 import { fetchMe } from '../users.service'
-import type {
-  CharacterFull,
-  Ability,
-  User
-} from '../characters.types'
+
+import type { CharacterFull } from '../characters.types'
+import type { User } from '../users.types'
 
 import AbilityCard from '../components/AbilityCard'
 import '../characters.css'
