@@ -24,7 +24,7 @@ export async function apiFetch<T>(
   if (response.status === 401) {
     console.error('[AUTH] 401 Unauthorized – redirecionando para /login')
     localStorage.removeItem('token')
-    window.location.href = '/login'
+    // window.location.href = '/login'
     throw new Error('Unauthorized')
   }
 
