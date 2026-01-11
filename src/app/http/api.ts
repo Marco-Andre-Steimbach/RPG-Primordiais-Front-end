@@ -34,7 +34,7 @@ export async function apiFetch<T>(
     console.error('[API] Resposta não é JSON', response)
     throw new Error('Resposta inválida da API')
   }
-
+  console.log(response)
   if (!response.ok) {
     console.error('[API ERROR]', {
       url: `${API_URL}${path}`,
