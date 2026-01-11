@@ -13,7 +13,7 @@ import CharacterSubmit from '../components/CharacterSubmit'
 import type {
   Race,
   Order,
-  ManaModifier
+  ManaModifier,RacesResponse,OrdersResponse
 } from '../characters.types'
 import '../characters.css'
 
@@ -29,10 +29,16 @@ function CharacterCreatePage() {
   const [races, setRaces] = useState<Race[]>([])
   const [orders, setOrders] = useState<Order[]>([])
 
-  useEffect(() => {
-    fetchRaces().then(res => setRaces(res.races))
-    fetchOrders().then(res => setOrders(res.orders))
-  }, [])
+useEffect(() => {
+  fetchRaces().then((res: RacesResponse) => {
+    setRaces(res.races)
+  })
+
+  fetchOrders().then((res: OrdersResponse) => {
+    setOrders(res.orders)
+  })
+}, [])
+
 
   async function handleSubmit() {
     if (!name || !description || !raceId || !manaModifier) {
@@ -75,7 +81,6 @@ function CharacterCreatePage() {
         options={orders}
         value={orderId}
         onChange={setOrderId}
-        allowNull
       />
 
       <ManaModifierSelect

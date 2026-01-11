@@ -65,3 +65,8 @@ export type ElementsResponse = {
   elements: Element[]
 }
 
+export type ElementResponse = {
+  element: Element
+}
+
+

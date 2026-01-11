@@ -6,37 +6,43 @@ import type {
   RaceResponse,
   OrderResponse,
   CreateAbilityPayload,
-  ElementType
+  ElementType,
+  RacesResponse,
+  OrdersResponse
 } from './characters.types'
 
-export function fetchRaces() {
-  return apiFetch('/races')
+export function fetchRaces(): Promise<RacesResponse> {
+  return apiFetch<RacesResponse>('/races')
 }
 
-export function fetchOrders() {
-  return apiFetch('/orders')
+export function fetchOrders(): Promise<OrdersResponse> {
+  return apiFetch<OrdersResponse>('/orders')
 }
 
-export function fetchRaceById(id: number) {
+export function fetchRaceById(id: number): Promise<RaceResponse> {
   return apiFetch<RaceResponse>(`/races/${id}`)
 }
 
-export function fetchOrderById(id: number) {
+export function fetchOrderById(id: number): Promise<OrderResponse> {
   return apiFetch<OrderResponse>(`/orders/${id}`)
 }
 
-export function createCharacter(payload: CreateCharacterPayload) {
+export function createCharacter(
+  payload: CreateCharacterPayload
+) {
   return apiFetch('/character', {
     method: 'POST',
     body: JSON.stringify(payload)
   })
 }
 
-export function fetchCharacterById(id: number) {
+export function fetchCharacterById(
+  id: number
+): Promise<CharacterByIdResponse> {
   return apiFetch<CharacterByIdResponse>(`/character/${id}`)
 }
 
-export function fetchMyCharacters() {
+export function fetchMyCharacters(): Promise<CharactersMeResponse> {
   return apiFetch<CharactersMeResponse>('/character/me')
 }
 
@@ -50,7 +56,6 @@ export function createCharacterAbility(
   })
 }
 
-export function fetchElements() {
+export function fetchElements(): Promise<{ elements: ElementType[] }> {
   return apiFetch<{ elements: ElementType[] }>('/elements')
 }
-

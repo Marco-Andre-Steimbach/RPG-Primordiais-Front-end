@@ -96,3 +96,11 @@ export type CreateAbilityPayload = {
   required_race_id: number | null
   required_order_id: number | null
 }
+
+export type RacesResponse = {
+  races: Race[]
+}
+
+export type OrdersResponse = {
+  orders: Order[]
+}

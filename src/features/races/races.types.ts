@@ -18,7 +18,7 @@ export interface Race {
 }
 
 export interface PerkAttribute {
-  attribute_name: stringcha
+  attribute_name: string
   attribute_value: number
 }
 

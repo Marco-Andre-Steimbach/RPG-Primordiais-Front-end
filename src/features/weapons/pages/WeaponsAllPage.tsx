@@ -8,10 +8,7 @@ import '../weapons.css'
 function WeaponsAllPage() {
   const [weapons, setWeapons] = useState<WeaponsResponse['weapons']>([])
   const [openId, setOpenId] = useState<number | null>(null)
-
   const [nameFilter, setNameFilter] = useState('')
-  const [damageTypeFilter, setDamageTypeFilter] = useState('')
-  const [elementFilter, setElementFilter] = useState<number[]>([])
 
   useEffect(() => {
     fetchAllWeapons().then(res => setWeapons(res.weapons))
@@ -26,30 +23,13 @@ function WeaponsAllPage() {
         return false
       }
 
-      if (damageTypeFilter && w.damage_type !== damageTypeFilter) {
-        return false
-      }
-
-      if (elementFilter.length > 0) {
-        if (
-          !w.element_types ||
-          !w.element_types.some(el => elementFilter.includes(el))
-        ) {
-          return false
-        }
-      }
-
       return true
     })
-  }, [weapons, nameFilter, damageTypeFilter, elementFilter])
+  }, [weapons, nameFilter])
 
   return (
     <div className="items-container">
-      <WeaponsFilter
-        onNameChange={setNameFilter}
-        onDamageTypeChange={setDamageTypeFilter}
-        onElementsChange={setElementFilter}
-      />
+      <WeaponsFilter onNameChange={setNameFilter} />
 
       <div className="items-all-container">
         {filteredWeapons.map(w => (

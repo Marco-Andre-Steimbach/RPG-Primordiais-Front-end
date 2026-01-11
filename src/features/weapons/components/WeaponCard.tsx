@@ -46,7 +46,6 @@ function WeaponCard({ weaponId, title, isOpen, onToggle }: Props) {
       {isOpen && weapon && (
         <WeaponExpanded
           weapon={weapon}
-          elementNames={elementNames}
           itemValue={itemValue}
           strengthRequirement={strengthRequirement}
         />
