@@ -19,11 +19,11 @@ export async function apiFetch<T>(
   if (refreshToken) {
     localStorage.setItem('token', refreshToken)
   }
-  console.log(token);
+  
   if (response.status === 401) {
     console.error('[AUTH] 401 Unauthorized – redirecionando para /login')
-    // localStorage.removeItem('token')
-    // window.location.href = '/login'
+    localStorage.removeItem('token')
+    window.location.href = '/login'
     throw new Error('Unauthorized')
   }
 
@@ -34,7 +34,7 @@ export async function apiFetch<T>(
     console.error('[API] Resposta não é JSON', response)
     throw new Error('Resposta inválida da API')
   }
-  console.log(response)
+  
   if (!response.ok) {
     console.error('[API ERROR]', {
       url: `${API_URL}${path}`,
