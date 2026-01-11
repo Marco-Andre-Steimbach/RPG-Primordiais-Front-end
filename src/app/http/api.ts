@@ -10,25 +10,38 @@ export async function apiFetch<T>(
     ...options,
     headers: {
       'Content-Type': 'application/json',
-      ...(token ? { Authorization: token } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
   })
 
   const refreshToken = response.headers.get('X-Refresh-Token')
   if (refreshToken) {
-    localStorage.setItem('token', refreshToken)
+    const cleanToken = refreshToken.replace(/^Bearer\s+/i, '')
+    localStorage.setItem('token', cleanToken)
   }
 
   if (response.status === 401) {
+    console.error('[AUTH] 401 Unauthorized – redirecionando para /login')
     localStorage.removeItem('token')
     window.location.href = '/login'
     throw new Error('Unauthorized')
   }
 
-  const data = await response.json()
+  let data: any
+  try {
+    data = await response.json()
+  } catch {
+    console.error('[API] Resposta não é JSON', response)
+    throw new Error('Resposta inválida da API')
+  }
 
   if (!response.ok) {
+    console.error('[API ERROR]', {
+      url: `${API_URL}${path}`,
+      status: response.status,
+      data,
+    })
     throw data
   }
 
