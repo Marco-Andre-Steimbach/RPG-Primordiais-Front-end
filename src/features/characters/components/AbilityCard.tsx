@@ -8,27 +8,50 @@ type Props = {
 
 function AbilityCard({ ability, isOpen, onToggle }: Props) {
   return (
-    <>
+    <div className="ability-wrapper">
       <div className="ability-card-small" onClick={onToggle}>
         <span>{ability.title}</span>
       </div>
 
       {isOpen && (
-        <div className="ability-card-expanded">
-          <p>{ability.description}</p>
+        <div className="ability-card-expanded parchment">
+          <p className="ability-description">
+            {ability.description}
+          </p>
 
-          <div className="ability-meta">
+          {ability.arcane_title && (
+            <div className="ability-arcane">
+              <strong>{ability.arcane_title}</strong>
+              <p>{ability.arcane_description}</p>
+            </div>
+          )}
+
+          <div className="ability-stats">
             <div>
-              <span>Dano</span>
+              <span>Dano: </span>
               <strong>
                 {ability.dice_formula} + {ability.base_damage}
               </strong>
             </div>
 
             <div>
-              <span>Custo de mana</span>
+              <span>Mana: </span>
               <strong>{ability.mana_cost}</strong>
             </div>
+
+            {ability.arcane_mana_cost && (
+              <div>
+                <span>Mana Arcana: </span>
+                <strong>{ability.arcane_mana_cost}</strong>
+              </div>
+            )}
+
+            {ability.bonus_speed > 0 && (
+              <div>
+                <span>Bônus Velocidade: </span>
+                <strong>+{ability.bonus_speed}</strong>
+              </div>
+            )}
           </div>
 
           {ability.element_types.length > 0 && (
@@ -42,7 +65,7 @@ function AbilityCard({ ability, isOpen, onToggle }: Props) {
           )}
         </div>
       )}
-    </>
+    </div>
   )
 }
 

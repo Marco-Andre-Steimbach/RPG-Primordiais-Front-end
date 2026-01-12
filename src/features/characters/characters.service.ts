@@ -59,3 +59,7 @@ export function createCharacterAbility(
 export function fetchElements(): Promise<{ elements: ElementType[] }> {
   return apiFetch<{ elements: ElementType[] }>('/elements')
 }
+
+export function fetchAllCharacters(): Promise<CharactersMeResponse> {
+  return apiFetch<CharactersMeResponse>('/character')
+}

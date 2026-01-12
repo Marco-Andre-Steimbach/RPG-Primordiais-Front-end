@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import MainLayout from './MainLayout'
 
 import LoginPage from '../../features/auth/LoginPage'
 import RegisterPage from '../../features/auth/RegisterPage'
@@ -17,6 +18,7 @@ import CharacterCreatePage from '../../features/characters/pages/CharacterCreate
 import CharacterMePage from '../../features/characters/pages/CharacterMePage'
 import CharacterPage from '../../features/characters/pages/CharacterPage'
 import CreateAbilityPage from '../../features/characters/pages/CreateAbilityPage'
+import CharacterAllPage from '../../features/characters/pages/CharacterAllPage'
 
 function Router() {
   return (
@@ -25,20 +27,23 @@ function Router() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/info" element={<InfoPage />} />
-        <Route path="/races" element={<RacesPage />} />
-        <Route path="/races/:id" element={<RaceDetailPage />} />
-        <Route path="/perks/:id" element={<PerkDetailPage />} />
-        <Route path="/orders" element={<OrdersPage />} />
-        <Route path="/orders/:id" element={<OrderDetailPage />} />
-        <Route path="/items" element={<ItemsPage />} />
-        <Route path="/items/all" element={<ItemsAllPage />} />
-        <Route path="/items/weapons" element={<WeaponsAllPage />} />
-        <Route path="/characters" element={<CharactersMenuPage />} />
-        <Route path="/characters/create" element={<CharacterCreatePage />} />
-        <Route path="/characters/my" element={<CharacterMePage />} />
-        <Route path="/characters/:id" element={<CharacterPage />} />
-        <Route path="/character/:id/ability" element={<CreateAbilityPage />} />
+        <Route element={<MainLayout />}>
+          <Route path="/info" element={<InfoPage />} />
+          <Route path="/races" element={<RacesPage />} />
+          <Route path="/races/:id" element={<RaceDetailPage />} />
+          <Route path="/perks/:id" element={<PerkDetailPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/orders/:id" element={<OrderDetailPage />} />
+          <Route path="/items" element={<ItemsPage />} />
+          <Route path="/items/all" element={<ItemsAllPage />} />
+          <Route path="/items/weapons" element={<WeaponsAllPage />} />
+          <Route path="/characters" element={<CharactersMenuPage />} />
+          <Route path="/characters/create" element={<CharacterCreatePage />} />
+          <Route path="/characters/my" element={<CharacterMePage />} />
+          <Route path="/characters/:id" element={<CharacterPage />} />
+          <Route path="/character/:id/ability" element={<CreateAbilityPage />} />
+          <Route path="/character/all" element={<CharacterAllPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

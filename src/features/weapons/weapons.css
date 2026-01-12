@@ -28,7 +28,6 @@
 }
 
 .item-element-tag.active {
-  background: #c9b37e;
   color: #000;
   font-weight: 700;
 }
@@ -84,7 +83,7 @@
 }
 
 .item-element-tag {
-  background: var(--color-parchment-dark);
+  background-color: #ffffff;
   padding: 4px 8px;
   border-radius: 8px;
   font-size: 0.75rem;
@@ -238,4 +237,19 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   padding-bottom: 4px;
+}
+
+.weapon-element-tag {
+  padding: 4px 8px;
+
+  background: var(--color-parchment-dark);
+  border: 1px solid var(--color-parchment-border);
+  border-radius: 8px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  color: var(--color-text-dark);
 }

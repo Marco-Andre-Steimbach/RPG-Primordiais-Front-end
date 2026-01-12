@@ -17,7 +17,7 @@ function CharactersMenuPage() {
       <div
         className="info-card"
         style={{ backgroundImage: 'url(/assets/images/menu/characters.jpg)' }}
-        onClick={() => navigate('/characters')}
+        onClick={() => navigate('/character/all')}
       >
         <div className="info-card-title">Personagens</div>
       </div>

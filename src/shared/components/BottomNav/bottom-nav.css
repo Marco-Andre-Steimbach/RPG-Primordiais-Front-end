@@ -1,0 +1,65 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 64px;
+  background: #0b1026;
+  border-top: 1px solid rgba(255,255,255,0.15);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  z-index: 1000;
+
+  transition: transform 0.3s ease;
+}
+
+.bottom-nav.show {
+  transform: translateY(0);
+}
+
+.bottom-nav.hide {
+  transform: translateY(100%);
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#app-scroll {
+  height: calc(100vh + 1px);
+  overflow-y: auto;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.bottom-nav-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.nav-icon {
+  width: 26px;
+  height: 26px;
+  color: #f5e6c8; /* parchment */
+}
+
+.bottom-nav button:active .nav-icon {
+  color: #e0cfa3;
+}
+
+.bottom-nav button:hover .nav-icon {
+  color: #ffffff;
+}

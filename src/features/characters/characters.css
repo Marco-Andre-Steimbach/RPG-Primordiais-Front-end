@@ -671,3 +671,92 @@
 .element-chip:hover {
   transform: scale(1.03);
 }
+
+.ability-card-small {
+  background: linear-gradient(
+    180deg,
+    rgba(8, 12, 28, 0.95),
+    rgba(6, 10, 25, 0.95)
+  );
+
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+
+  color: #f5f0e6;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ability-card-small:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.ability-card-expanded {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ability-description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.ability-arcane {
+  padding-top: 8px;
+  border-top: 1px solid var(--color-parchment-border);
+}
+
+.ability-arcane strong {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ability-arcane p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.ability-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ability-stats span {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.ability-stats strong {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.ability-elements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.item-element-tag {
+  padding: 4px 8px;
+
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--color-parchment-border);
+  border-radius: var(--radius-sm);
+
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  color: var(--color-text-dark);
+}

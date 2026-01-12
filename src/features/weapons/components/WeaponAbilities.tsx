@@ -18,7 +18,7 @@ function WeaponAbilities({ ability, elements = [] }: Props) {
 
           <div className="item-elements-list">
             {elements.map(el => (
-              <span key={el.id} className="item-element-tag">
+              <span key={el.id} className="weapon-element-tag">
                 {el.name}
               </span>
             ))}
