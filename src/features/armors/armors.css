@@ -1,0 +1,255 @@
+.items-container {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.items-card {
+  flex: 1;
+  background-size: cover;
+  background-position: top center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+
+  transition:
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.items-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0.2)
+  );
+}
+
+.item-element-tag.active {
+  color: #000;
+  font-weight: 700;
+}
+
+
+.items-card:hover {
+  transform: scale(1.035);
+}
+
+.items-card:active {
+  transform: scale(1.04);
+  transition-duration: 0.15s;
+}
+
+.items-card-title {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  z-index: 1;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f5f0e6;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.items-card-top {
+  background-position: top;
+}
+
+
+.items-all-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-card-small {
+  background: var(--color-bg-dark);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  color: #fff;
+}
+
+.item-card-expanded {
+  background: var(--color-parchment-light);
+  border-radius: 16px;
+  padding: 16px;
+  color: var(--color-text-dark);
+}
+
+.item-element-tag {
+  background-color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+}
+
+.item-ability {
+  margin-top: 8px;
+}
+
+.item-ability-card {
+  background: var(--color-bg-dark);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 16px;
+  color: #f5f0e6;
+}
+
+/* TÍTULO */
+.item-ability-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f5f0e6;
+}
+
+/* DESCRIÇÃO */
+.item-ability-description {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(245, 240, 230, 0.85);
+}
+
+/* DIVISOR */
+.item-ability-divider {
+  height: 1px;
+  background: rgba(245, 240, 230, 0.15);
+  margin: 12px 0;
+}
+
+/* META GRID */
+.item-ability-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.item-ability-meta div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* LABEL (DADOS, DANO BASE, etc) */
+.item-ability-meta span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(245, 240, 230, 0.55);
+}
+
+/* VALOR (4d6, Sim, 1) */
+.item-ability-meta strong {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.items-filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 10, 25, 0.95),
+    rgba(6, 10, 25, 0.85)
+  );
+
+  backdrop-filter: blur(6px);
+  padding: 12px 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.items-filter-bar input,
+.items-filter-bar select {
+  background: var(--color-bg-dark);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+
+  font-size: 0.9rem;
+  color: #f5f0e6;
+  outline: none;
+}
+
+.items-filter-bar input::placeholder {
+  color: rgba(245, 240, 230, 0.5);
+}
+
+.items-filter-value {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 8px;
+}
+
+.item-elements-list {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  padding-bottom: 6px;
+}
+
+.item-elements-list::-webkit-scrollbar {
+  height: 6px;
+}
+
+.item-elements-list::-webkit-scrollbar-thumb {
+  background: rgba(201, 179, 126, 0.4);
+  border-radius: 6px;
+}
+
+.weapon-elements-filter {
+  max-height: 140px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.weapon-elements-filter .item-elements-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+
+.weapon-elements-filter {
+  max-height: 96px;
+  overflow-y: auto;
+}
+
+.item-elements-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.weapon-element-tag {
+  padding: 4px 8px;
+
+  background: var(--color-parchment-dark);
+  border: 1px solid var(--color-parchment-border);
+  border-radius: 8px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  color: var(--color-text-dark);
+}
