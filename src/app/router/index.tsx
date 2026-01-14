@@ -20,6 +20,11 @@ import CharacterPage from '../../features/characters/pages/CharacterPage'
 import CreateAbilityPage from '../../features/characters/pages/CreateAbilityPage'
 import CharacterAllPage from '../../features/characters/pages/CharacterAllPage'
 import ArmorsAllPage from '../../features/armors/pages/ArmorsAllPage'
+import CampaignsMenuPage from '../../features/campaigns/pages/CampaignsMenuPage'
+import CampaignsAllPage from '../../features/campaigns/pages/CampaignsAllPage'
+import CampaignPage from '../../features/campaigns/pages/CampaignPage'
+import CharacterSheetPage from '../../features/campaigns/pages/CharacterSheetPage'
+import CampaignCharacterPerksPage from '../../features/campaigns/pages/CampaignCharacterPerksPage'
 
 function Router() {
   return (
@@ -45,6 +50,11 @@ function Router() {
           <Route path="/characters/:id" element={<CharacterPage />} />
           <Route path="/character/:id/ability" element={<CreateAbilityPage />} />
           <Route path="/character/all" element={<CharacterAllPage />} />
+          <Route path="/campaigns" element={<CampaignsMenuPage />} />
+          <Route path="/campaigns/all" element={<CampaignsAllPage />} />
+          <Route path="/campaigns/:id" element={<CampaignPage />} />
+          <Route path="/campaign/:campaignId/characters/:characterId/sheet" element={<CharacterSheetPage />} />
+          <Route path="/campaign/:campaignId/characters/:characterId/perks" element={<CampaignCharacterPerksPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
