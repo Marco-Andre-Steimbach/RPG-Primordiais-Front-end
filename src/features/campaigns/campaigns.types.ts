@@ -50,13 +50,13 @@ export type UserMeResponse = {
 }
 
 export type CharacterSheetInfo = {
+    campaign_character_id: number
     level: number
     perks: number
     abilities: number
     weapons: number
     armors: number
 }
-
 
 export type CharacterSheetInfoResponse = {
     infos: CharacterSheetInfo

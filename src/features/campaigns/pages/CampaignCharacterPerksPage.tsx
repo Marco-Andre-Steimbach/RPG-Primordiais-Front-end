@@ -86,7 +86,9 @@ function CampaignCharacterPerksPage() {
     const missing = infos.level - infos.perks
 
     const handleAddPerk = (perkId: number) => {
-        addPerkToCampaignCharacter(campaignId!, {
+        if (!infos) return
+
+        addPerkToCampaignCharacter(infos.campaign_character_id, {
             perk_id: perkId
         }).then(() => {
             fetchCharacterSheetInfo(campaignId!, characterId!)

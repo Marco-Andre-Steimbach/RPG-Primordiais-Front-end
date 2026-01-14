@@ -46,11 +46,11 @@ export function fetchPerksByOrder(orderId: string | number) {
 }
 
 export function addPerkToCampaignCharacter(
-    campaignId: string | number,
+    campaignCharacterId: string | number,
     payload: AddPerkToCampaignCharacterPayload
 ) {
     return apiFetch<void>(
-        `/campaign/${campaignId}/perk`,
+        `/campaign/${campaignCharacterId}/perk`,
         {
             method: 'POST',
             body: JSON.stringify(payload)
