@@ -325,27 +325,27 @@
     align-items: center;
     justify-content: center;
     z-index: 999;
-  }
-  
-  .progression-modal {
+}
+
+.progression-modal {
     background: var(--color-parchment-light);
     border-radius: 16px;
     padding: 20px;
     max-width: 320px;
     text-align: center;
     color: var(--color-text-dark);
-  }
-  
-  .progression-modal h3 {
+}
+
+.progression-modal h3 {
     margin-bottom: 8px;
-  }
-  
-  .progression-modal p {
+}
+
+.progression-modal p {
     font-size: 0.9rem;
     line-height: 1.6;
-  }
-  
-  .progression-modal button {
+}
+
+.progression-modal button {
     margin-top: 16px;
     width: 100%;
     padding: 10px;
@@ -355,106 +355,286 @@
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
-  }
-  
-  /* ---------- PERKS PAGE ---------- */
+}
+
+/* ---------- PERKS PAGE ---------- */
 
 .campaign-perks-page {
     padding: 24px 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-  }
-  
-  /* ---------- HEADER ---------- */
-  
-  .campaign-perks-header {
+}
+
+/* ---------- HEADER ---------- */
+
+.campaign-perks-header {
     display: flex;
     flex-direction: column;
     gap: 6px;
-  }
-  
-  .campaign-perks-header h1 {
+}
+
+.campaign-perks-header h1 {
     margin: 0;
     font-size: 1.6rem;
     color: #ffffff;
-  }
-  
-  .campaign-perks-header p {
+}
+
+.campaign-perks-header p {
     font-size: 0.85rem;
     color: rgba(245, 240, 230, 0.7);
-  }
-  
-  /* ---------- PERK CARD (FECHADO) ---------- */
-  
-  .campaign-perk-card {
+}
+
+/* ---------- PERK CARD (FECHADO) ---------- */
+
+.campaign-perk-card {
     background: var(--color-bg-dark);
     border-radius: 12px;
     padding: 14px 16px;
-  
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-  
+
     cursor: pointer;
     color: #ffffff;
-  
+
     transition: background 0.2s ease;
-  }
-  
-  .campaign-perk-card:hover {
+}
+
+.campaign-perk-card:hover {
     background: rgba(255, 255, 255, 0.06);
-  }
-  
-  .campaign-perk-name {
+}
+
+.campaign-perk-name {
     font-weight: 600;
     font-size: 0.95rem;
-  }
-  
-  .campaign-perk-level {
+}
+
+.campaign-perk-level {
     font-size: 0.8rem;
     opacity: 0.8;
-  }
-  
-  /* ---------- PERK CARD (EXPANDED) ---------- */
-  
-  .campaign-perk-expanded {
+}
+
+/* ---------- PERK CARD (EXPANDED) ---------- */
+
+.campaign-perk-expanded {
     background: var(--color-parchment-light);
     border-radius: 12px;
     padding: 12px;
-  
+
     display: flex;
     flex-direction: column;
     gap: 8px;
-  
+
     margin-top: 6px;
-  }
-  
-  /* ---------- BUTTONS ---------- */
-  
-  .campaign-perk-button {
+}
+
+/* ---------- BUTTONS ---------- */
+
+.campaign-perk-button {
     background: var(--color-primary);
     color: #ffffff;
     border: none;
     border-radius: 10px;
-  
+
     padding: 10px 14px;
     font-size: 0.85rem;
     font-weight: 600;
-  
+
     cursor: pointer;
     transition: background 0.2s ease;
-  }
-  
-  .campaign-perk-button:hover {
+}
+
+.campaign-perk-button:hover {
     background: var(--color-primary-dark);
-  }
-  
-  .campaign-perk-button.primary {
+}
+
+.campaign-perk-button.primary {
     background: var(--color-danger);
-  }
-  
-  .campaign-perk-button.primary:hover {
+}
+
+.campaign-perk-button.primary:hover {
     background: #a93226;
-  }
-  
+}
+
+/* ---------- ABILITIES PAGE ---------- */
+
+.campaign-abilities-page {
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ---------- HEADER ---------- */
+
+.campaign-abilities-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campaign-abilities-header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #ffffff;
+}
+
+.campaign-abilities-header p {
+    font-size: 0.85rem;
+    color: rgba(245, 240, 230, 0.7);
+}
+
+/* ---------- ABILITY CARD (FECHADO) ---------- */
+
+.campaign-ability-card {
+    background: var(--color-bg-dark);
+    border-radius: 12px;
+    padding: 14px 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    cursor: pointer;
+    color: #ffffff;
+
+    transition: background 0.2s ease;
+}
+
+.campaign-ability-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.campaign-ability-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.campaign-ability-cost {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* ---------- ABILITY CARD (EXPANDED) ---------- */
+
+.campaign-ability-expanded {
+    background: var(--color-parchment-light);
+    border-radius: 12px;
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin-top: 6px;
+}
+
+/* ---------- BUTTONS ---------- */
+
+.campaign-ability-button {
+    background: var(--color-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.campaign-ability-button:hover {
+    background: var(--color-primary-dark);
+}
+
+.campaign-ability-button.primary {
+    background: var(--color-danger);
+}
+
+.campaign-ability-button.primary:hover {
+    background: #a93226;
+}
+
+/* ---------- LOCKED STATE ---------- */
+
+.campaign-ability-locked {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+/* ---------- ADD CHARACTER TO CAMPAIGN ---------- */
+
+.campaign-add-character {
+    display: flex;
+    justify-content: center;
+}
+
+.campaign-add-character-button {
+    width: 100%;
+    max-width: 360px;
+
+    background: linear-gradient(135deg,
+            var(--color-primary),
+            var(--color-primary-dark));
+
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+
+    padding: 14px 18px;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+
+    cursor: pointer;
+    text-align: center;
+
+    box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+    transition:
+        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+.campaign-add-character-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.campaign-add-character-button:active {
+    transform: translateY(0);
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.35),
+        inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- ADD CHARACTER PAGE ---------- */
+
+.campaign-add-character-page {
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ---------- BUTTON VARIANT ---------- */
+
+.campaign-character-button.primary {
+    background: var(--color-primary);
+}
+
+.campaign-character-button.primary:hover {
+    background: var(--color-primary-dark);
+}

@@ -25,6 +25,8 @@ import CampaignsAllPage from '../../features/campaigns/pages/CampaignsAllPage'
 import CampaignPage from '../../features/campaigns/pages/CampaignPage'
 import CharacterSheetPage from '../../features/campaigns/pages/CharacterSheetPage'
 import CampaignCharacterPerksPage from '../../features/campaigns/pages/CampaignCharacterPerksPage'
+import CampaignCharacterAbilitiesPage from '../../features/campaigns/pages/CampaignCharacterAbilitiesPage'
+import CampaignCharacterAddPage from '../../features/campaigns/pages/CampaignCharacterAddPage'
 
 function Router() {
   return (
@@ -55,6 +57,8 @@ function Router() {
           <Route path="/campaigns/:id" element={<CampaignPage />} />
           <Route path="/campaign/:campaignId/characters/:characterId/sheet" element={<CharacterSheetPage />} />
           <Route path="/campaign/:campaignId/characters/:characterId/perks" element={<CampaignCharacterPerksPage />} />
+          <Route path="/campaign/:campaignId/characters/:characterId/abilities" element={<CampaignCharacterAbilitiesPage />} />
+          <Route path="/campaign/:id/characters" element={<CampaignCharacterAddPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

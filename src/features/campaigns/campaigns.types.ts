@@ -147,11 +147,76 @@ export type CampaignCharacterActionResponse = {
 
 export type CharacterSheet = {
     perks: Perk[]
-  }
-  
-  export type CharacterSheetResponse = {
+}
+
+export type CharacterSheetResponse = {
     sheet: {
-      perks: Perk[]
+        perks: Perk[]
+        abilities: CampaignCharacterAbility[]
     }
-  }
-  
+}
+
+export type CampaignCharacterAbility = {
+    ability: Ability
+    elements: number[]
+}
+
+export type ElementType = {
+    id: number
+    name: string
+}
+
+export type Ability = {
+    id: number
+    title: string
+    description: string
+    arcane_title: string | null
+    arcane_description: string | null
+    mana_cost: number
+    arcane_mana_cost: number | null
+    dice_formula: string
+    base_damage: number
+    bonus_speed: number
+    required_race_id: number | null
+    required_order_id: number | null
+    element_types: ElementType[]
+}
+
+export type CharacterAbilitiesResponse = {
+    abilities: Ability[]
+}
+
+export type CharacterAbilityByIdResponse = {
+    ability: Ability
+}
+
+export type AddCharacterToCampaignAttributes = {
+    str: number
+    dex: number
+    con: number
+    intt: number
+    wis: number
+    cha: number
+    sanity: number
+}
+
+export type AddCharacterToCampaignPayload = {
+    character_id: number
+    attributes: AddCharacterToCampaignAttributes
+}
+
+export type AddCharacterToCampaignResponse = {
+    success: boolean
+    message: string
+}
+
+export type MyCharacter = {
+    id: number
+    name: string
+    race_id: number
+    order_id: number
+}
+
+export type MyCharactersResponse = {
+    characters: MyCharacter[]
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { fetchCampaignById, fetchMe } from '../campaigns.service'
 import type {
     CampaignWithCharacters,
@@ -11,6 +11,8 @@ import '../campaigns.css'
 
 function CampaignPage() {
     const { id } = useParams()
+    const navigate = useNavigate()
+
     const [campaign, setCampaign] = useState<CampaignWithCharacters | null>(null)
     const [user, setUser] = useState<User | null>(null)
 
@@ -32,6 +34,10 @@ function CampaignPage() {
 
     const isMaster = user.nickname === campaign.master
 
+    const isAlreadyInCampaign = campaign.characters.some(
+        c => c.controlled_by === user.nickname
+    )
+
     return (
         <div className="campaign-page-container">
             <header className="campaign-page-header">
@@ -44,6 +50,19 @@ function CampaignPage() {
             <section className="campaign-page-description">
                 <p>{campaign.description}</p>
             </section>
+
+            {!isMaster && !isAlreadyInCampaign && (
+                <div className="campaign-add-character">
+                    <button
+                        className="campaign-add-character-button"
+                        onClick={() =>
+                            navigate(`/campaign/${campaign.id}/characters`)
+                        }
+                    >
+                        Adicionar personagem a essa campanha
+                    </button>
+                </div>
+            )}
 
             <section className="campaign-page-characters">
                 <h2>Personagens</h2>
@@ -63,7 +82,6 @@ function CampaignPage() {
                         isMaster={isMaster}
                     />
                 ))}
-
             </section>
         </div>
     )

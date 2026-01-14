@@ -9,7 +9,12 @@ import type {
     AddPerkToCampaignCharacterPayload,
     AddAbilityToCampaignCharacterPayload,
     CampaignCharacterActionResponse,
-    CharacterSheetResponse
+    CharacterSheetResponse,
+    CharacterAbilitiesResponse,
+    CharacterAbilityByIdResponse,
+    AddCharacterToCampaignPayload,
+    AddCharacterToCampaignResponse,
+    MyCharactersResponse
 } from './campaigns.types'
 
 export function fetchAllCampaigns() {
@@ -74,9 +79,40 @@ export function addAbilityToCampaignCharacter(
 export function fetchCharacterSheet(
     campaignId: string | number,
     characterId: string | number
-  ) {
+) {
     return apiFetch<CharacterSheetResponse>(
-      `/campaign/${campaignId}/character/${characterId}/sheet`
+        `/campaign/${campaignId}/character/${characterId}/sheet`
     )
-  }
-  
+}
+
+export function fetchCharacterAbilities(characterId: string | number) {
+    return apiFetch<CharacterAbilitiesResponse>(
+        `/character/${characterId}/abilities`
+    )
+}
+
+export function fetchCharacterAbilityById(
+    characterId: string | number,
+    abilityId: string | number
+) {
+    return apiFetch<CharacterAbilityByIdResponse>(
+        `/character/${characterId}/abilities/${abilityId}`
+    )
+}
+
+export function addCharacterToCampaign(
+    campaignId: string | number,
+    payload: AddCharacterToCampaignPayload
+) {
+    return apiFetch<AddCharacterToCampaignResponse>(
+        `/campaign/${campaignId}/characters`,
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
+    )
+}
+
+export function fetchMyCharacters() {
+    return apiFetch<MyCharactersResponse>('/character/me')
+}
