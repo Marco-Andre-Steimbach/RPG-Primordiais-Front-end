@@ -1,72 +1,43 @@
-import { useEffect, useState } from 'react'
-import type { Element, Item, SheetItem } from '../campaigns.types'
-import { fetchItemById } from '../campaigns.service'
+import { useState } from 'react'
+import type { Element, SheetItem } from '../campaigns.types'
+import ItemCardSheet from './ItemCardSheet'
 
 type Props = {
-    item: SheetItem
-    elementsMap: Map<number, Element>
-    isOpen: boolean
-    onToggle: () => void
+  items: SheetItem[]
+  elementsMap: Map<number, Element>
 }
 
-function ItemCardSheet({
-    item,
-    elementsMap,
-    isOpen,
-    onToggle
-}: Props) {
-    const [itemData, setItemData] = useState<Item | null>(
-        item.item ?? null
-    )    
+function CardItens({ items, elementsMap }: Props) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-    useEffect(() => {
-        if (!isOpen) return
-        if (itemData) return
-
-        fetchItemById(item.item.id).then(res => {
-            setItemData(res.item)
-        })
-    }, [isOpen])
-
-    const resolvedElements = item.elements
-        .map(id => elementsMap.get(id))
-        .filter(Boolean) as Element[]
-
+  if (items.length === 0) {
     return (
-        <div className="ability-wrapper">
-            <div
-                className="campaign-ability-card"
-                onClick={onToggle}
-            >
-                <span className="campaign-ability-name">
-                    {itemData?.name ?? 'Item'}
-                </span>
-            </div>
-
-            {isOpen && (
-                <div className="campaign-ability-expanded">
-                    {itemData?.description && (
-                        <p className="ability-description">
-                            {itemData.description}
-                        </p>
-                    )}
-
-                    {resolvedElements.length > 0 && (
-                        <div className="ability-elements">
-                            {resolvedElements.map(el => (
-                                <span
-                                    key={el.id}
-                                    className="item-element-tag"
-                                >
-                                    {el.name}
-                                </span>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            )}
-        </div>
+      <div className="campaign-card">
+        <h3>Itens</h3>
+        <p>Nenhum item no inventário.</p>
+      </div>
     )
+  }
+
+  function toggle(index: number) {
+    setOpenIndex(prev => (prev === index ? null : index))
+  }
+
+  return (
+    <div className="campaign-card">
+      <h3>Itens</h3>
+
+      {items.map((item, index) => (
+        <ItemCardSheet
+          key={`${item.item?.id ?? 'item'}-${index}`}
+          item={item}
+          elementsMap={elementsMap}
+          isOpen={openIndex === index}
+          onToggle={() => toggle(index)}
+        />
+      ))}
+    </div>
+  )
 }
 
-export default ItemCardSheet
+export default CardItens

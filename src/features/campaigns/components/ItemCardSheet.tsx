@@ -34,18 +34,18 @@ function ItemCardSheet({
         .filter(Boolean) as Element[]
 
     return (
-        <div className="ability-wrapper">
+        <div className="item-wrapper">
             <div
-                className="campaign-ability-card"
+                className="item-card"
                 onClick={onToggle}
             >
-                <span className="campaign-ability-name">
+                <span className="item-name">
                     {itemData ? itemData.name : 'Item'}
                 </span>
             </div>
 
             {isOpen && (
-                <div className="campaign-ability-expanded">
+                <div className="item-expanded">
                     {itemData?.description && (
                         <p className="ability-description">
                             {itemData.description}
