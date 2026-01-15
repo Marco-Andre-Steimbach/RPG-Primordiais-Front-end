@@ -5,6 +5,8 @@ import { fetchMyCharacters } from '../campaigns.service'
 import type { MyCharacter } from '../campaigns.types'
 
 import CampaignCharacterAddCard from '../components/CampaignCharacterAddCard'
+import CampaignCharacterAddModal from '../components/CampaignCharacterAddModal'
+
 import '../campaigns.css'
 
 function CampaignCharacterAddPage() {
@@ -12,6 +14,8 @@ function CampaignCharacterAddPage() {
     const navigate = useNavigate()
 
     const [characters, setCharacters] = useState<MyCharacter[]>([])
+    const [selectedCharacter, setSelectedCharacter] =
+        useState<MyCharacter | null>(null)
 
     useEffect(() => {
         fetchMyCharacters()
@@ -35,19 +39,19 @@ function CampaignCharacterAddPage() {
                 <CampaignCharacterAddCard
                     key={character.id}
                     character={character}
-                    onAdd={() =>
-                        console.log(
-                            'Adicionar personagem',
-                            character.id,
-                            'na campanha',
-                            campaignId
-                        )
-                    }
+                    onAdd={() => setSelectedCharacter(character)}
                     onView={() =>
                         navigate(`/characters/${character.id}`)
                     }
                 />
             ))}
+
+            {selectedCharacter && (
+                <CampaignCharacterAddModal
+                    character={selectedCharacter}
+                    onClose={() => setSelectedCharacter(null)}
+                />
+            )}
         </div>
     )
 }

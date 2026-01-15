@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { MyCharacter } from '../characterMe.types'
+import type { MyCharacter } from '../campaigns.types'
 
 type Props = {
     character: MyCharacter
@@ -18,26 +18,31 @@ function CampaignCharacterAddCard({
         <>
             <div
                 className="campaign-character-card"
-                onClick={() => setOpen(!open)}
+                onClick={() => setOpen(prev => !prev)}
             >
                 <span className="campaign-character-name">
                     {character.name}
                 </span>
-
             </div>
 
             {open && (
                 <div className="campaign-character-expanded">
                     <button
                         className="campaign-character-button"
-                        onClick={onView}
+                        onClick={e => {
+                            e.stopPropagation()
+                            onView()
+                        }}
                     >
                         Visualizar personagem
                     </button>
 
                     <button
                         className="campaign-character-button primary"
-                        onClick={onAdd}
+                        onClick={e => {
+                            e.stopPropagation()
+                            onAdd()
+                        }}
                     >
                         Adicionar à campanha
                     </button>

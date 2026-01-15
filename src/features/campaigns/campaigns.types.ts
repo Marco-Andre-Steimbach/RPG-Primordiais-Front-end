@@ -220,3 +220,256 @@ export type MyCharacter = {
 export type MyCharactersResponse = {
     characters: MyCharacter[]
 }
+
+export type BaseAttributes = {
+    str: number
+    dex: number
+    con: number
+    int: number
+    wis: number
+    cha: number
+    free: number
+}
+
+export type Race = {
+    id: number
+    name: string
+    description: string
+    attributes: BaseAttributes
+    created_at: string
+    updated_at: string
+}
+
+export type RaceByIdResponse = {
+    race: Race
+}
+
+export type Order = {
+    id: number
+    name: string
+    description: string
+    required_race_id: number | null
+    attributes: BaseAttributes
+    created_at: string
+    updated_at: string
+}
+
+export type OrderByIdResponse = {
+    order: Order
+}
+
+export type LevelUpAttribute =
+    | 'str'
+    | 'dex'
+    | 'con'
+    | 'intt'
+    | 'wis'
+    | 'cha'
+
+export type CampaignCharacterLevelUpPayload = {
+    campaign_character_id: number
+    attribute: LevelUpAttribute
+}
+
+export type CampaignCharacterLevelUpResponse = {
+    message: string
+}
+
+export type SheetAttributes = {
+    str: number
+    dex: number
+    con: number
+    intt: number
+    wis: number
+    cha: number
+}
+
+export type CharacterAttributesBlock = {
+    base: SheetAttributes
+    race: SheetAttributes
+    order: SheetAttributes
+    perk: SheetAttributes
+    final: SheetAttributes
+}
+
+export type CharacterModifiers = {
+    str: number
+    dex: number
+    con: number
+    intt: number
+    wis: number
+    cha: number
+}
+
+export type CharacterSanity = {
+    current: number
+    max: number
+}
+
+export type CharacterSheetBase = {
+    campaign_character_id: number
+    level: number
+    attributes: CharacterAttributesBlock
+    modifiers: CharacterModifiers
+    hp_max: number
+    mana_max: number
+    base_ca: number
+    sanity: CharacterSanity
+}
+
+export type SheetRace = {
+    id: number
+    name: string
+    description: string
+    attributes: any[]
+    created_at: string
+    updated_at: string
+}
+
+
+export type SheetOrder = {
+    id: number
+    name: string
+    description: string
+    required_race_id: number | null
+    attributes: any[]
+    created_at: string
+    updated_at: string
+}
+
+export type CharacterDerived = {
+    armor_class: number
+    speed: number
+}
+
+export type SheetWeaponAbility = {
+    id: number
+    weapon_id: number
+    title: string
+    description: string
+    dice_formula: string
+    base_damage: number
+    bonus_damage: number
+    bonus_accuracy: number
+    bonus_speed: number
+    element_types: number[]
+    created_at: string
+}
+
+export type SheetWeapon = {
+    id: number
+    item_id: number
+    item_name: string
+    item_description: string
+    weapon_damage_type_id: number
+    damage_type: string
+    dice_formula: string
+    base_damage: number
+    bonus_accuracy: number
+    bonus_speed: number
+    ammo_item_id: number | null
+    ammo_per_use: number
+    created_at: string
+    element_types: number[]
+    abilities: SheetWeaponAbility[]
+    is_equipped: boolean
+}
+
+export type SheetArmorAbility = {
+    id: number
+    title: string
+    description: string
+    dice_formula: string | null
+    base_damage: number
+    armor_class_bonus: number
+    bonus_speed: number
+    created_at: string
+    updated_at: string | null
+}
+
+export type SheetArmorSlot = {
+    id: number
+    name: string
+    is_exclusive: number
+    created_at: string
+}
+
+export type SheetArmor = {
+    armor: {
+        id: number
+        item_id: number
+        armor_slot_id: number
+        armor_class_bonus: number
+        min_strength_required: number
+        speed_penalty: number
+        element_types: number[]
+        armor_abilities: any[]
+        created_at: string
+    }
+    slot: SheetArmorSlot
+    elements: number[]
+    abilities: SheetArmorAbility[]
+    is_equipped: boolean
+}
+
+export type SheetItem = {
+    item: {
+        id: number
+        name: string
+        description: string
+        value: number
+        element_types: number[]
+        item_abilities: any[]
+        created_at: string
+        updated_at: string
+    }
+    quantity: number
+    elements: number[]
+    abilities: any[]
+}
+
+export type FullCharacterSheet = {
+    base: CharacterSheetBase
+    race: SheetRace
+    order: SheetOrder
+    derived: CharacterDerived
+    perks: Perk[]
+    weapons: SheetWeapon[]
+    armors: SheetArmor[]
+    items: SheetItem[]
+    abilities: CampaignCharacterAbility[]
+}
+
+export type FullCharacterSheetResponse = {
+    sheet: FullCharacterSheet
+}
+
+export type Element = {
+    id: number
+    name: string
+    description: string
+    created_at: string
+}
+
+export type ElementByIdResponse = {
+    element: Element
+}
+
+export type ElementsResponse = {
+    elements: Element[]
+}
+
+export type Item = {
+    id: number
+    name: string
+    description: string
+    value: number
+    element_types: number[]
+    item_abilities: any[]
+    created_at: string
+    updated_at: string
+  }
+  
+  export type FetchItemByIdResponse = {
+    item: Item
+  }

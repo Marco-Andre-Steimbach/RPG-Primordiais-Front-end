@@ -523,7 +523,7 @@
     background: var(--color-parchment-light);
     border-radius: 12px;
     padding: 12px;
-
+    color: var(--color-text-dark);
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -638,3 +638,627 @@
 .campaign-character-button.primary:hover {
     background: var(--color-primary-dark);
 }
+
+.modal-large {
+    max-width: 420px;
+}
+
+.free-points-info {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    color: var(--color-text-dark);
+}
+
+.attributes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.attribute-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.attribute-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.attribute-row input {
+    width: 80px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: none;
+    background: var(--color-bg-dark);
+    color: #ffffff;
+    text-align: center;
+    outline: none;
+}
+
+.attribute-row input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.modal-hint {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-bottom: 12px;
+}
+
+.free-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.free-controls button {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.progression-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.progression-modal {
+    background: #f6e8c9;
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 360px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.progression-modal h3 {
+    margin: 0 0 8px;
+    text-align: center;
+}
+
+.modal-hint {
+    font-size: 14px;
+    text-align: center;
+    opacity: 0.8;
+    margin-bottom: 16px;
+}
+
+.attribute-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.attribute-row span {
+    font-weight: 600;
+}
+
+.attribute-row input {
+    width: 80px;
+    height: 34px;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+    background: #0d1321;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.attribute-row input:focus {
+    outline: 2px solid #1e3a8a;
+}
+
+.sanity-box {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.sanity-box input {
+    width: 120px;
+    height: 36px;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+    background: #0d1321;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.sanity-box input:focus {
+    outline: 2px solid #1e3a8a;
+}
+
+.levelup-options {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.levelup-option {
+    background: #1e3a8a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.levelup-option:hover {
+    background: #2746a6;
+}
+
+.levelup-option.selected {
+    background: #0ea5e9;
+    transform: scale(1.05);
+}
+
+.levelup-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.levelup-option {
+    padding: 12px 0;
+    border-radius: 10px;
+    background-color: #1f3c88;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.levelup-option:hover {
+    background-color: #2448a0;
+}
+
+.levelup-option.selected {
+    background-color: #10245a;
+    box-shadow: inset 0 0 0 2px #fff;
+}
+
+/* ---------- CHARACTER SHEET CARDS ---------- */
+
+.sheet-card {
+    background: var(--color-bg-dark);
+    border-radius: 16px;
+    padding: 16px;
+    color: #ffffff;
+}
+
+/* ---------- CARD TITLE ---------- */
+
+.sheet-card-title {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f5f0e6;
+}
+
+/* ---------- META GRID ---------- */
+
+.sheet-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.sheet-meta-grid div {
+    display: flex;
+    flex-direction: column;
+}
+
+.sheet-meta-grid span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(245, 240, 230, 0.65);
+}
+
+.sheet-meta-grid strong {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* ---------- ATTRIBUTES CARD ---------- */
+
+.sheet-attributes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.sheet-attribute {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.sheet-attribute span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(245, 240, 230, 0.65);
+}
+
+.sheet-attribute strong {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.sheet-attribute em {
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* ---------- ABILITIES (SHEET) ---------- */
+
+.sheet-abilities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ability-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.ability-description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.ability-arcane strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+}
+
+.ability-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.ability-stats span {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.ability-stats strong {
+    font-size: 0.85rem;
+}
+
+.ability-elements {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.empty-text {
+    font-size: 0.85rem;
+    color: rgba(245, 240, 230, 0.6);
+}
+
+/* ---------- ARMOR SHEET CARD ---------- */
+
+.sheet-card {
+    background: linear-gradient(
+        to bottom,
+        rgba(6, 10, 25, 0.95),
+        rgba(6, 10, 25, 0.85)
+    );
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* título padrão já existente */
+.sheet-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sheet-card-sub {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+/* ---------- ARMOR LIST ---------- */
+
+.armor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* reutiliza visual de ability */
+.armor-card-small {
+    background: var(--color-bg-dark);
+    border-radius: 12px;
+    padding: 14px 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    cursor: pointer;
+    color: #ffffff;
+
+    transition: background 0.2s ease;
+}
+
+.armor-card-small:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.armor-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.armor-ca {
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+/* ---------- ARMOR EXPANDED ---------- */
+
+.armor-card-expanded {
+    background: var(--color-parchment-light);
+    border-radius: 12px;
+    padding: 14px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: 6px;
+
+    color: var(--color-text-dark);
+}
+
+.armor-card-expanded p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* ---------- ARMOR STATS ---------- */
+
+.armor-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.armor-stats div {
+    display: flex;
+    flex-direction: column;
+}
+
+.armor-stats span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.armor-stats strong {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+/* ---------- ARMOR ELEMENTS ---------- */
+
+.armor-elements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+/* ---------- ARMOR ABILITIES ---------- */
+
+.armor-abilities {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.armor-ability {
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.armor-ability strong {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.sheet-card {
+    background: linear-gradient(
+        to bottom,
+        rgba(10, 15, 35, 0.95),
+        rgba(6, 10, 25, 0.9)
+    );
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sheet-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f5f0e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sheet-card-sub {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.ability-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campaign-ability-card {
+    background: var(--color-bg-dark);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: #ffffff;
+    transition: background 0.2s ease;
+}
+
+.campaign-ability-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.campaign-ability-expanded {
+    background: var(--color-parchment-light);
+    border-radius: 12px;
+    padding: 12px;
+    color: var(--color-text-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ability-description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.ability-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.ability-stats span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.ability-stats strong {
+    font-size: 0.9rem;
+}
+
+.ability-elements {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.empty-text {
+    display: block;
+    padding: 12px 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.9rem;
+}
+
+.ability-wrapper {
+    margin-bottom: 10px;
+}
+
+.campaign-ability-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0.02)
+    );
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.campaign-ability-card:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.campaign-ability-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.campaign-ability-expanded {
+    padding: 14px 16px;
+    margin-top: 6px;
+    border-radius: 10px;
+    /* background: rgba(0,0,0,0.35); */
+}
+
+.ability-description {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    /* color: rgba(255,255,255,0.85); */
+}
+
+.ability-elements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+

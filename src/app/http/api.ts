@@ -19,7 +19,7 @@ export async function apiFetch<T>(
   if (refreshToken) {
     localStorage.setItem('token', refreshToken)
   }
-  
+
   if (response.status === 401) {
     console.error('[AUTH] 401 Unauthorized – redirecionando para /login')
     localStorage.removeItem('token')
@@ -27,22 +27,26 @@ export async function apiFetch<T>(
     throw new Error('Unauthorized')
   }
 
-  let data: any
-  try {
-    data = await response.json()
-  } catch {
-    console.error('[API] Resposta não é JSON', response)
-    throw new Error('Resposta inválida da API')
+  let data: any = null
+  const contentType = response.headers.get('content-type')
+
+  if (contentType && contentType.includes('application/json')) {
+    try {
+      data = await response.json()
+    } catch {
+      console.error('[API] JSON inválido', response)
+      throw new Error('Resposta inválida da API')
+    }
   }
-  
+
   if (!response.ok) {
     console.error('[API ERROR]', {
       url: `${API_URL}${path}`,
       status: response.status,
       data,
     })
-    throw data
+    throw data ?? { message: 'Erro inesperado' }
   }
 
-  return data
+  return data as T
 }

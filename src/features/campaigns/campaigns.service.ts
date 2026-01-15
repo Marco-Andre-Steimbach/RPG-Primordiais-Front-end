@@ -14,7 +14,15 @@ import type {
     CharacterAbilityByIdResponse,
     AddCharacterToCampaignPayload,
     AddCharacterToCampaignResponse,
-    MyCharactersResponse
+    MyCharactersResponse,
+    RaceByIdResponse,
+    OrderByIdResponse,
+    CampaignCharacterLevelUpPayload,
+    CampaignCharacterLevelUpResponse,
+    FullCharacterSheetResponse,
+    ElementByIdResponse,
+    ElementsResponse,
+    FetchItemByIdResponse
 } from './campaigns.types'
 
 export function fetchAllCampaigns() {
@@ -115,4 +123,49 @@ export function addCharacterToCampaign(
 
 export function fetchMyCharacters() {
     return apiFetch<MyCharactersResponse>('/character/me')
+}
+
+export function fetchRaceById(raceId: string | number) {
+    return apiFetch<RaceByIdResponse>(`/races/${raceId}`)
+}
+
+export function fetchOrderById(orderId: string | number) {
+    return apiFetch<OrderByIdResponse>(`/orders/${orderId}`)
+}
+
+export function levelUpCampaignCharacter(
+    payload: CampaignCharacterLevelUpPayload
+) {
+    return apiFetch<CampaignCharacterLevelUpResponse>(
+        '/campaign/characters/level-up',
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
+    )
+}
+
+export function fetchFullCharacterSheet(
+    campaignId: string | number,
+    campaignCharacterId: string | number
+) {
+    return apiFetch<FullCharacterSheetResponse>(
+        `/campaign/${campaignId}/character/${campaignCharacterId}/sheet`
+    )
+}
+
+export function fetchElementById(elementId: string | number) {
+    return apiFetch<ElementByIdResponse>(
+        `/elements/${elementId}`
+    )
+}
+
+export function fetchAllElements() {
+    return apiFetch<ElementsResponse>('/elements')
+}
+
+export function fetchItemById(itemId: string | number) {
+    return apiFetch<FetchItemByIdResponse>(
+        `/items/${itemId}`
+    )
 }
