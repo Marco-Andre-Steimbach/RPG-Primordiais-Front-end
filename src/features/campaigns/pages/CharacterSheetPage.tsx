@@ -163,7 +163,6 @@ function CharacterSheetPage() {
       <CardAbilidades
         abilities={sheet.abilities}
         elementsMap={elementsMap}
-        characterElements={characterElements}
       />
 
       <CardPerks

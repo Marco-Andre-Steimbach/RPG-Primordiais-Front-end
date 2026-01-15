@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import type { Element, Item } from '../campaigns.types'
+import type { Element, Item, SheetItem } from '../campaigns.types'
 import { fetchItemById } from '../campaigns.service'
 
 type Props = {
-    item: any
+    item: SheetItem
     elementsMap: Map<number, Element>
     isOpen: boolean
     onToggle: () => void
@@ -15,19 +15,22 @@ function ItemCardSheet({
     isOpen,
     onToggle
 }: Props) {
-    const [itemData, setItemData] = useState<Item | null>(item.item ?? null)
+    const [itemData, setItemData] = useState<Item | null>(
+        item.item ?? null
+    )
 
     useEffect(() => {
         if (!isOpen) return
         if (itemData) return
+        if (!item.item) return
 
-        fetchItemById(item.item.item_id).then(res => {
+        fetchItemById(item.item.id).then(res => {
             setItemData(res.item)
         })
     }, [isOpen])
 
-    const resolvedElements = (item.elements ?? [])
-        .map((id: number) => elementsMap.get(id))
+    const resolvedElements = item.elements
+        .map(id => elementsMap.get(id))
         .filter(Boolean) as Element[]
 
     return (
@@ -37,7 +40,7 @@ function ItemCardSheet({
                 onClick={onToggle}
             >
                 <span className="campaign-ability-name">
-                    {itemData?.name ?? 'Item'}
+                    {itemData ? itemData.name : 'Item'}
                 </span>
             </div>
 
@@ -62,10 +65,10 @@ function ItemCardSheet({
                         </div>
                     )}
 
-                    {item.abilities?.length > 0 && (
+                    {item.abilities.length > 0 && (
                         <>
                             <h4>Habilidades</h4>
-                            {item.abilities.map((ab: any) => (
+                            {item.abilities.map(ab => (
                                 <p key={ab.id}>
                                     <strong>{ab.title}</strong><br />
                                     {ab.description}

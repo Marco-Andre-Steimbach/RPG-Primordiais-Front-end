@@ -1,23 +1,10 @@
 import { useState } from 'react'
-import type { Element } from '../campaigns.types'
+import type { Element, SheetWeapon } from '../campaigns.types'
 import WeaponCardSheet from './WeaponCardSheet' 
 
-type WeaponSheet = {
-    weapon: {
-        base_damage: number
-        dice_formula: string
-        range: number
-        element_types: number[]
-        weapon_abilities: any[]
-        item_id: number
-    }
-    elements: number[]
-    abilities: any[]
-    is_equipped: boolean
-}
 
 type Props = {
-    weapons: WeaponSheet[]
+    weapons: SheetWeapon[]
     elementsMap: Map<number, Element>
 }
 

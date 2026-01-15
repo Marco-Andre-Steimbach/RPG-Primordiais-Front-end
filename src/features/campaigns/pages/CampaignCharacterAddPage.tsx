@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { fetchMyCharacters } from '../campaigns.service'
 import type { MyCharacter } from '../campaigns.types'
@@ -10,7 +10,6 @@ import CampaignCharacterAddModal from '../components/CampaignCharacterAddModal'
 import '../campaigns.css'
 
 function CampaignCharacterAddPage() {
-    const { campaignId } = useParams()
     const navigate = useNavigate()
 
     const [characters, setCharacters] = useState<MyCharacter[]>([])

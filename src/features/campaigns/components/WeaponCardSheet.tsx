@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import type { Element, Item } from '../campaigns.types'
+import type { Element, Item, SheetWeapon } from '../campaigns.types'
 import { fetchItemById } from '../campaigns.service'
 
 type Props = {
-    weapon: any
+    weapon: SheetWeapon
     elementsMap: Map<number, Element>
     isOpen: boolean
     onToggle: () => void
