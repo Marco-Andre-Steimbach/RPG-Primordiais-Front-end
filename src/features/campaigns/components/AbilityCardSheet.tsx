@@ -13,6 +13,10 @@ function AbilityCardSheet({
     isOpen,
     onToggle
 }: Props) {
+    const hasDamage =
+        ability.dice_formula &&
+        ability.dice_formula !== '0'
+
     return (
         <div className="ability-wrapper">
             <div
@@ -42,20 +46,31 @@ function AbilityCardSheet({
                     )}
 
                     <div className="ability-stats">
-                        {ability.dice_formula && (
+                        {hasDamage && (
                             <div>
-                                <span>Dano</span>
+                                <span>Dano: </span>
                                 <strong>
                                     {ability.dice_formula}
                                     {ability.base_damage > 0 &&
                                         ` + ${ability.base_damage}`}
+                                    {ability.bonus_damage > 0 &&
+                                        ` + ${ability.bonus_damage}`}
                                 </strong>
                             </div>
                         )}
 
-                        {ability.arcane_mana_cost && (
+                        {ability.range > 0 && (
                             <div>
-                                <span>Mana Arcana</span>
+                                <span>Alcance: </span>
+                                <strong>
+                                    {ability.range} casas
+                                </strong>
+                            </div>
+                        )}
+
+                        {ability.arcane_mana_cost !== null && ability.arcane_mana_cost > 0 && (
+                            <div>
+                                <span>Mana Arcana </span>
                                 <strong>
                                     {ability.arcane_mana_cost}
                                 </strong>

@@ -978,11 +978,9 @@
 /* ---------- ARMOR SHEET CARD ---------- */
 
 .sheet-card {
-    background: linear-gradient(
-        to bottom,
-        rgba(6, 10, 25, 0.95),
-        rgba(6, 10, 25, 0.85)
-    );
+    background: linear-gradient(to bottom,
+            rgba(6, 10, 25, 0.95),
+            rgba(6, 10, 25, 0.85));
     border-radius: 16px;
     padding: 16px;
     display: flex;
@@ -1120,11 +1118,9 @@
 }
 
 .sheet-card {
-    background: linear-gradient(
-        to bottom,
-        rgba(10, 15, 35, 0.95),
-        rgba(6, 10, 25, 0.9)
-    );
+    background: linear-gradient(to bottom,
+            rgba(10, 15, 35, 0.95),
+            rgba(6, 10, 25, 0.9));
     border-radius: 16px;
     padding: 16px;
     display: flex;
@@ -1222,17 +1218,15 @@
     align-items: center;
     padding: 14px 16px;
     border-radius: 10px;
-    background: linear-gradient(
-        135deg,
-        rgba(255,255,255,0.06),
-        rgba(255,255,255,0.02)
-    );
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.06),
+            rgba(255, 255, 255, 0.02));
     cursor: pointer;
     transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .campaign-ability-card:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .campaign-ability-name {
@@ -1304,3 +1298,164 @@
     margin-top: 6px;
 }
 
+.perk-details-button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 12px;
+
+    background: rgba(0, 0, 0, 0.08);
+    color: #1a1a1a;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+
+    cursor: pointer;
+    transition:
+        background 0.25s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.perk-details-button:hover {
+    background: rgba(0, 0, 0, 0.14);
+}
+
+.perk-details-button:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.weapon-card-expanded {
+    background: var(--color-parchment-light);
+    color: black;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.weapon-description {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.weapon-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 6px 0;
+}
+
+.weapon-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.weapon-stats span {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.weapon-elements {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.weapon-section-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.weapon-abilities {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.weapon-ability-card {
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.weapon-ability-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.weapon-ability-damage {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.parchment {
+    background: var(--color-parchment-light);
+    color: black;
+    border-radius: 14px;
+    padding: 16px;
+    color: black;
+}
+
+.armor-divider {
+    height: 1px;
+    margin: 10px 0;
+    background: linear-gradient(to right,
+            transparent,
+            rgba(0, 0, 0, 0.25),
+            transparent);
+}
+
+.armor-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 12px;
+}
+
+.armor-stats-grid span {
+    font-size: 12px;
+    opacity: 0.65;
+}
+
+.armor-ability-card {
+    background: rgba(0, 0, 0, 0.04);
+    border-left: 4px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.armor-ability-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.armor-weakness {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(160, 40, 40, 0.1);
+    border-left: 4px solid #a02828;
+    font-size: 13px;
+  }
+  
+  .armor-weakness span {
+    opacity: 0.7;
+  }
+  
+  .armor-weakness strong {
+    color: #a02828;
+    font-weight: 600;
+  }
+  

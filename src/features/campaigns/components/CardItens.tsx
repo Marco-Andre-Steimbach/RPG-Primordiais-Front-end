@@ -12,9 +12,9 @@ function CardItens({ items, elementsMap }: Props) {
 
   if (items.length === 0) {
     return (
-      <div className="campaign-card">
-        <h3>Itens</h3>
-        <p>Nenhum item no inventário.</p>
+      <div className="sheet-card">
+        <h3 className="sheet-card-title">Itens</h3>
+        <span className="empty-text">Nenhum item no inventário.</span>
       </div>
     )
   }
@@ -24,7 +24,7 @@ function CardItens({ items, elementsMap }: Props) {
   }
 
   return (
-    <div className="campaign-card">
+    <div className="sheet-card">
       <h3>Itens</h3>
 
       {items.map((item, index) => (

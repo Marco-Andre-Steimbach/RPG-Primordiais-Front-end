@@ -53,6 +53,14 @@ function WeaponAbilities({ ability, elements = [] }: Props) {
           <span>Velocidade</span>
           <strong>{ability.bonus_speed}</strong>
         </div>
+
+        {ability.range > 0 && (
+          <div>
+            <span>Alcance</span>
+            <strong>{ability.range} casas</strong>
+          </div>
+        )}
+
       </div>
     </div>
   )

@@ -53,39 +53,45 @@ function WeaponExpanded({
 
       <div className="weapon-info-grid">
         <div>
-          <strong>Dano:</strong>
+          <strong>Dano: </strong>
           <span>
             {weapon.dice_formula} + {weapon.base_damage}
           </span>
         </div>
 
         <div>
-          <strong>Tipo:</strong>
+          <strong>Tipo: </strong>
           <span>{weapon.damage_type}</span>
         </div>
 
         {itemValue !== undefined && (
           <div>
-            <strong>Valor:</strong>
+            <strong>Valor: </strong>
             <span>{itemValue}</span>
           </div>
         )}
 
         {strengthRequirement !== undefined && (
           <div>
-            <strong>Força mínima:</strong>
+            <strong>Força mínima: </strong>
             <span>{strengthRequirement}</span>
           </div>
         )}
 
         {ammoName && (
           <div>
-            <strong>Requer:</strong>
+            <strong>Requer: </strong>
             <span>
               {ammoName} ({weapon.ammo_per_use} por ataque)
             </span>
           </div>
         )}
+
+        <div>
+          <strong>Alcance: </strong>
+          <span>{weapon.range} casas</span>
+        </div>
+
       </div>
 
       {weaponElements.length > 0 && (

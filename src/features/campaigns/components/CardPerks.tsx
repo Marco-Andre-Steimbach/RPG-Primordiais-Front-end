@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { Element } from '../campaigns.types'
 
 type Perk = {
@@ -17,6 +18,7 @@ type Props = {
 
 function CardPerks({ perks, elementsMap }: Props) {
     const [openId, setOpenId] = useState<number | null>(null)
+    const navigate = useNavigate()
 
     return (
         <div className="sheet-card">
@@ -72,6 +74,13 @@ function CardPerks({ perks, elementsMap }: Props) {
                                         ))}
                                     </div>
                                 )}
+
+                                <button
+                                    className="perk-details-button"
+                                    onClick={() => navigate(`/perks/${perk.id}`)}
+                                >
+                                    Ver detalhes do perk
+                                </button>
                             </div>
                         )}
                     </div>

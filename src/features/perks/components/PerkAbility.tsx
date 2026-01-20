@@ -13,6 +13,13 @@ function PerkAbility({ ability }: { ability: Ability }) {
       <p className="perk-description">{ability.description}</p>
 
       <div className="perk-ability-stats">
+        {ability.range > 0 && (
+          <div className="perk-stat">
+            <span>Alcance:</span>
+            <strong>{ability.range} casas</strong>
+          </div>
+        )}
+
         {ability.bonus_accuracy > 0 && (
           <div className="perk-stat">
             <span>Bônus para acerto:</span>

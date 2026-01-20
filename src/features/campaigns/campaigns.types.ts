@@ -174,8 +174,10 @@ export type Ability = {
     arcane_description: string | null
     mana_cost: number
     arcane_mana_cost: number | null
+    range: number
     dice_formula: string
     base_damage: number
+    bonus_damage: number
     bonus_speed: number
     required_race_id: number | null
     required_order_id: number | null
@@ -350,6 +352,7 @@ export type SheetWeaponAbility = {
     dice_formula: string
     base_damage: number
     bonus_damage: number
+    range: number
     bonus_accuracy: number
     bonus_speed: number
     element_types: number[]
@@ -366,6 +369,7 @@ export type SheetWeapon = {
     dice_formula: string
     base_damage: number
     bonus_accuracy: number
+    range: number
     bonus_speed: number
     ammo_item_id: number | null
     ammo_per_use: number

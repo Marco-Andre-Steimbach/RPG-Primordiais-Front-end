@@ -29,6 +29,13 @@ function ArmorAbilities({ ability, elements = [] }: Props) {
       <div className="item-ability-divider" />
 
       <div className="item-ability-meta">
+        {ability.range > 0 && (
+          <div>
+            <span>Alcance</span>
+            <strong>{ability.range} casas</strong>
+          </div>
+        )}
+
         {ability.dice_formula && (
           <div>
             <span>Dados</span>

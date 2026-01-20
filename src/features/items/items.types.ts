@@ -16,6 +16,7 @@ export type ItemAbility = {
   bonus_damage: number
   bonus_accuracy: number
   bonus_speed: number
+  range: number
   is_consumable: boolean
   max_uses: number | null
   override_element_type_id: number | null

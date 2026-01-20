@@ -18,17 +18,41 @@ import CardInfosGameplay from '../components/CardInfosGameplay'
 import CardAtributos from '../components/CardAtributos'
 import CardAbilidades from '../components/CardAbilidades'
 import CardTiposPersonagem from '../components/CardTiposPersonagem'
+import CardFraquezasDefensivas from '../components/CardFraquezasDefensivas'
 import CardArmadura from '../components/CardArmadura'
 import CardArmas from '../components/CardArmas'
 import CardItens from '../components/CardItens'
 import CardPerks from '../components/CardPerks'
-
 
 import '../campaigns.css'
 
 function calculateExpectedAbilities(level: number) {
   if (level <= 4) return level
   return 4 + Math.floor((level - 4) / 3)
+}
+
+const DAMAGE_TYPE_MAP: Record<number, string> = {
+  1: 'Cortante',
+  2: 'Perfurante',
+  3: 'Concussão'
+}
+
+function getCharacterWeakDamageTypes(armors: any[]) {
+  const chestArmor = armors.find(
+    a => a.is_equipped && a.armor.armor_slot_id === 2
+  )
+
+  if (!chestArmor) {
+    return [1, 2, 3]
+  }
+
+  const weakType = chestArmor.armor.weak_damage_type_id
+
+  if (!weakType) {
+    return []
+  }
+
+  return [weakType]
 }
 
 function CharacterSheetPage() {
@@ -124,6 +148,18 @@ function CharacterSheetPage() {
       .filter(Boolean) as Element[]
   }, [characterElementIds, elementsMap])
 
+  const weakDamageTypeIds = useMemo(() => {
+    if (!sheet) return []
+    return getCharacterWeakDamageTypes(sheet.armors)
+  }, [sheet])
+
+  const weakDamageTypes = useMemo(() => {
+    return weakDamageTypeIds.map(id => ({
+      id,
+      name: DAMAGE_TYPE_MAP[id]
+    }))
+  }, [weakDamageTypeIds])
+
   if (modal) {
     return (
       <CharacterProgressionModal
@@ -155,6 +191,8 @@ function CharacterSheetPage() {
 
       <CardTiposPersonagem elements={characterElements} />
 
+      <CardFraquezasDefensivas damageTypes={weakDamageTypes} />
+
       <CardAtributos
         attributes={sheet.base.attributes.final}
         modifiers={sheet.base.modifiers}
@@ -185,7 +223,6 @@ function CharacterSheetPage() {
         items={sheet.items}
         elementsMap={elementsMap}
       />
-
     </div>
   )
 }

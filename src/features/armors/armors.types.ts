@@ -4,11 +4,13 @@ export type ArmorAbility = {
     description: string
     dice_formula: string | null
     base_damage: number
+    range: number
     armor_class_bonus: number
     bonus_speed: number
     created_at: string
     updated_at: string | null
 }
+
 
 export type Armor = {
     id: number
@@ -18,7 +20,7 @@ export type Armor = {
     armor_class_bonus: number
     min_strength_required: number
     speed_penalty: number
-
+    weak_damage_type_id: number
     element_types: number[]
     armor_abilities: ArmorAbility[]
 
@@ -71,3 +73,4 @@ export type Item = {
   export type ItemResponse = {
     item: Item
   }
+  

@@ -704,6 +704,7 @@
 .ability-description {
   font-size: 0.9rem;
   line-height: 1.5;
+  white-space: pre-line;
 }
 
 .ability-arcane {
@@ -720,6 +721,7 @@
 .ability-arcane p {
   font-size: 0.85rem;
   line-height: 1.4;
+  white-space: pre-line;
 }
 
 .ability-stats {

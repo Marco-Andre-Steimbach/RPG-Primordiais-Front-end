@@ -12,6 +12,12 @@ function ArmorExpanded({ armor }: Props) {
   const [armorElements, setArmorElements] = useState<Element[]>([])
   const [item, setItem] = useState<Item | null>(null)
 
+  const WEAPON_DAMAGE_TYPE_MAP: Record<number, string> = {
+    1: 'Cortante',
+    2: 'Perfurante',
+    3: 'Concussão'
+  }
+
   useEffect(() => {
     fetchItemById(armor.item_id).then(res => {
       setItem(res.item)
@@ -31,7 +37,8 @@ function ArmorExpanded({ armor }: Props) {
       <h3>{item.name}</h3>
 
       <p>{item.description}</p>
-        <br></br>
+      <br></br>
+
       <div className="weapon-info-grid">
         <div>
           <strong>Slot: </strong>
@@ -57,11 +64,20 @@ function ArmorExpanded({ armor }: Props) {
           <strong>Valor: </strong>
           <span>{item.value}</span>
         </div>
+
+        {armor.weak_damage_type_id && (
+          <div>
+            <strong>Fraqueza: </strong>
+            <span>
+              {WEAPON_DAMAGE_TYPE_MAP[armor.weak_damage_type_id]}
+            </span>
+          </div>
+        )}
       </div>
 
       {armorElements.length > 0 && (
         <>
-        <br></br>
+          <br></br>
           <h4>Elementos</h4>
           <div className="item-elements-list">
             {armorElements.map(el => (

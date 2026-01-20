@@ -5,6 +5,7 @@ export type WeaponAbility = {
   description: string
   dice_formula: string
   base_damage: number
+  range: number
   bonus_damage: number
   bonus_accuracy: number
   bonus_speed: number
@@ -24,6 +25,7 @@ export type Weapon = {
   base_damage: number
   bonus_accuracy: number
   bonus_speed: number
+  range: number
 
   ammo_item_id: number | null
   ammo_per_use: number
