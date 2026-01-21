@@ -23,6 +23,7 @@ import CardArmadura from '../components/CardArmadura'
 import CardArmas from '../components/CardArmas'
 import CardItens from '../components/CardItens'
 import CardPerks from '../components/CardPerks'
+import CardInfosGerais from '../components/CardInfosGerais'
 
 import '../campaigns.css'
 
@@ -180,6 +181,14 @@ function CharacterSheetPage() {
 
   return (
     <div className="character-sheet-page">
+      <CardInfosGerais
+        level={sheet.progression.level}
+        gold={sheet.progression.gold}
+        xpCurrent={sheet.progression.xp.current}
+        xpRequired={sheet.progression.xp.required_for_next_level}
+        xpRemaining={sheet.progression.xp.to_next_level}
+      />
+
       <CardInfosGameplay
         level={sheet.base.level}
         hpMax={sheet.base.hp_max}

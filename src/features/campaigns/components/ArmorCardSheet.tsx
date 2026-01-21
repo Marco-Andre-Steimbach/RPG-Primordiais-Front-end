@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react'
-import type { Element, Item } from '../campaigns.types'
-import { fetchItemById } from '../campaigns.service'
+import type { Element } from '../campaigns.types'
 
 const DAMAGE_TYPE_MAP: Record<number, string> = {
     1: 'Cortante',
     2: 'Perfurante',
-    3: 'Contusão'
+    3: 'Concussão'
 }
 
 type Props = {
@@ -21,8 +19,6 @@ function ArmorCardSheet({
     isOpen,
     onToggle
 }: Props) {
-    const [item, setItem] = useState<Item | null>(armor.item ?? null)
-
     const isChest =
         armor.slot.name.toLowerCase() === 'armadura'
 
@@ -30,15 +26,6 @@ function ArmorCardSheet({
         armor.armor.weak_damage_type_id
             ? DAMAGE_TYPE_MAP[armor.armor.weak_damage_type_id]
             : null
-
-    useEffect(() => {
-        if (!isOpen) return
-        if (item) return
-
-        fetchItemById(armor.armor.item_id).then(res => {
-            setItem(res.item)
-        })
-    }, [isOpen])
 
     const resolvedElements = armor.elements
         .map((id: number) => elementsMap.get(id))
@@ -51,7 +38,7 @@ function ArmorCardSheet({
                 onClick={onToggle}
             >
                 <span className="campaign-ability-name">
-                    {item?.name ?? 'Armadura'}
+                    {armor.armor.item_name}
                 </span>
 
                 <span className="campaign-ability-cost">
@@ -61,9 +48,9 @@ function ArmorCardSheet({
 
             {isOpen && (
                 <div className="armor-card-expanded parchment">
-                    {item?.description && (
+                    {armor.armor.item_description && (
                         <p className="ability-description">
-                            {item.description}
+                            {armor.armor.item_description}
                         </p>
                     )}
 

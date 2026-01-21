@@ -22,7 +22,10 @@ import type {
     FullCharacterSheetResponse,
     ElementByIdResponse,
     ElementsResponse,
-    FetchItemByIdResponse
+    FetchItemByIdResponse,
+    LupidaResponse,
+    SpendGoldPayload,
+    WeaponDetails
 } from './campaigns.types'
 
 export function fetchAllCampaigns() {
@@ -167,5 +170,87 @@ export function fetchAllElements() {
 export function fetchItemById(itemId: string | number) {
     return apiFetch<FetchItemByIdResponse>(
         `/items/${itemId}`
+    )
+}
+
+export function fetchLupida(campaignId: string | number) {
+    return apiFetch<LupidaResponse>(
+        `/campaign/${campaignId}/lupida`
+    )
+}
+
+export function spendCampaignCharacterGold(
+    payload: SpendGoldPayload
+) {
+    return apiFetch<CampaignCharacterActionResponse>(
+        '/campaign/characters/gold',
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
+    )
+}
+
+export function fetchCampaignCharacterGold(
+    campaignId: string | number,
+    characterId: string | number
+) {
+    return apiFetch<CharacterSheetInfoResponse>(
+        `/campaign/${campaignId}/character/${characterId}/info`
+    )
+}
+
+export function addArmorToCampaignCharacter(
+    campaignCharacterId: string | number,
+    payload: {
+        armor_item_id: number
+        equip: boolean
+    }
+) {
+    return apiFetch<CampaignCharacterActionResponse>(
+        `/campaign/${campaignCharacterId}/armor`,
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
+    )
+}
+
+export function addWeaponToCampaignCharacter(
+    campaignCharacterId: number,
+    payload: {
+        weapon_id: number
+        equip?: boolean
+        deactivate_weapon_id?: number
+    }
+) {
+    return apiFetch(
+        `/campaign/${campaignCharacterId}/weapon`,
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
+    )
+}
+
+export function fetchWeaponById(id: number) {
+    return apiFetch<{ weapon: WeaponDetails }>(`/weapons/${id}`, {
+        method: 'GET'
+    })
+}
+
+export function addItemToCampaignCharacter(
+    campaignCharacterId: string | number,
+    payload: {
+        item_id: number
+        quantity: number
+    }
+) {
+    return apiFetch(
+        `/campaign/${campaignCharacterId}/item`,
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
     )
 }

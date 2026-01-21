@@ -52,11 +52,23 @@ export type UserMeResponse = {
 export type CharacterSheetInfo = {
     campaign_character_id: number
     level: number
+    gold: number
+
     perks: number
     abilities: number
-    weapons: number
-    armors: number
+
+    armors: {
+        armor_id: number
+        armor_slot_id: number
+    }[]
+
+    weapons: {
+        id: number
+        weapon_id: number
+        item_name: string
+    }[]
 }
+
 
 export type CharacterSheetInfoResponse = {
     infos: CharacterSheetInfo
@@ -442,6 +454,16 @@ export type FullCharacterSheet = {
     armors: SheetArmor[]
     items: SheetItem[]
     abilities: CampaignCharacterAbility[]
+    progression: {
+        level: number
+        gold: number
+        xp: {
+            current: number
+            total: number
+            to_next_level: number
+            required_for_next_level: number
+        }
+    }
 }
 
 export type FullCharacterSheetResponse = {
@@ -472,8 +494,129 @@ export type Item = {
     item_abilities: any[]
     created_at: string
     updated_at: string
-  }
-  
-  export type FetchItemByIdResponse = {
+}
+
+export type FetchItemByIdResponse = {
     item: Item
-  }
+}
+
+export type LupidaArmorAbility = {
+    id: number
+    title: string
+    description: string
+    dice_formula: string | null
+    base_damage: number
+    armor_class_bonus: number
+    bonus_speed: number
+    created_at: string
+    updated_at: string | null
+}
+export type LupidaWeaponAbility = {
+    id: number
+    weapon_id: number
+    title: string
+    description: string
+    dice_formula: string
+    base_damage: number
+    bonus_damage: number
+    bonus_accuracy: number
+    bonus_speed: number
+    element_types: number[]
+    created_at: string
+    
+}
+
+export type LupidaArmor = {
+    armor_id: number
+    item_id: number
+
+    item_name: string
+    item_description: string
+
+    armor_slot_id: number
+    slot_name: string
+
+    armor_class_bonus: number
+    min_strength_required: number
+    speed_penalty: number
+
+    weak_damage_type_id: number | null
+
+    value: number
+
+    elements: number[]
+    abilities: LupidaArmorAbility[]
+}
+
+
+export type LupidaWeapon = {
+    id: number
+    item_id: number
+    item_name: string
+    item_description: string
+    weapon_damage_type_id: number
+    damage_type: string
+    dice_formula: string
+    base_damage: number
+    bonus_accuracy: number
+    bonus_speed: number
+    ammo_item_id: number | null
+    ammo_per_use: number
+    created_at: string
+    elements: number[]
+    value: number
+    abilities: LupidaWeaponAbility[]
+}
+export type LupidaItem = {
+    item_id: number
+    item_name: string
+    item_description: string
+    quantity: number
+    elements: number[]
+    abilities: number[]
+    value: number
+}
+export type LupidaPayload = {
+    lupida: {
+        campaign_id: number
+        armors: LupidaArmor[]
+        weapons: LupidaWeapon[]
+        items: LupidaItem[]
+    }
+}
+export type LupidaGoldState = {
+    current: number
+}
+
+export type LupidaResponse = LupidaPayload
+
+export type LupidaSessionState = {
+    gold: number
+    boughtArmorIds: number[]
+    boughtWeaponIds: number[]
+    boughtItemIds: number[]
+}
+
+export type BuyLupidaItemPayload = {
+    type: 'armor' | 'weapon' | 'item'
+    id: number
+    price: number
+}
+
+export type SpendGoldPayload = {
+    campaign_character_id: number
+    amount: number
+    operation: 'add' | 'remove'
+}
+
+export type EquippedWeaponInfo = {
+    id: number
+    weapon_id: number
+    item_id: number
+}
+
+export type WeaponDetails = {
+    id: number
+    item_name: string
+    campaign_weapon_id: number
+}

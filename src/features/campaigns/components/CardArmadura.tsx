@@ -1,33 +1,11 @@
 import { useState } from 'react'
-import type { Element } from '../campaigns.types'
+import type { Element, SheetArmor } from '../campaigns.types'
 import ArmorCardSheet from './ArmorCardSheet'
 
-type ArmorSheet = {
-    armor: {
-        armor_class_bonus: number
-        min_strength_required: number
-        speed_penalty: number
-        element_types: number[]
-        armor_abilities: any[]
-        armor_slot_id: number
-        item_id: number
-    }
-    slot: {
-        name: string
-    }
-    elements: number[]
-    abilities: any[]
-    is_equipped: boolean
-    item?: {
-        name: string
-        description: string
-        value: number
-    }
-}
 
 type Props = {
     baseArmor: number
-    armors: ArmorSheet[]
+    armors: SheetArmor[]
     elementsMap: Map<number, Element>
 }
 

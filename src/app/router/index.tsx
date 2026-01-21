@@ -27,6 +27,7 @@ import CharacterSheetPage from '../../features/campaigns/pages/CharacterSheetPag
 import CampaignCharacterPerksPage from '../../features/campaigns/pages/CampaignCharacterPerksPage'
 import CampaignCharacterAbilitiesPage from '../../features/campaigns/pages/CampaignCharacterAbilitiesPage'
 import CampaignCharacterAddPage from '../../features/campaigns/pages/CampaignCharacterAddPage'
+import LupidaPage from '../../features/campaigns/pages/LupidaPage'
 
 function Router() {
   return (
@@ -58,6 +59,7 @@ function Router() {
           <Route path="/campaign/:campaignId/characters/:characterId/sheet" element={<CharacterSheetPage />} />
           <Route path="/campaign/:campaignId/characters/:characterId/perks" element={<CampaignCharacterPerksPage />} />
           <Route path="/campaign/:campaignId/characters/:characterId/abilities" element={<CampaignCharacterAbilitiesPage />} />
+          <Route path="/campaign/:campaignId/characters/:characterId/lupida" element={<LupidaPage />} />
           <Route path="/campaign/:id/characters" element={<CampaignCharacterAddPage />} />
         </Route>
       </Routes>
