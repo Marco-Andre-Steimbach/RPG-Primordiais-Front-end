@@ -106,6 +106,35 @@ function LupidaPage() {
         }
     }, [campaignId, navigate])
 
+    // =========================
+    // 🔹 ADIÇÃO: refresh infos
+    // =========================
+    async function refreshCharacterInfos() {
+        if (!campaignId || !characterId) return
+
+        const infoRes = await fetchCharacterSheetInfo(campaignId, characterId)
+        const infos = infoRes?.infos
+
+        if (!infos) return
+
+        setGold(infos.gold)
+        setCampaignCharacterId(infos.campaign_character_id)
+
+        setEquippedArmors(
+            infos.armors.map((a: any) => ({
+                armor_id: a.armor_id,
+                armor_slot_id: a.armor_slot_id
+            }))
+        )
+
+        setEquippedWeapons(
+            infos.weapons.map((w: any) => ({
+                campaign_weapon_id: w.id,
+                weapon_id: w.weapon_id,
+                item_name: w.item_name
+            }))
+        )
+    }
 
     function tryBuyArmor(armor: LupidaArmor) {
         if (gold < armor.value) return
@@ -139,6 +168,8 @@ function LupidaPage() {
         setArmors(v => v.filter(a => a.armor_id !== armor.armor_id))
         setArmorModalOpen(false)
         setPendingArmor(null)
+
+        await refreshCharacterInfos()
     }
 
     function tryBuyWeapon(weapon: LupidaWeapon) {
@@ -173,6 +204,8 @@ function LupidaPage() {
         setWeapons(v => v.filter(w => w.id !== weapon.id))
         setWeaponModalOpen(false)
         setPendingWeapon(null)
+
+        await refreshCharacterInfos()
     }
 
     async function buyItem(item: LupidaItem, quantity: number) {
@@ -199,6 +232,8 @@ function LupidaPage() {
                     : i
             ).filter(i => i.quantity > 0)
         )
+
+        await refreshCharacterInfos()
     }
 
     function handleCloseLupida() {
