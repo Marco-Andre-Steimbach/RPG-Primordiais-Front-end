@@ -181,6 +181,17 @@ function CharacterSheetPage() {
 
   return (
     <div className="character-sheet-page">
+      <button
+        className="lupida-button"
+        onClick={() =>
+          navigate(
+            `/campaign/${campaignId}/characters/${characterId}/lupida`
+          )
+        }
+      >
+        Ir para Lupida
+      </button>
+
       <CardInfosGerais
         level={sheet.progression.level}
         gold={sheet.progression.gold}
@@ -231,7 +242,9 @@ function CharacterSheetPage() {
       <CardItens
         items={sheet.items}
         elementsMap={elementsMap}
+        campaignCharacterId={sheet.base.campaign_character_id}
       />
+
     </div>
   )
 }

@@ -254,3 +254,20 @@ export function addItemToCampaignCharacter(
         }
     )
 }
+
+export function useCampaignCharacterItem(payload: {
+    campaign_character_id: number
+    item_id: number
+}) {
+    return apiFetch(
+        '/campaign/item/use',
+        {
+            method: 'PUT',
+            body: JSON.stringify(payload)
+        }
+    )
+}
+
+export function fetchMyCampaigns() {
+    return apiFetch<CampaignsResponse>('/campaign/my')
+}

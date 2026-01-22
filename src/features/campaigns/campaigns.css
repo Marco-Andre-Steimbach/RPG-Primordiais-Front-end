@@ -1950,34 +1950,34 @@
 
 .lupida-item-card {
     background: linear-gradient(180deg, #0b1026, #070b1a);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     padding: 16px;
     margin-bottom: 14px;
-  
+
     display: flex;
     justify-content: space-between;
     gap: 16px;
-  }
-  
-  .lupida-item-info h4 {
+}
+
+.lupida-item-info h4 {
     margin: 0 0 6px;
-  }
-  
-  .lupida-item-info p {
+}
+
+.lupida-item-info p {
     font-size: 0.85rem;
     opacity: 0.85;
-  }
-  
-  .lupida-item-meta {
+}
+
+.lupida-item-meta {
     margin-top: 8px;
     display: flex;
     gap: 12px;
     font-size: 0.8rem;
     opacity: 0.75;
-  }
-  
-  .lupida-buy-button {
+}
+
+.lupida-buy-button {
     align-self: center;
     padding: 10px 18px;
     border-radius: 10px;
@@ -1986,17 +1986,17 @@
     color: #1a1408;
     font-weight: 600;
     cursor: pointer;
-  }
-  
-  .item-quantity-control {
+}
+
+.item-quantity-control {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 16px;
     margin: 16px 0;
-  }
-  
-  .item-quantity-control button {
+}
+
+.item-quantity-control button {
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -2005,26 +2005,26 @@
     color: #fff;
     font-size: 1.2rem;
     cursor: pointer;
-  }
-  
-  .item-quantity-control span {
+}
+
+.item-quantity-control span {
     font-size: 1.2rem;
     font-weight: bold;
-  }
-  
-  .item-quantity-info {
+}
+
+.item-quantity-info {
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
-  }
-  
-  .confirm-actions {
+}
+
+.confirm-actions {
     display: flex;
     justify-content: space-between;
     gap: 12px;
-  }
-  
-  .confirm-buy {
+}
+
+.confirm-buy {
     flex: 1;
     background: #b8a97a;
     border: none;
@@ -2032,5 +2032,129 @@
     padding: 10px;
     font-weight: bold;
     cursor: pointer;
-  }
-  
+}
+
+.lupida-button {
+    width: 100%;
+    display: block;
+
+    padding: 12px 16px;
+    margin-bottom: 16px;
+
+    background: linear-gradient(135deg,
+            #1f3c88,
+            #162a5e);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+
+    color: #f5e6c8;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.45);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.lupida-button:hover {
+    background: linear-gradient(135deg,
+            #2a4fc2,
+            #1f3c88);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.55),
+        inset 0 0 12px rgba(255, 255, 255, 0.06);
+}
+
+.lupida-button:active {
+    transform: translateY(0);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.6),
+        inset 0 0 18px rgba(0, 0, 0, 0.4);
+}
+
+
+.item-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.item-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.item-quantity {
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
+
+.item-arrow {
+    transition: transform 0.2s ease;
+}
+
+.item-arrow.open {
+    transform: rotate(180deg);
+}
+
+.item-actions {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.use-item-button {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 10px;
+
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to bottom,
+            #f5e6c8,
+            #e0cfa3);
+
+    color: #2b1e0f;
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+.use-item-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(to bottom,
+            #f8ecd4,
+            #e6d6ad);
+}
+
+.use-item-button:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.use-item-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+}

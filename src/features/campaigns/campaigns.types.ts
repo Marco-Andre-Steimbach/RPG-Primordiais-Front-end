@@ -548,7 +548,6 @@ export type LupidaArmor = {
     abilities: LupidaArmorAbility[]
 }
 
-
 export type LupidaWeapon = {
     id: number
     item_id: number
@@ -568,6 +567,7 @@ export type LupidaWeapon = {
     abilities: LupidaWeaponAbility[]
     range: number
 }
+
 export type LupidaItem = {
     item_id: number
     item_name: string

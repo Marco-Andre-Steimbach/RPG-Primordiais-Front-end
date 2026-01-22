@@ -5,9 +5,15 @@ import ItemCardSheet from './ItemCardSheet'
 type Props = {
   items: SheetItem[]
   elementsMap: Map<number, Element>
+  campaignCharacterId: number
 }
 
-function CardItens({ items, elementsMap }: Props) {
+function CardItens({
+  items,
+  elementsMap,
+  campaignCharacterId
+}: Props) {
+
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   if (items.length === 0) {
@@ -29,11 +35,12 @@ function CardItens({ items, elementsMap }: Props) {
 
       {items.map((item, index) => (
         <ItemCardSheet
-          key={`${item.item?.id ?? 'item'}-${index}`}
+          key={`${item.item?.id}-${index}`}
           item={item}
           elementsMap={elementsMap}
           isOpen={openIndex === index}
           onToggle={() => toggle(index)}
+          campaignCharacterId={campaignCharacterId}
         />
       ))}
     </div>
