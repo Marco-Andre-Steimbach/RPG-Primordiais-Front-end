@@ -55,7 +55,7 @@ function Router() {
           <Route path="/character/all" element={<CharacterAllPage />} />
           <Route path="/campaigns" element={<CampaignsMenuPage />} />
           <Route path="/campaigns/all" element={<CampaignsAllPage />} />
-          <Route path="/campaigns/my" element={<CampaignsAllPage />} />
+          <Route path="/campaigns/my" element={<MyCampaignsPage />} />
           <Route path="/campaigns/:id" element={<CampaignPage />} />
           <Route path="/campaign/:campaignId/characters/:characterId/sheet" element={<CharacterSheetPage />} />
           <Route path="/campaign/:campaignId/characters/:characterId/perks" element={<CampaignCharacterPerksPage />} />

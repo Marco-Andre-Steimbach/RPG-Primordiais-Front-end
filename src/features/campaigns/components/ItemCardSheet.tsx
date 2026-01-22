@@ -4,7 +4,6 @@ import {
     fetchItemById,
     useCampaignCharacterItem
 } from '../campaigns.service'
-import { useParams } from 'react-router-dom'
 
 type Props = {
     item: SheetItem
