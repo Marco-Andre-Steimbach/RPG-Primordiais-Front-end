@@ -29,6 +29,7 @@ import CampaignCharacterAbilitiesPage from '../../features/campaigns/pages/Campa
 import CampaignCharacterAddPage from '../../features/campaigns/pages/CampaignCharacterAddPage'
 import LupidaPage from '../../features/campaigns/pages/LupidaPage'
 import MyCampaignsPage from '../../features/campaigns/pages/MyCampaignsPage'
+import MasterPage from '../../features/master/pages/MasterPage'
 function Router() {
   return (
     <BrowserRouter>
@@ -36,6 +37,7 @@ function Router() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/campaign/:id/master" element={<MasterPage />} />
         <Route element={<MainLayout />}>
           <Route path="/info" element={<InfoPage />} />
           <Route path="/races" element={<RacesPage />} />

@@ -2158,3 +2158,58 @@
     opacity: 0.5;
     box-shadow: none;
 }
+
+.campaign-master-area {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .campaign-master-button {
+    padding: 10px 18px;
+  
+    background: linear-gradient(
+      135deg,
+      #8b6b3e,
+      #6b4f2a
+    );
+  
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+  
+    color: #f5e6c8;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  
+    cursor: pointer;
+  
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.45);
+  
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+  }
+  
+  .campaign-master-button:hover {
+    background: linear-gradient(
+      135deg,
+      #a8834d,
+      #8b6b3e
+    );
+  
+    transform: translateY(-1px);
+  
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.55);
+  }
+  
+  .campaign-master-button:active {
+    transform: translateY(0);
+  
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.6);
+  }
+  

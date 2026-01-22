@@ -40,6 +40,21 @@ function CampaignPage() {
 
     return (
         <div className="campaign-page-container">
+
+            {/* 🔹 BOTÃO DO MESTRE */}
+            {isMaster && (
+                <div className="campaign-master-area">
+                    <button
+                        className="campaign-master-button"
+                        onClick={() =>
+                            navigate(`/campaign/${campaign.id}/master`)
+                        }
+                    >
+                        Ir para área do mestre
+                    </button>
+                </div>
+            )}
+
             <header className="campaign-page-header">
                 <h1>{campaign.name}</h1>
                 <span className="campaign-page-master">
