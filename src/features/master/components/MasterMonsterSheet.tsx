@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { fetchMonsterById } from '../monsters.service'
 import type { MonsterFull } from '../monsters.types'
 import { useElementMap } from '../hooks/useElementMap'
+import { useWeaponDamageTypeMap } from '../hooks/useWeaponDamageTypeMap'
 
 
 type Props = {
@@ -10,6 +11,8 @@ type Props = {
 
 function MasterMonsterSheet({ monsterId }: Props) {
     const { elementMap, loading: elementsLoading } = useElementMap()
+    const { weaponDamageTypeMap, loading: weaponTypesLoading } = useWeaponDamageTypeMap()
+
 
     const [monster, setMonster] = useState<MonsterFull | null>(null)
     const [loading, setLoading] = useState(true)
@@ -60,6 +63,15 @@ function MasterMonsterSheet({ monsterId }: Props) {
                         )
                     })}
                 </div>
+                {monster.weakness_damage_type_id && (
+                    <div className="master-sheet-weakness">
+                        <span>Fraqueza:</span>
+                        <strong>
+                            {weaponDamageTypeMap.get(monster.weakness_damage_type_id)?.name
+                                ?? `#${monster.weakness_damage_type_id}`}
+                        </strong>
+                    </div>
+                )}
 
             </div>
 
@@ -145,7 +157,7 @@ function MasterMonsterSheet({ monsterId }: Props) {
                                         <div className="master-card-meta">
                                             <span>{a.dice_formula}</span>
                                             <span>Base {a.base_damage}</span>
-                                            <span>Acc {a.bonus_accuracy}</span>
+                                            <span>Bonus de acerto {a.bonus_accuracy}</span>
                                             <span>Range {a.attack_range}</span>
                                         </div>
                                     </div>
@@ -163,6 +175,12 @@ function MasterMonsterSheet({ monsterId }: Props) {
                                             )
                                         })}
                                     </div>
+                                    {a.weapon_damage_type_id && (
+                                        <span className="master-weapon-tag">
+                                            {weaponDamageTypeMap.get(a.weapon_damage_type_id)?.name
+                                                ?? `#${a.weapon_damage_type_id}`}
+                                        </span>
+                                    )}
                                 </div>
                             ))}
                         </div>

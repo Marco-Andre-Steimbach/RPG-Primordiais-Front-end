@@ -12,11 +12,16 @@ import type {
   CreateMonsterAbilityPayload
 } from '../monsterCreation.types'
 
+type CreatedRef = {
+  id: number
+  label: string
+}
+
 export function useMonsterCreation() {
   const [monsterId, setMonsterId] = useState<number | null>(null)
 
-  const [attackIds, setAttackIds] = useState<number[]>([])
-  const [abilityIds, setAbilityIds] = useState<number[]>([])
+  const [attacks, setAttacks] = useState<CreatedRef[]>([])
+  const [abilities, setAbilities] = useState<CreatedRef[]>([])
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -30,9 +35,9 @@ export function useMonsterCreation() {
       setMonsterId(res.monster.id)
 
       return res.monster
-    } catch (err) {
+    } catch {
       setError('Erro ao criar monstro.')
-      throw err
+      throw new Error()
     } finally {
       setLoading(false)
     }
@@ -48,12 +53,16 @@ export function useMonsterCreation() {
       setError(null)
 
       const res = await createMonsterAttack(payload)
-      setAttackIds(prev => [...prev, res.attack.id])
+
+      setAttacks(prev => [
+        ...prev,
+        { id: res.attack.id, label: res.attack.name }
+      ])
 
       return res.attack
-    } catch (err) {
+    } catch {
       setError('Erro ao criar ataque.')
-      throw err
+      throw new Error()
     } finally {
       setLoading(false)
     }
@@ -69,12 +78,16 @@ export function useMonsterCreation() {
       setError(null)
 
       const res = await createMonsterAbility(payload)
-      setAbilityIds(prev => [...prev, res.ability.id])
+
+      setAbilities(prev => [
+        ...prev,
+        { id: res.ability.id, label: res.ability.title }
+      ])
 
       return res.ability
-    } catch (err) {
+    } catch {
       setError('Erro ao criar habilidade.')
-      throw err
+      throw new Error()
     } finally {
       setLoading(false)
     }
@@ -89,22 +102,22 @@ export function useMonsterCreation() {
       setLoading(true)
       setError(null)
 
-      if (attackIds.length > 0) {
+      if (attacks.length > 0) {
         await linkMonsterAttacks(monsterId, {
-          attack_ids: attackIds
+          attack_ids: attacks.map(a => a.id)
         })
       }
 
-      if (abilityIds.length > 0) {
+      if (abilities.length > 0) {
         await linkMonsterAbilities(monsterId, {
-          ability_ids: abilityIds
+          ability_ids: abilities.map(a => a.id)
         })
       }
 
       return true
-    } catch (err) {
+    } catch {
       setError('Erro ao vincular ataques ou habilidades.')
-      throw err
+      throw new Error()
     } finally {
       setLoading(false)
     }
@@ -112,16 +125,17 @@ export function useMonsterCreation() {
 
   function reset() {
     setMonsterId(null)
-    setAttackIds([])
-    setAbilityIds([])
+    setAttacks([])
+    setAbilities([])
     setError(null)
     setLoading(false)
   }
 
   return {
     monsterId,
-    attackIds,
-    abilityIds,
+
+    attacks,
+    abilities,
 
     loading,
     error,

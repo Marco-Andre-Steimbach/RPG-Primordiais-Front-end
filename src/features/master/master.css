@@ -5,11 +5,9 @@
 
 .master-navbar {
   width: 260px;
-  background: linear-gradient(
-    180deg,
-    var(--color-parchment-light),
-    var(--color-parchment-dark)
-  );
+  background: linear-gradient(180deg,
+      var(--color-parchment-light),
+      var(--color-parchment-dark));
   border-right: 2px solid var(--color-parchment-border);
   padding: 16px;
   box-sizing: border-box;
@@ -139,6 +137,8 @@
   background: rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: background 0.2s ease;
+  color: white;
+  margin-top: 0.5rem;
 }
 
 .master-side-item:hover {
@@ -456,11 +456,9 @@
 }
 
 .master-status-group {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.01)
-  );
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0.01));
   border-radius: var(--radius-md);
   padding: 16px;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -622,3 +620,476 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
+.master-weapon-tag {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.9);
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.master-sheet-weakness {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: rgba(192, 57, 43, 0.18);
+  border: 1px solid rgba(192, 57, 43, 0.35);
+  color: rgba(255, 255, 255, 0.95);
+
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  font-size: 0.8rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.master-sheet-weakness span {
+  opacity: 0.85;
+  font-weight: 700;
+}
+
+.master-sheet-weakness strong {
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.master-sheet-header {
+  flex-wrap: wrap;
+}
+
+.master-side-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.master-side-action {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.master-side-action:hover {
+  background: rgba(31, 60, 136, 0.25);
+  border-color: rgba(31, 60, 136, 0.45);
+}
+
+/* ===============================
+   LAYOUT PRINCIPAL
+================================ */
+
+.element-damage-layout {
+  display: grid;
+  grid-template-columns: 1fr 420px 1fr;
+  gap: 24px;
+  height: 100%;
+  padding: 24px;
+}
+
+/* ===============================
+   COLUNAS DE ELEMENTOS
+================================ */
+
+.element-column {
+  background: linear-gradient(180deg, #0f1730, #0a1024);
+  border: 1px solid rgba(31, 60, 136, 0.45);
+  border-radius: 16px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.element-column h3 {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* ===============================
+   BOTÕES DE ELEMENTO
+================================ */
+
+.element-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(53, 229, 255, 0.25);
+  color: #dbefff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.element-btn:hover {
+  background: rgba(53, 229, 255, 0.1);
+}
+
+.element-btn.active {
+  background: rgba(31, 60, 136, 0.35);
+  border-color: rgba(31, 60, 136, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(31, 60, 136, 0.35);
+  color: #ffffff;
+}
+
+/* ===============================
+   BLOCO CENTRAL DE DANO
+================================ */
+
+.element-center {
+  background: linear-gradient(180deg, #0f1730, #0a1024);
+  border: 1px solid rgba(31, 60, 136, 0.45);
+  border-radius: 16px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.element-center h3 {
+  color: #35e5ff;
+  font-weight: 600;
+}
+
+/* ===============================
+   INPUT DE DANO
+================================ */
+
+.element-center input {
+  width: 120px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(53, 229, 255, 0.4);
+  background: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* ===============================
+   BOTÃO CALCULAR
+================================ */
+
+.element-center button {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+
+  background: rgba(31, 60, 136, 0.85);
+  color: white;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.element-center button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 6px 16px rgba(31, 60, 136, 0.35);
+}
+
+.element-center button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   RESULTADO DO DANO
+================================ */
+
+.damage-result {
+  margin-top: 12px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(53, 229, 255, 0.35);
+  border-radius: 12px;
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.damage-result p {
+  color: #dbefff;
+  font-size: 14px;
+}
+
+/* ===============================
+   SCROLL PADRÃO (IGUAL MONSTROS)
+================================ */
+
+/* Colunas de elementos */
+.element-column {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.element-column::-webkit-scrollbar {
+  width: 6px;
+}
+
+.element-column::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.element-column::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.element-column::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.45);
+}
+
+/* ===============================
+   LAYOUT FRAQUEZAS
+================================ */
+
+.element-weakness-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  height: 100%;
+}
+
+/* ===============================
+   COLUNA DE ELEMENTOS
+================================ */
+
+.element-column {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  overflow-y: auto;
+}
+
+.element-column h3 {
+  text-align: center;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===============================
+   BOTÕES
+================================ */
+
+.element-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.element-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.element-btn.active {
+  background: rgba(31, 60, 136, 0.35);
+  border-color: rgba(31, 60, 136, 0.55);
+}
+
+/* ===============================
+   RESULTADO
+================================ */
+
+.element-result-panel {
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.element-result-panel h3 {
+  text-align: center;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* ===============================
+   GRUPOS DE FRAQUEZA
+================================ */
+
+.weakness-group {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.weakness-group.immune {
+  border-color: rgba(192, 57, 43, 0.5);
+  background: rgba(192, 57, 43, 0.15);
+}
+
+.weakness-multiplier {
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.weakness-elements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.weakness-elements span {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* ===============================
+   ESTADOS
+================================ */
+
+.element-hint {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.element-error {
+  color: #e74c3c;
+  font-weight: 700;
+  text-align: center;
+}
+
+.master-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.master-form.full {
+  grid-template-columns: 1fr;
+}
+
+.master-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.master-field label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  letter-spacing: 0.03em;
+}
+
+.master-field input,
+.master-field textarea,
+.master-field select {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.master-field textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.master-field input:focus,
+.master-field textarea:focus,
+.master-field select:focus {
+  outline: none;
+  border-color: rgba(31, 60, 136, 0.7);
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.master-field input[type="number"] {
+  max-width: 120px;
+}
+
+.master-sheet-elements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.master-element-tag {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.master-element-tag:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.master-element-tag.active {
+  background: rgba(31, 60, 136, 0.45);
+  border-color: rgba(31, 60, 136, 0.8);
+  box-shadow: inset 0 0 0 1px rgba(31, 60, 136, 0.45);
+}
+
+.master-wizard-panel > .master-wizard-btn.primary {
+  margin-top: 16px;
+}

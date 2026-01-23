@@ -5,6 +5,10 @@ import type {
   CreateMonsterAttackPayload,
   CreateMonsterAbilityPayload
 } from '../monsterCreation.types'
+import MonsterBaseForm from '../components/MonsterBaseForm'
+import MonsterAttackForm from '../components/MonsterAttackForm'
+import MonsterCreatedList from '../components/MonsterCreatedList'
+import MonsterAbilityForm from '../components/MonsterAbilityForm'
 
 type Step = 1 | 2 | 3 | 4
 
@@ -16,8 +20,8 @@ type Props = {
 function MasterMonsterWizard({ onCancel, onDone }: Props) {
   const {
     monsterId,
-    attackIds,
-    abilityIds,
+    attacks,
+    abilities,
     loading,
     error,
     createBaseMonster,
@@ -31,9 +35,10 @@ function MasterMonsterWizard({ onCancel, onDone }: Props) {
 
   const canGoAttacks = useMemo(() => !!monsterId, [monsterId])
   const canFinalize = useMemo(
-    () => !!monsterId && (attackIds.length > 0 || abilityIds.length > 0),
-    [monsterId, attackIds.length, abilityIds.length]
+    () => !!monsterId && (attacks.length > 0 || abilities.length > 0),
+    [monsterId, attacks.length, abilities.length]
   )
+
 
   async function handleCreateMonster(payload: CreateMonsterPayload) {
     await createBaseMonster(payload)
@@ -98,7 +103,7 @@ function MasterMonsterWizard({ onCancel, onDone }: Props) {
           onClick={() => setStep(2)}
           disabled={!canGoAttacks || loading}
         >
-          Ataques ({attackIds.length})
+          Ataques ({attacks.length})
         </button>
 
         <button
@@ -106,7 +111,7 @@ function MasterMonsterWizard({ onCancel, onDone }: Props) {
           onClick={() => setStep(3)}
           disabled={!canGoAttacks || loading}
         >
-          Habilidades ({abilityIds.length})
+          Habilidades ({abilities.length})
         </button>
 
         <button
@@ -120,121 +125,77 @@ function MasterMonsterWizard({ onCancel, onDone }: Props) {
 
       <div className="master-wizard-body">
         {step === 1 && (
-          <div className="master-wizard-panel">
-            <div className="master-empty">
-              Aqui entra o formulário do monstro (POST /monsters).
-            </div>
-
-            <button
-              className="master-wizard-btn primary"
-              disabled={loading}
-              onClick={() =>
-                handleCreateMonster({
-                  name: 'Novo Monstro',
-                  description: '...',
-                  base_hp: 10,
-                  base_ac: 10,
-                  base_speed: 6,
-                  actions_per_turn: 1,
-                  xp_reward: 0,
-                  base_str: 1,
-                  base_dex: 1,
-                  base_con: 1,
-                  base_wis: 1,
-                  base_int: 1,
-                  weakness_damage_type_id: 1,
-                  element_types: [1]
-                })
-              }
-            >
-              Criar (teste)
-            </button>
-          </div>
+          <MonsterBaseForm
+            loading={loading}
+            onSubmit={handleCreateMonster}
+          />
         )}
 
-        {step === 2 && (
-          <div className="master-wizard-panel">
-            <div className="master-empty">
-              Aqui entra o form de ataque + lista de ataques criados.
-            </div>
 
-            <button
-              className="master-wizard-btn primary"
-              disabled={loading || !monsterId}
-              onClick={() =>
-                handleAddAttack({
-                  name: 'Ataque Teste',
-                  description: '...',
-                  dice_formula: '1d4',
-                  base_damage: 1,
-                  bonus_accuracy: 0,
-                  attack_range: 1,
-                  weapon_damage_type_id: 1,
-                  element_types: [1]
-                })
-              }
-            >
-              Adicionar ataque (teste)
-            </button>
+        {step === 2 && (
+          <>
+            <MonsterAttackForm
+              loading={loading}
+              onSubmit={handleAddAttack}
+            />
+
+            <MonsterCreatedList
+              title="Ataques"
+              items={attacks}
+            />
 
             <button
               className="master-wizard-btn ghost"
-              disabled={loading || !monsterId}
+              disabled={loading}
               onClick={() => setStep(3)}
             >
               Próximo
             </button>
-          </div>
+          </>
         )}
 
-        {step === 3 && (
-          <div className="master-wizard-panel">
-            <div className="master-empty">
-              Aqui entra o form de habilidade + lista de habilidades criadas.
-            </div>
 
-            <button
-              className="master-wizard-btn primary"
-              disabled={loading || !monsterId}
-              onClick={() =>
-                handleAddAbility({
-                  title: 'Habilidade Teste',
-                  description: '...',
-                  dice_formula: '1d6',
-                  base_damage: 1,
-                  bonus_damage: 0,
-                  bonus_speed: 0,
-                  ability_range: 1,
-                  element_types: [1]
-                })
-              }
-            >
-              Adicionar habilidade (teste)
-            </button>
+        {step === 3 && (
+          <>
+            <MonsterAbilityForm
+              loading={loading}
+              onSubmit={handleAddAbility}
+            />
+
+            <MonsterCreatedList
+              title="Habilidades"
+              items={abilities}
+            />
 
             <button
               className="master-wizard-btn ghost"
-              disabled={loading || !monsterId}
+              disabled={loading}
               onClick={() => setStep(4)}
             >
               Próximo
             </button>
-          </div>
+          </>
         )}
+
 
         {step === 4 && (
           <div className="master-wizard-panel">
             <div className="master-wizard-summary">
               <div><strong>Monstro:</strong> {monsterId ?? '-'}</div>
-              <div><strong>Ataques:</strong> {attackIds.length}</div>
-              <div><strong>Habilidades:</strong> {abilityIds.length}</div>
+              <div><strong>Ataques:</strong> {attacks.length}</div>
+              <div><strong>Habilidades:</strong> {abilities.length}</div>
             </div>
 
-            <button className="master-wizard-btn primary" disabled={loading || !canFinalize} onClick={handleFinalize}>
+            <button
+              className="master-wizard-btn primary"
+              disabled={loading || !canFinalize}
+              onClick={handleFinalize}
+            >
               Finalizar e vincular
             </button>
           </div>
         )}
+
       </div>
     </section>
   )
