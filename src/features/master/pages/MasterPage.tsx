@@ -7,17 +7,32 @@ import MasterElementTools from '../components/MasterElementTools'
 import ElementDamageCalculator from '../components/ElementDamageCalculator'
 import DiscoverElementRelations from '../components/DiscoverElementRelations'
 import DiscoverElementAttackRelations from '../components/DiscoverElementAttackRelations'
+import MasterCharacterTools from '../components/MasterCharacterTools'
+import MasterGiveGold from '../components/MasterGiveGold'
+import MasterGiveXP from '../components/MasterGiveXP'
+import MasterGiveItem from '../components/MasterGiveItem'
 import '../master.css'
 
-type ActiveSection = 'monsters' | 'elements' | null
+type ActiveSection = 'monsters' | 'elements' | 'characters' | null
 type ElementTool = 'damage' | 'weakness' | 'attack' | null
+type CharacterTool = 'sheet' | 'gold' | 'xp' | 'item' | null
 
 function MasterPage() {
   const [collapsed, setCollapsed] = useState(false)
   const [activeSection, setActiveSection] = useState<ActiveSection>(null)
-  const [activeElementTool, setActiveElementTool] = useState<ElementTool>(null)
 
-  const [selectedMonsterId, setSelectedMonsterId] = useState<number | null>(null)
+  const [activeElementTool, setActiveElementTool] =
+    useState<ElementTool>(null)
+
+  const [activeCharacterTool, setActiveCharacterTool] =
+    useState<CharacterTool>(null)
+
+  const [selectedMonsterId, setSelectedMonsterId] =
+    useState<number | null>(null)
+
+  const [selectedCharacterId, setSelectedCharacterId] =
+    useState<number | null>(null)
+
   const [mode, setMode] = useState<'sheet' | 'create'>('sheet')
 
   return (
@@ -29,7 +44,9 @@ function MasterPage() {
           setActiveSection(section)
           setMode('sheet')
           setSelectedMonsterId(null)
+          setSelectedCharacterId(null)
           setActiveElementTool(null)
+          setActiveCharacterTool(null)
         }}
       />
 
@@ -56,6 +73,13 @@ function MasterPage() {
         />
       )}
 
+      {activeSection === 'characters' && (
+        <MasterCharacterTools
+          activeTool={activeCharacterTool}
+          onSelectTool={setActiveCharacterTool}
+        />
+      )}
+
       {/* ============== CONTEÚDO CENTRAL ============== */}
 
       <main className="master-content">
@@ -63,6 +87,26 @@ function MasterPage() {
           <div className="master-placeholder">
             Selecione uma opção no menu do mestre
           </div>
+        )}
+
+        {/* ================= PERSONAGENS ================= */}
+
+        {activeSection === 'characters' && !activeCharacterTool && (
+          <div className="master-placeholder">
+            Selecione uma ação para personagens
+          </div>
+        )}
+
+        {activeSection === 'characters' && activeCharacterTool === 'gold' && (
+          <MasterGiveGold />
+        )}
+
+        {activeSection === 'characters' && activeCharacterTool === 'xp' && (
+          <MasterGiveXP />
+        )}
+
+        {activeSection === 'characters' && activeCharacterTool === 'item' && (
+          <MasterGiveItem />
         )}
 
         {/* ================= MONSTROS ================= */}
