@@ -1,12 +1,15 @@
 import { useCallback, useState } from 'react'
 import { discoverElementRelations } from '../element.service'
-import type { ElementRelation } from '../elements.types'
+import type {
+  ElementRelation,
+  GroupedElementRelations
+} from '../elements.types'
 import { groupRelationsByMultiplier } from './groupRelationsByMultiplier'
 
 export function useDiscoverElementRelations() {
   const [selectedElements, setSelectedElements] = useState<number[]>([])
   const [immune, setImmune] = useState<ElementRelation[]>([])
-  const [groups, setGroups] = useState<any[]>([])
+  const [groups, setGroups] = useState<GroupedElementRelations[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 

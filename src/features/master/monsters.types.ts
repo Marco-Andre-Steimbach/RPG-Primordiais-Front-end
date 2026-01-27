@@ -43,9 +43,10 @@ export type MonsterStats = {
     xp_reward: number
     stats: MonsterStats
     element_types: number[]
+    weakness_damage_type_id: number | null
     attacks: MonsterAttack[]
     abilities: MonsterAbility[]
-  }
+  }  
   
   export type MonsterByIdResponse = {
     monster: MonsterFull

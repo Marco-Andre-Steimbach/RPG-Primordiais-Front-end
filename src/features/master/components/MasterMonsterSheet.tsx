@@ -10,10 +10,9 @@ type Props = {
 }
 
 function MasterMonsterSheet({ monsterId }: Props) {
-    const { elementMap, loading: elementsLoading } = useElementMap()
-    const { weaponDamageTypeMap, loading: weaponTypesLoading } = useWeaponDamageTypeMap()
-
-
+    const { elementMap } = useElementMap()
+    const { weaponDamageTypeMap } = useWeaponDamageTypeMap()
+    
     const [monster, setMonster] = useState<MonsterFull | null>(null)
     const [loading, setLoading] = useState(true)
 

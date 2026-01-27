@@ -43,8 +43,11 @@ export type CreateMonsterAttackResponse = {
     message: string
     attack: {
         id: number
+        name: string
     }
 }
+
+
 export type CreateMonsterAbilityPayload = {
     title: string
     description: string
@@ -62,8 +65,10 @@ export type CreateMonsterAbilityResponse = {
     message: string
     ability: {
         id: number
+        title: string
     }
 }
+
 export type LinkMonsterAttacksPayload = {
     attack_ids: number[]
 }
