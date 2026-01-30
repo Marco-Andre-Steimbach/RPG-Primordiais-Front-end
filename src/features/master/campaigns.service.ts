@@ -5,7 +5,9 @@ import type {
     GiveItemToCharacterResponse,
     FetchCampaignCharacterInfosResponse,
     GiveWeaponToCharacterPayload,
-    GiveWeaponToCharacterResponse
+    GiveWeaponToCharacterResponse,
+    GiveArmorToCharacterPayload,
+    GiveArmorToCharacterResponse
 } from './campaigns.types'
 
 export function fetchCampaignById(
@@ -42,6 +44,19 @@ export function giveWeaponToCharacter(
 ): Promise<GiveWeaponToCharacterResponse> {
     return apiFetch<GiveWeaponToCharacterResponse>(
         `/campaign/${campaignCharacterId}/weapon`,
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
+    )
+}
+
+export function giveArmorToCharacter(
+    campaignCharacterId: number,
+    payload: GiveArmorToCharacterPayload
+): Promise<GiveArmorToCharacterResponse> {
+    return apiFetch<GiveArmorToCharacterResponse>(
+        `/campaign/${campaignCharacterId}/armor`,
         {
             method: 'POST',
             body: JSON.stringify(payload)

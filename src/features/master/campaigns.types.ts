@@ -69,3 +69,12 @@ export type GiveWeaponToCharacterPayload = {
 export type GiveWeaponToCharacterResponse = {
     message: string
 }
+
+export type GiveArmorToCharacterPayload = {
+    armor_item_id: number
+    equip: boolean
+}
+
+export type GiveArmorToCharacterResponse = {
+    success: true
+}
