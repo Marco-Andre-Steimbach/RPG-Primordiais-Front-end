@@ -59,3 +59,13 @@ export type CampaignCharacterInfos = {
 export type FetchCampaignCharacterInfosResponse = {
     infos: CampaignCharacterInfos
 }
+
+export type GiveWeaponToCharacterPayload = {
+    weapon_id: number
+    equip: boolean
+    deactivate_weapon_id?: number | null
+}
+
+export type GiveWeaponToCharacterResponse = {
+    message: string
+}

@@ -1454,3 +1454,254 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
+.master-item-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.master-item-meta span {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.master-item-body {
+  padding-top: 10px;
+}
+
+.master-item-description {
+  margin-bottom: 8px;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.master-item-card {
+  transition: background 0.2s ease;
+}
+
+.master-item-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.master-item-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.master-item-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.master-item-btn.give {
+  background: #1f8f5f;
+}
+
+.master-item-btn.buy {
+  background: #b84242;
+}
+
+.master-item-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.master-item-header strong {
+  display: block;
+  line-height: 1.3;
+}
+
+.master-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.master-modal {
+  width: 520px;
+  max-width: 90%;
+  background: linear-gradient(180deg, #111827, #0b1020);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+.master-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 20, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.master-modal {
+  width: 100%;
+  max-width: 520px;
+  background: linear-gradient(160deg, #0e1730, #0a1022);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  color: #e6e8ef;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.master-modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.master-modal-sub {
+  font-size: 14px;
+  color: #b8c0ff;
+}
+
+.master-modal-error {
+  background: rgba(255, 70, 70, 0.15);
+  border: 1px solid rgba(255, 70, 70, 0.4);
+  color: #ff9a9a;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.master-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.master-modal-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.master-modal-item:hover {
+  background: rgba(120, 140, 255, 0.12);
+  border-color: rgba(120, 140, 255, 0.4);
+}
+
+.master-modal-item strong {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.master-modal-item span {
+  font-size: 12px;
+  color: #aab2ff;
+}
+
+.master-modal-gold {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #ffd36b;
+}
+
+.master-modal-selected {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.master-modal-deactivate {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.master-modal-deactivate p {
+  font-size: 13px;
+  color: #cdd4ff;
+}
+
+.deactivate-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #e6e8ef;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.deactivate-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.deactivate-btn.active {
+  background: rgba(255, 120, 120, 0.18);
+  border-color: rgba(255, 120, 120, 0.6);
+  color: #ffd0d0;
+}
+
+.master-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.master-modal-confirm {
+  background: linear-gradient(135deg, #3cff7a, #2fd068);
+  color: #0b1a10;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+.master-modal-confirm:hover {
+  filter: brightness(1.1);
+}
+
+.master-modal-confirm:active {
+  transform: scale(0.97);
+}
+
+.master-modal-confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.master-modal-close {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.master-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

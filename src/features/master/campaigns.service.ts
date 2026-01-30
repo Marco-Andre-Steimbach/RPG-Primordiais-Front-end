@@ -3,7 +3,9 @@ import type {
     FetchCampaignResponse,
     GiveItemToCharacterPayload,
     GiveItemToCharacterResponse,
-    FetchCampaignCharacterInfosResponse
+    FetchCampaignCharacterInfosResponse,
+    GiveWeaponToCharacterPayload,
+    GiveWeaponToCharacterResponse
 } from './campaigns.types'
 
 export function fetchCampaignById(
@@ -31,5 +33,18 @@ export function fetchCampaignCharacterInfos(
 ): Promise<FetchCampaignCharacterInfosResponse> {
     return apiFetch<FetchCampaignCharacterInfosResponse>(
         `/campaign/${campaignId}/character/${characterId}/info`
+    )
+}
+
+export function giveWeaponToCharacter(
+    campaignCharacterId: number,
+    payload: GiveWeaponToCharacterPayload
+): Promise<GiveWeaponToCharacterResponse> {
+    return apiFetch<GiveWeaponToCharacterResponse>(
+        `/campaign/${campaignCharacterId}/weapon`,
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
     )
 }

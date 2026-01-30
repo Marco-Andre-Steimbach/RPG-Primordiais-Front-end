@@ -11,11 +11,13 @@ import MasterCharacterTools from '../components/MasterCharacterTools'
 import MasterGiveGold from '../components/MasterGiveGold'
 import MasterGiveXP from '../components/MasterGiveXP'
 import MasterGiveItem from '../components/MasterGiveItem'
+import MasterGiveWeapon from '../components/MasterGiveWeapon'
+import MasterGiveArmor from '../components/MasterGiveArmor'
 import '../master.css'
 
 type ActiveSection = 'monsters' | 'elements' | 'characters' | null
 type ElementTool = 'damage' | 'weakness' | 'attack' | null
-type CharacterTool = 'sheet' | 'gold' | 'xp' | 'item' | null
+type CharacterTool = 'sheet' | 'gold' | 'xp' | 'item' | 'weapon' | 'armor' | null
 
 function MasterPage() {
   const [collapsed, setCollapsed] = useState(false)
@@ -107,6 +109,14 @@ function MasterPage() {
 
         {activeSection === 'characters' && activeCharacterTool === 'item' && (
           <MasterGiveItem />
+        )}
+
+        {activeSection === 'characters' && activeCharacterTool === 'weapon' && (
+          <MasterGiveWeapon />
+        )}
+
+        {activeSection === 'characters' && activeCharacterTool === 'armor' && (
+          <MasterGiveArmor />
         )}
 
         {/* ================= MONSTROS ================= */}
