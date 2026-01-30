@@ -32,8 +32,6 @@ function MasterPage() {
   const [selectedMonsterId, setSelectedMonsterId] =
     useState<number | null>(null)
 
-  const [selectedCharacterId, setSelectedCharacterId] =
-    useState<number | null>(null)
 
   const [mode, setMode] = useState<'sheet' | 'create'>('sheet')
 
@@ -46,7 +44,6 @@ function MasterPage() {
           setActiveSection(section)
           setMode('sheet')
           setSelectedMonsterId(null)
-          setSelectedCharacterId(null)
           setActiveElementTool(null)
           setActiveCharacterTool(null)
         }}
