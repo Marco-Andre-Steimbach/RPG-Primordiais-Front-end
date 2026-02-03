@@ -1705,3 +1705,250 @@
 .master-modal-close:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+
+/* ===============================
+   FORM PADRÃO (inputs antigos)
+   usa seu visual do master-field
+================================ */
+
+.master-form-title{
+  grid-column: 1 / -1;
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: rgba(255,255,255,.92);
+}
+
+.master-input,
+.master-textarea{
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 0.92rem;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  box-sizing: border-box;
+}
+
+.master-textarea{
+  resize: vertical;
+  min-height: 86px;
+  line-height: 1.45;
+}
+
+.master-input:focus,
+.master-textarea:focus{
+  outline: none;
+  border-color: rgba(31, 60, 136, 0.7);
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.master-input::placeholder,
+.master-textarea::placeholder{
+  color: rgba(255,255,255,.45);
+  font-weight: 600;
+}
+
+/* título + descrição ocupam a linha toda */
+.master-form > .master-form-title{
+  grid-column: 1 / -1;
+}
+
+.master-form > .master-textarea{
+  grid-column: 1 / -1;
+}
+
+/* fórmula de dado e checkbox ficam alinhados */
+.master-form > .master-input:nth-of-type(2){
+  grid-column: 1 / -1;
+}
+
+/* ===============================
+   GRID NUMÉRICO MAIS BONITO
+================================ */
+
+.master-form-grid{
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.master-form-grid .master-input{
+  padding: 9px 10px;
+}
+
+.master-form-grid .master-input[type="number"]{
+  max-width: none;
+}
+
+/* remove spinner */
+.master-input::-webkit-outer-spin-button,
+.master-input::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.master-input[type=number]{
+  -moz-appearance: textfield;
+}
+
+/* ===============================
+   CHECKBOX PADRÃO
+================================ */
+
+.master-checkbox{
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,.9);
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+.master-checkbox input{
+  width: 16px;
+  height: 16px;
+  accent-color: rgba(31, 60, 136, 0.95);
+}
+
+/* usos máximos e override ficam lado a lado quando possível */
+.master-form > .master-input[type="number"]:last-of-type{
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 980px){
+  .master-form > .master-input[type="number"]{
+    grid-column: span 1;
+  }
+
+  /* quando renderiza maxUses (fica antes do override), deixa 2 colunas */
+  .master-form > .master-input[type="number"]{
+    max-width: none;
+  }
+}
+
+/* ===============================
+   LISTA "Nenhuma habilidade..." e área de ações
+================================ */
+
+.master-form-empty{
+  grid-column: 1 / -1;
+  color: var(--color-text-muted);
+  background: rgba(0,0,0,.18);
+  border: 1px dashed rgba(255,255,255,.12);
+  padding: 12px;
+  border-radius: var(--radius-md);
+}
+
+/* botão do form ocupar a largura certa e ficar alinhado */
+.master-form button.master-wizard-btn{
+  grid-column: 1 / -1;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.master-field{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.master-field label{
+  font-size: .75rem;
+  font-weight: 800;
+  color: rgba(255,255,255,.75);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.master-field small{
+  font-size: .7rem;
+  color: rgba(255,255,255,.45);
+}
+
+/* ===============================
+   ELEMENTOS – ITEM FORM
+================================ */
+
+.master-form-section {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.master-form-subtitle {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* grid dos elementos */
+.master-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 8px;
+}
+
+/* chip base */
+.master-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 8px 10px;
+
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  text-align: center;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+/* hover */
+.master-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ativo */
+.master-chip.active {
+  background: rgba(31, 60, 136, 0.45);
+  border-color: rgba(31, 60, 136, 0.8);
+  box-shadow:
+    inset 0 0 0 1px rgba(31, 60, 136, 0.45),
+    0 4px 14px rgba(31, 60, 136, 0.35);
+  color: #ffffff;
+}
+
+/* desabilitado (enquanto carrega) */
+.master-chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

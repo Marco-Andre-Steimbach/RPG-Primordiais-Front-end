@@ -13,11 +13,14 @@ import MasterGiveXP from '../components/MasterGiveXP'
 import MasterGiveItem from '../components/MasterGiveItem'
 import MasterGiveWeapon from '../components/MasterGiveWeapon'
 import MasterGiveArmor from '../components/MasterGiveArmor'
+import MasterItemTools from '../components/MasterItemTools'
+import MasterItemWizard from '../components/MasterItemWizard'
 import '../master.css'
 
-type ActiveSection = 'monsters' | 'elements' | 'characters' | null
+type ActiveSection = 'monsters' | 'elements' | 'characters' | 'items' | null
 type ElementTool = 'damage' | 'weakness' | 'attack' | null
 type CharacterTool = 'sheet' | 'gold' | 'xp' | 'item' | 'weapon' | 'armor' | null
+type ItemTool = 'item' | 'weapon' | 'armor' | null
 
 function MasterPage() {
   const [collapsed, setCollapsed] = useState(false)
@@ -31,6 +34,9 @@ function MasterPage() {
 
   const [selectedMonsterId, setSelectedMonsterId] =
     useState<number | null>(null)
+
+  const [activeItemTool, setActiveItemTool] =
+    useState<ItemTool>(null)
 
 
   const [mode, setMode] = useState<'sheet' | 'create'>('sheet')
@@ -46,6 +52,7 @@ function MasterPage() {
           setSelectedMonsterId(null)
           setActiveElementTool(null)
           setActiveCharacterTool(null)
+          setActiveItemTool(null)
         }}
       />
 
@@ -78,6 +85,14 @@ function MasterPage() {
           onSelectTool={setActiveCharacterTool}
         />
       )}
+
+      {activeSection === 'items' && (
+        <MasterItemTools
+          activeTool={activeItemTool}
+          onSelectTool={setActiveItemTool}
+        />
+      )}
+
 
       {/* ============== CONTEÚDO CENTRAL ============== */}
 
@@ -157,6 +172,36 @@ function MasterPage() {
         {activeSection === 'elements' && activeElementTool === 'attack' && (
           <DiscoverElementAttackRelations />
         )}
+
+        {/* ================= ITEMS ================= */}
+
+        {activeSection === 'items' && !activeItemTool && (
+          <div className="master-placeholder">
+            Selecione uma ação de itens
+          </div>
+        )}
+
+        {activeSection === 'items' && activeItemTool === 'item' && (
+          <MasterItemWizard
+            onCancel={() => setActiveItemTool(null)}
+            onDone={() => setActiveItemTool(null)}
+          />
+        )}
+
+        {activeSection === 'items' && activeItemTool === 'weapon' && (
+          <div className="master-placeholder">
+            Criar Arma (em breve)
+          </div>
+        )}
+
+        {activeSection === 'items' && activeItemTool === 'armor' && (
+          <div className="master-placeholder">
+            Criar Armadura (em breve)
+          </div>
+        )}
+
+
+
       </main>
     </div>
   )

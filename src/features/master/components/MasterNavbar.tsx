@@ -1,7 +1,7 @@
 type Props = {
   collapsed: boolean
   onToggle: () => void
-  onSelect: (section: 'monsters' | 'elements' | 'characters') => void
+  onSelect: (section: 'monsters' | 'elements' | 'characters' | 'items') => void
 }
 
 function MasterNavbar({ collapsed, onToggle, onSelect }: Props) {
@@ -40,7 +40,10 @@ function MasterNavbar({ collapsed, onToggle, onSelect }: Props) {
           <span className="master-navbar-item-text">Elementos</span>
         </button>
 
-        <button className="master-navbar-item">
+        <button
+          className="master-navbar-item"
+          onClick={() => onSelect('items')}
+        >
           <span className="master-navbar-item-text">Itens</span>
         </button>
       </nav>
