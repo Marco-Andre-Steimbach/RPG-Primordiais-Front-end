@@ -15,6 +15,8 @@ import MasterGiveWeapon from '../components/MasterGiveWeapon'
 import MasterGiveArmor from '../components/MasterGiveArmor'
 import MasterItemTools from '../components/MasterItemTools'
 import MasterItemWizard from '../components/MasterItemWizard'
+import MasterWeaponWizard from '../components/MasterWeaponWizard'
+
 import '../master.css'
 
 type ActiveSection = 'monsters' | 'elements' | 'characters' | 'items' | null
@@ -189,9 +191,9 @@ function MasterPage() {
         )}
 
         {activeSection === 'items' && activeItemTool === 'weapon' && (
-          <div className="master-placeholder">
-            Criar Arma (em breve)
-          </div>
+          <MasterWeaponWizard
+            onCancel={() => setActiveItemTool(null)}
+          />
         )}
 
         {activeSection === 'items' && activeItemTool === 'armor' && (

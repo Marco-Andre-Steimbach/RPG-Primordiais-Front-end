@@ -38,12 +38,6 @@ function ItemAbilityForm({ loading, onSubmit }: Props) {
             override_element_type_id: 1
         }
 
-        console.log('PAYLOAD ENVIADO:', payload)
-        console.log('TIPO is_consumable:', typeof payload.is_consumable)
-        console.log('VALOR is_consumable:', payload.is_consumable)
-        console.log('TIPO max_uses:', typeof payload.max_uses)
-        console.log('VALOR max_uses:', payload.max_uses)
-
         await onSubmit(payload)
 
         setTitle('')
