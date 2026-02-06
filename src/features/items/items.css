@@ -192,3 +192,33 @@
   grid-template-columns: 110px 1fr;
   gap: 8px;
 }
+
+.item-ability-description,
+.item-card-expanded p {
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.item-ability-title,
+.item-name {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.item-ability-description {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.item-card-expanded p {
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.item-ability-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}

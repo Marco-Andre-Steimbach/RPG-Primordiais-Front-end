@@ -1,3 +1,4 @@
+// LupidaPage.tsx
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
@@ -94,27 +95,10 @@ function LupidaPage() {
         })
     }, [campaignId, characterId])
 
-    useEffect(() => {
-        const blockBack = () => {
-            navigate(`/campaigns/${campaignId}`, { replace: true })
-        }
-
-        window.addEventListener('popstate', blockBack)
-
-        return () => {
-            window.removeEventListener('popstate', blockBack)
-        }
-    }, [campaignId, navigate])
-
-    // =========================
-    // 🔹 ADIÇÃO: refresh infos
-    // =========================
     async function refreshCharacterInfos() {
         if (!campaignId || !characterId) return
-
         const infoRes = await fetchCharacterSheetInfo(campaignId, characterId)
         const infos = infoRes?.infos
-
         if (!infos) return
 
         setGold(infos.gold)
@@ -226,18 +210,16 @@ function LupidaPage() {
         setGold(v => v - totalCost)
 
         setItems(v =>
-            v.map(i =>
-                i.item_id === item.item_id
-                    ? { ...i, quantity: i.quantity - quantity }
-                    : i
-            ).filter(i => i.quantity > 0)
+            v
+                .map(i =>
+                    i.item_id === item.item_id
+                        ? { ...i, quantity: i.quantity - quantity }
+                        : i
+                )
+                .filter(i => i.quantity > 0)
         )
 
         await refreshCharacterInfos()
-    }
-
-    function handleCloseLupida() {
-        navigate(`/campaigns/${campaignId}`, { replace: true })
     }
 
     if (loading) {
@@ -272,6 +254,7 @@ function LupidaPage() {
                             key={armor.armor_id}
                             armor={armor}
                             onBuy={tryBuyArmor}
+                            canBuy={gold >= armor.value}
                         />
                     ))}
 
@@ -281,6 +264,7 @@ function LupidaPage() {
                             key={weapon.id}
                             weapon={weapon}
                             onBuy={tryBuyWeapon}
+                            canBuy={gold >= weapon.value}
                         />
                     ))}
 
@@ -289,13 +273,17 @@ function LupidaPage() {
                         <LupidaItemCard
                             key={item.item_id}
                             item={item}
+                            gold={gold}
                             onBuy={buyItem}
+                            canBuy={gold >= item.value}
                         />
                     ))}
             </div>
 
             <footer className="lupida-footer">
-                <button onClick={handleCloseLupida}>Sair da Lúpida</button>
+                <button onClick={() => navigate(`/campaigns/${campaignId}`, { replace: true })}>
+                    Sair da Lúpida
+                </button>
             </footer>
 
             {armorModalOpen && pendingArmor && (
