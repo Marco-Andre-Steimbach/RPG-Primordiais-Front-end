@@ -5,8 +5,7 @@ import {
 } from '../items.service'
 import type {
   CreateItemPayload,
-  CreateItemAbilityPayload,
-  ItemAbility
+  CreateItemAbilityPayload
 } from '../items.types'
 
 type CreatedAbilityRef = {
@@ -16,7 +15,6 @@ type CreatedAbilityRef = {
 
 export function useItemCreation() {
   const [itemId, setItemId] = useState<number | null>(null)
-
   const [abilities, setAbilities] = useState<CreatedAbilityRef[]>([])
 
   const [loading, setLoading] = useState(false)
