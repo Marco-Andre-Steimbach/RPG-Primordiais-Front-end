@@ -271,3 +271,16 @@ export function useCampaignCharacterItem(payload: {
 export function fetchMyCampaigns() {
     return apiFetch<CampaignsResponse>('/campaign/my')
 }
+
+export function confirmCampaignCharacterLevelUp(
+    payload: CampaignCharacterLevelUpPayload
+) {
+    return apiFetch<CampaignCharacterLevelUpResponse>(
+        '/campaign/characters/confirm-level-up',
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
+    )
+}
+

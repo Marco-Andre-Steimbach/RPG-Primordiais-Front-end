@@ -456,6 +456,7 @@ export type FullCharacterSheet = {
     abilities: CampaignCharacterAbility[]
     progression: {
         level: number
+        pending_level_ups: number
         gold: number
         xp: {
             current: number

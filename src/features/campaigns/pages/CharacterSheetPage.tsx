@@ -91,7 +91,7 @@ function CharacterSheetPage() {
   }, [campaignId, characterId])
 
   useEffect(() => {
-    if (!campaign || !infos) return
+    if (!campaign || !infos || !sheet) return
 
     const character = campaign.characters.find(
       c => c.character_id === Number(characterId)
@@ -102,6 +102,15 @@ function CharacterSheetPage() {
     const level = character.level
     const expectedPerks = level
     const expectedAbilities = calculateExpectedAbilities(level)
+
+    if (sheet.progression.pending_level_ups > 0) {
+      setModal({
+        title: 'Atributo para evoluir',
+        message: `Este personagem possui ${sheet.progression.pending_level_ups} ponto(s) de atributo pendente(s). Você precisa distribuí-los antes de continuar.`,
+        redirect: `/campaigns/${campaignId}`
+      })
+      return
+    }
 
     if (infos.perks < expectedPerks) {
       setModal({
@@ -118,8 +127,11 @@ function CharacterSheetPage() {
         message: `Este personagem possui ${infos.abilities} habilidades, mas deveria possuir ${expectedAbilities}. Você precisa escolher ${expectedAbilities - infos.abilities} habilidade(s) antes de continuar.`,
         redirect: `/campaign/${campaignId}/characters/${characterId}/abilities`
       })
+      return
     }
-  }, [campaign, infos, campaignId, characterId])
+
+    setModal(null)
+  }, [campaign, infos, sheet, campaignId, characterId])
 
   const elementsMap = useMemo(() => {
     const map = new Map<number, Element>()
@@ -198,6 +210,7 @@ function CharacterSheetPage() {
         xpCurrent={sheet.progression.xp.current}
         xpRequired={sheet.progression.xp.required_for_next_level}
         xpRemaining={sheet.progression.xp.to_next_level}
+        pendingLevelUps={sheet.progression.pending_level_ups}
       />
 
       <CardInfosGameplay
@@ -244,7 +257,6 @@ function CharacterSheetPage() {
         elementsMap={elementsMap}
         campaignCharacterId={sheet.base.campaign_character_id}
       />
-
     </div>
   )
 }

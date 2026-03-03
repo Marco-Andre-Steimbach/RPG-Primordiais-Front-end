@@ -16,6 +16,7 @@ import MasterGiveArmor from '../components/MasterGiveArmor'
 import MasterItemTools from '../components/MasterItemTools'
 import MasterItemWizard from '../components/MasterItemWizard'
 import MasterWeaponWizard from '../components/MasterWeaponWizard'
+import MasterArmorWizard from '../components/MasterArmorWizard'
 
 import '../master.css'
 
@@ -197,12 +198,10 @@ function MasterPage() {
         )}
 
         {activeSection === 'items' && activeItemTool === 'armor' && (
-          <div className="master-placeholder">
-            Criar Armadura (em breve)
-          </div>
+          <MasterArmorWizard
+            onCancel={() => setActiveItemTool(null)}
+          />
         )}
-
-
 
       </main>
     </div>
