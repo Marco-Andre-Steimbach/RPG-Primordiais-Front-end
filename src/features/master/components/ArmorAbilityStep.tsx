@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import type { ReturnType } from 'react'
 import { useArmorCreation } from '../hooks/useArmorCreation'
 import ArmorAbilityForm from './ArmorAbilityForm'
 import ArmorAbilitySelect from './ArmorAbilitySelect'
@@ -24,18 +23,15 @@ function ArmorAbilityStep({
 
   return (
     <div className="master-form">
-
       <h3 className="master-form-title">
         Habilidades da armadura
       </h3>
 
-      {/* AQUI ESTÁ O DROPDOWN */}
       <ArmorAbilitySelect
         armor={armor}
         disabled={loading}
       />
 
-      {/* Criar nova habilidade */}
       <div style={{ marginTop: 24 }}>
         {!showCreate ? (
           <button
@@ -62,7 +58,6 @@ function ArmorAbilityStep({
           Ir para criação da armadura
         </button>
       </div>
-
     </div>
   )
 }
