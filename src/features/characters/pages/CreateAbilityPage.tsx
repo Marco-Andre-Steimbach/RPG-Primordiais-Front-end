@@ -25,6 +25,7 @@ function CreateAbilityPage() {
     dice_formula: '',
     base_damage: '',
     bonus_speed: '',
+    range: '',
     element_types: [] as number[]
   })
 
@@ -71,6 +72,7 @@ function CreateAbilityPage() {
       dice_formula: form.dice_formula,
       base_damage: Number(form.base_damage),
       bonus_speed: Number(form.bonus_speed),
+      range: Number(form.range),
       element_types: form.element_types,
       required_race_id: character.character.race_id,
       required_order_id: character.character.order_id
@@ -80,7 +82,6 @@ function CreateAbilityPage() {
 
     navigate(`/characters/${id}`)
   }
-
 
   if (!character) return null
 
@@ -156,6 +157,14 @@ function CreateAbilityPage() {
           type="number"
           name="bonus_speed"
           value={form.bonus_speed}
+          onChange={handleChange}
+        />
+
+        <span className="field-label">Range</span>
+        <input
+          type="number"
+          name="range"
+          value={form.range}
           onChange={handleChange}
         />
       </div>

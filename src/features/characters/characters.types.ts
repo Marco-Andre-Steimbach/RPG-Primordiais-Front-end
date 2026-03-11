@@ -59,6 +59,7 @@ export type Ability = {
   dice_formula: string
   base_damage: number
   bonus_speed: number
+  range: number
   required_race_id: number | null
   required_order_id: number | null
   element_types: ElementType[]
@@ -92,6 +93,7 @@ export type CreateAbilityPayload = {
   dice_formula: string
   base_damage: number
   bonus_speed: number
+  range: number
   element_types: number[]
   required_race_id: number | null
   required_order_id: number | null
