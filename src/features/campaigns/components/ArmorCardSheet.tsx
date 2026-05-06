@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import type { Element } from '../campaigns.types'
+import { removeArmorFromCampaignCharacter } from '../campaigns.service'
 
 const DAMAGE_TYPE_MAP: Record<number, string> = {
     1: 'Cortante',
@@ -11,14 +13,19 @@ type Props = {
     elementsMap: Map<number, Element>
     isOpen: boolean
     onToggle: () => void
+    campaignCharacterId: number
 }
 
 function ArmorCardSheet({
     armor,
     elementsMap,
     isOpen,
-    onToggle
+    onToggle,
+    campaignCharacterId
 }: Props) {
+    const [showConfirm, setShowConfirm] = useState(false)
+    const [loading, setLoading] = useState(false)
+
     const isChest =
         armor.slot.name.toLowerCase() === 'armadura'
 
@@ -30,6 +37,23 @@ function ArmorCardSheet({
     const resolvedElements = armor.elements
         .map((id: number) => elementsMap.get(id))
         .filter(Boolean) as Element[]
+
+    async function handleUnequipArmor() {
+        try {
+            setLoading(true)
+
+            await removeArmorFromCampaignCharacter(
+                campaignCharacterId,
+                {
+                    armor_slot_id: armor.slot.id
+                }
+            )
+
+            window.location.reload()
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <div className="ability-wrapper">
@@ -138,6 +162,52 @@ function ArmorCardSheet({
                             ))}
                         </>
                     )}
+
+                    <div className="armor-divider" />
+
+                    <button
+                        type="button"
+                        className="armor-remove-button"
+                        onClick={() => setShowConfirm(true)}
+                    >
+                        Desequipar armadura
+                    </button>
+                </div>
+            )}
+
+            {showConfirm && (
+                <div className="unequip-modal-backdrop">
+                    <div className="unequip-modal">
+                        <h3>Desequipar armadura?</h3>
+
+                        <p>
+                            Tem certeza que deseja desequipar <strong>{armor.armor.item_name}</strong>?
+                        </p>
+
+                        <p>
+                            Essa ação não poderá ser desfeita.
+                        </p>
+
+                        <div className="unequip-modal-actions">
+                            <button
+                                type="button"
+                                className="secondary"
+                                onClick={() => setShowConfirm(false)}
+                                disabled={loading}
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="button"
+                                className="danger"
+                                onClick={handleUnequipArmor}
+                                disabled={loading}
+                            >
+                                {loading ? 'Desequipando...' : 'Desequipar'}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

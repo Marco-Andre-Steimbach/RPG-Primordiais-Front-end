@@ -2,14 +2,19 @@ import { useState } from 'react'
 import type { Element, SheetArmor } from '../campaigns.types'
 import ArmorCardSheet from './ArmorCardSheet'
 
-
 type Props = {
     baseArmor: number
     armors: SheetArmor[]
     elementsMap: Map<number, Element>
+    campaignCharacterId: number
 }
 
-function CardArmadura({ baseArmor, armors, elementsMap }: Props) {
+function CardArmadura({
+    baseArmor,
+    armors,
+    elementsMap,
+    campaignCharacterId
+}: Props) {
     const [openId, setOpenId] = useState<number | null>(null)
 
     return (
@@ -36,6 +41,7 @@ function CardArmadura({ baseArmor, armors, elementsMap }: Props) {
                     onToggle={() =>
                         setOpenId(openId === index ? null : index)
                     }
+                    campaignCharacterId={campaignCharacterId}
                 />
             ))}
         </div>

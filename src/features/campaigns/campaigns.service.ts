@@ -284,3 +284,17 @@ export function confirmCampaignCharacterLevelUp(
     )
 }
 
+export function removeArmorFromCampaignCharacter(
+    campaignCharacterId: string | number,
+    payload: {
+        armor_slot_id: number
+    }
+) {
+    return apiFetch<CampaignCharacterActionResponse>(
+        `/campaign/${campaignCharacterId}/unequip-armor`,
+        {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }
+    )
+}
