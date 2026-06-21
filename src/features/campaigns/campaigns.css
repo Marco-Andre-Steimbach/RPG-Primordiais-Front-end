@@ -2435,3 +2435,46 @@
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+.collapsible-section {
+    margin-bottom: 16px;
+}
+
+.collapsible-header {
+    width: 100%;
+    padding: 18px 24px;
+    border: none;
+    border-radius: 16px;
+    background: #111827;
+    color: #f5f5f5;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.collapsible-content {
+    margin-top: 12px;
+}
+
+.sheet-search-input {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.9);
+    color: #f8fafc;
+    font-size: 15px;
+    outline: none;
+}
+
+.sheet-search-input::placeholder {
+    color: rgba(248, 250, 252, 0.45);
+}
+
+.sheet-search-input:focus {
+    border-color: rgba(148, 163, 184, 0.7);
+}

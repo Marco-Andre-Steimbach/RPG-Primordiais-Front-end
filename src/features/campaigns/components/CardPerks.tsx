@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Element } from '../campaigns.types'
 
@@ -18,7 +18,18 @@ type Props = {
 
 function CardPerks({ perks, elementsMap }: Props) {
     const [openId, setOpenId] = useState<number | null>(null)
+    const [search, setSearch] = useState('')
     const navigate = useNavigate()
+
+    const filteredPerks = useMemo(() => {
+        const normalizedSearch = search.trim().toLowerCase()
+
+        if (!normalizedSearch) return perks
+
+        return perks.filter(perk =>
+            perk.name.toLowerCase().includes(normalizedSearch)
+        )
+    }, [perks, search])
 
     return (
         <div className="sheet-card">
@@ -26,13 +37,27 @@ function CardPerks({ perks, elementsMap }: Props) {
                 Perks
             </h3>
 
+            <input
+                className="sheet-search-input"
+                type="text"
+                placeholder="Buscar perk..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+            />
+
             {perks.length === 0 && (
                 <span className="empty-text">
                     Nenhum perk adquirido
                 </span>
             )}
 
-            {perks.map((perk, index) => {
+            {perks.length > 0 && filteredPerks.length === 0 && (
+                <span className="empty-text">
+                    Nenhum perk encontrado
+                </span>
+            )}
+
+            {filteredPerks.map(perk => {
                 const resolvedElements = perk.element_types
                     .map(id => elementsMap.get(id))
                     .filter(Boolean) as Element[]
@@ -42,7 +67,7 @@ function CardPerks({ perks, elementsMap }: Props) {
                         <div
                             className="campaign-ability-card"
                             onClick={() =>
-                                setOpenId(openId === index ? null : index)
+                                setOpenId(openId === perk.id ? null : perk.id)
                             }
                         >
                             <span className="campaign-ability-name">
@@ -56,7 +81,7 @@ function CardPerks({ perks, elementsMap }: Props) {
                             </span>
                         </div>
 
-                        {openId === index && (
+                        {openId === perk.id && (
                             <div className="campaign-ability-expanded">
                                 <p className="ability-description">
                                     {perk.description}

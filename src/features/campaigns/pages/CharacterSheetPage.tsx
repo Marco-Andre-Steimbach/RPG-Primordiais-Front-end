@@ -24,6 +24,7 @@ import CardArmas from '../components/CardArmas'
 import CardItens from '../components/CardItens'
 import CardPerks from '../components/CardPerks'
 import CardInfosGerais from '../components/CardInfosGerais'
+import CollapsibleSection from '../components/CollapsibleSection'
 
 import '../campaigns.css'
 
@@ -231,33 +232,43 @@ function CharacterSheetPage() {
                 modifiers={sheet.base.modifiers}
             />
 
-            <CardAbilidades
-                abilities={sheet.abilities}
-                elementsMap={elementsMap}
-            />
+            <CollapsibleSection title="Habilidades">
+                <CardAbilidades
+                    abilities={sheet.abilities}
+                    elementsMap={elementsMap}
+                />
+            </CollapsibleSection>
 
-            <CardPerks
-                perks={sheet.perks}
-                elementsMap={elementsMap}
-            />
+            <CollapsibleSection title="Perks">
+                <CardPerks
+                    perks={sheet.perks}
+                    elementsMap={elementsMap}
+                />
+            </CollapsibleSection>
 
-            <CardArmadura
-                baseArmor={sheet.base.base_ca}
-                armors={sheet.armors}
-                elementsMap={elementsMap}
-                campaignCharacterId={sheet.base.campaign_character_id}
-            />
+            <CollapsibleSection title="Armadura">
+                <CardArmadura
+                    baseArmor={sheet.base.base_ca}
+                    armors={sheet.armors}
+                    elementsMap={elementsMap}
+                    campaignCharacterId={sheet.base.campaign_character_id}
+                />
+            </CollapsibleSection>
 
-            <CardArmas
-                weapons={sheet.weapons}
-                elementsMap={elementsMap}
-            />
+            <CollapsibleSection title="Armas">
+                <CardArmas
+                    weapons={sheet.weapons}
+                    elementsMap={elementsMap}
+                />
+            </CollapsibleSection>
 
-            <CardItens
-                items={sheet.items}
-                elementsMap={elementsMap}
-                campaignCharacterId={sheet.base.campaign_character_id}
-            />
+            <CollapsibleSection title="Itens">
+                <CardItens
+                    items={sheet.items}
+                    elementsMap={elementsMap}
+                    campaignCharacterId={sheet.base.campaign_character_id}
+                />
+            </CollapsibleSection>
         </div>
     )
 }
