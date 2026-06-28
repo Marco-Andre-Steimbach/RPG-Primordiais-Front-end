@@ -20,9 +20,7 @@ export type ElementDamageResponse = {
     base_damage: number
     final_damage: number
     multiplier: number
-    advantages: number
-    disadvantages: number
-    immunity: boolean
+    modifier: number
   }
 }
 

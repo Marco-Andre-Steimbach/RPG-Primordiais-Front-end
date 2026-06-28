@@ -74,10 +74,8 @@ function ElementDamageCalculator() {
           <div className="damage-result">
             <p>Dano Base: {result.base_damage}</p>
             <p>Multiplicador: x{result.multiplier}</p>
+            <p>Modificador: {result.modifier}</p>
             <p>Dano Final: {result.final_damage}</p>
-            <p>Vantagens: {result.advantages}</p>
-            <p>Desvantagens: {result.disadvantages}</p>
-            <p>Imunidade: {result.immunity ? 'Sim' : 'Não'}</p>
           </div>
         )}
       </div>
