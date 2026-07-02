@@ -45,3 +45,12 @@ export type GroupedElementRelations = {
 export type DiscoverAttackRelationsPayload = {
   attack_elements: number[]
 }
+
+export type ElementSummary = {
+  id: number
+  name: string
+}
+
+export type EntityElementsResponse = {
+  elements: ElementSummary[]
+}

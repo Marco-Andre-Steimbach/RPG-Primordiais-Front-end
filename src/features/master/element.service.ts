@@ -3,7 +3,8 @@ import type {
   ElementsResponse,
   ElementDamagePayload,
   ElementDamageResponse,
-  DiscoverRelationsResponse
+  DiscoverRelationsResponse,
+  EntityElementsResponse
 } from './elements.types'
 
 export function fetchElements(): Promise<ElementsResponse> {
@@ -39,4 +40,16 @@ export function discoverElementAttackRelations(
       attack_elements: attackElements
     })
   })
+}
+
+export function fetchMonsterElements(
+  monsterId: number
+): Promise<EntityElementsResponse> {
+  return apiFetch<EntityElementsResponse>(`/elements/monster/${monsterId}`)
+}
+
+export function fetchCharacterElements(
+  characterId: number
+): Promise<EntityElementsResponse> {
+  return apiFetch<EntityElementsResponse>(`/elements/character/${characterId}`)
 }

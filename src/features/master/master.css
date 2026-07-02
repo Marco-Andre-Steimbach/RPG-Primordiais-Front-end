@@ -1952,3 +1952,41 @@
   transform: none;
   box-shadow: none;
 }
+
+.defense-selector-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.defense-selector-card label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--color-text-muted);
+}
+
+.defense-selector-card select {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: 700;
+}
+
+.defense-selector-card select:focus {
+  outline: none;
+  border-color: rgba(31, 60, 136, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.defense-selector-card p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
