@@ -16,11 +16,29 @@ function WeaponCardSheet({
   onToggle
 }: Props) {
   const [item, setItem] = useState<Item | null>(null)
+  const [ammoItem, setAmmoItem] = useState<Item | null>(null)
 
   useEffect(() => {
-    if (!isOpen || item) return
-    fetchItemById(weapon.item_id).then(res => setItem(res.item))
-  }, [isOpen])
+    if (!isOpen) return
+
+    if (!item) {
+      fetchItemById(weapon.item_id).then(res => {
+        setItem(res.item)
+      })
+    }
+
+    if (weapon.ammo_item_id && !ammoItem) {
+      fetchItemById(weapon.ammo_item_id).then(res => {
+        setAmmoItem(res.item)
+      })
+    }
+  }, [
+    isOpen,
+    item,
+    ammoItem,
+    weapon.item_id,
+    weapon.ammo_item_id
+  ])
 
   const resolvedElements = weapon.element_types
     .map(id => elementsMap.get(id))
@@ -28,10 +46,14 @@ function WeaponCardSheet({
 
   return (
     <div className="ability-wrapper">
-      <div className="campaign-ability-card" onClick={onToggle}>
+      <div
+        className="campaign-ability-card"
+        onClick={onToggle}
+      >
         <span className="campaign-ability-name">
           {item?.name ?? weapon.item_name}
         </span>
+
         <span className="campaign-ability-cost">
           {weapon.dice_formula}
         </span>
@@ -68,11 +90,31 @@ function WeaponCardSheet({
                 <strong>{weapon.range} casas</strong>
               </div>
             )}
+
+            {weapon.ammo_item_id && (
+              <div>
+                <span>Munição</span>
+                <strong>
+                  {ammoItem?.name ?? 'Carregando...'}
+                </strong>
+              </div>
+            )}
+
+            {weapon.ammo_item_id &&
+              weapon.ammo_per_use > 0 && (
+                <div>
+                  <span>Consumo</span>
+                  <strong>
+                    {weapon.ammo_per_use} por ataque
+                  </strong>
+                </div>
+              )}
           </div>
 
           {resolvedElements.length > 0 && (
             <>
               <div className="weapon-divider" />
+
               <div className="weapon-elements">
                 {resolvedElements.map(el => (
                   <span
@@ -89,6 +131,7 @@ function WeaponCardSheet({
           {weapon.abilities.length > 0 && (
             <>
               <div className="weapon-divider" />
+
               <h4 className="weapon-section-title">
                 Habilidades
               </h4>
@@ -101,6 +144,7 @@ function WeaponCardSheet({
                   >
                     <div className="weapon-ability-header">
                       <strong>{ab.title}</strong>
+
                       {ab.range > 0 && (
                         <span>
                           Alcance {ab.range}

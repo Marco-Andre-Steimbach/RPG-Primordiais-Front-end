@@ -119,6 +119,7 @@ export type PerkAbility = {
     bonus_accuracy: number
     bonus_damage: number
     bonus_speed: number
+    range: number
     created_at: string
     updated_at: string
 }
@@ -134,10 +135,19 @@ export type Perk = {
     required_level: number
     element_types: number[]
     flags: string[]
-    attributes: any[]
+    attributes: PerkAttribute[]
     ability: PerkAbility[]
+    has_attributes?: boolean
+    has_ability?: boolean
     created_at: string
     updated_at: string
+}
+
+export type PerkAttribute = {
+    id?: number
+    perk_id?: number
+    attribute_name: string
+    attribute_value: number
 }
 
 export type PerksResponse = {
@@ -524,7 +534,7 @@ export type LupidaWeaponAbility = {
     bonus_speed: number
     element_types: number[]
     created_at: string
-    
+
 }
 
 export type LupidaArmor = {

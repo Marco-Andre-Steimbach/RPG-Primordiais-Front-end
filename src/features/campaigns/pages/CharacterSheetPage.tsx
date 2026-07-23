@@ -25,6 +25,7 @@ import CardItens from '../components/CardItens'
 import CardPerks from '../components/CardPerks'
 import CardInfosGerais from '../components/CardInfosGerais'
 import CollapsibleSection from '../components/CollapsibleSection'
+import DiceRollerDrawer from '../components/DiceRollerDrawer'
 
 import '../campaigns.css'
 
@@ -65,11 +66,12 @@ function CharacterSheetPage() {
     const [infos, setInfos] = useState<CharacterSheetInfo | null>(null)
     const [sheet, setSheet] = useState<FullCharacterSheet | null>(null)
     const [elements, setElements] = useState<Element[]>([])
-    const [modal, setModal] = useState<null | {
-        title: string
-        message: string
-        redirect: string
-    }>(null)
+const [modal, setModal] = useState<null | {
+    title: string
+    message: string
+    redirect: string
+    canClose?: boolean
+}>(null)
 
     useEffect(() => {
         if (!campaignId || !characterId) return
@@ -122,18 +124,34 @@ function CharacterSheetPage() {
             return
         }
 
-        if (infos.abilities < expectedAbilities) {
-            setModal({
-                title: 'Habilidades pendentes',
-                message: `Este personagem possui ${infos.abilities} habilidades, mas deveria possuir ${expectedAbilities}. Você precisa escolher ${expectedAbilities - infos.abilities} habilidade(s) antes de continuar.`,
-                redirect: `/campaign/${campaignId}/characters/${characterId}/abilities`
-            })
-            return
-        }
+if (infos.abilities < expectedAbilities) {
+    setModal({
+        title: 'Habilidades pendentes',
+        message: `Este personagem possui ${infos.abilities} habilidades, mas deveria possuir ${expectedAbilities}. Você ainda pode acessar a ficha e escolher as habilidades posteriormente.`,
+        redirect: `/campaign/${campaignId}/characters/${characterId}/abilities`,
+        canClose: true
+    })
+    return
+}
 
         setModal(null)
     }, [campaign, infos, sheet, campaignId, characterId])
 
+    const attributePerks = useMemo(() => {
+        if (!sheet) return []
+
+        return sheet.perks.filter(
+            perk => perk.has_attributes && !perk.has_ability
+        )
+    }, [sheet])
+
+    const combatPerks = useMemo(() => {
+        if (!sheet) return []
+
+        return sheet.perks.filter(
+            perk => perk.has_ability || !perk.has_attributes
+        )
+    }, [sheet])
     const elementsMap = useMemo(() => {
         const map = new Map<number, Element>()
         elements.forEach(el => map.set(el.id, el))
@@ -156,6 +174,8 @@ function CharacterSheetPage() {
         return Array.from(ids)
     }, [sheet])
 
+    const [diceDrawerOpen, setDiceDrawerOpen] = useState(false)
+
     const characterElements = useMemo(() => {
         return characterElementIds
             .map(id => elementsMap.get(id))
@@ -174,15 +194,20 @@ function CharacterSheetPage() {
         }))
     }, [weakDamageTypeIds])
 
-    if (modal) {
-        return (
-            <CharacterProgressionModal
-                title={modal.title}
-                message={modal.message}
-                onConfirm={() => navigate(modal.redirect)}
-            />
-        )
-    }
+if (modal) {
+    return (
+        <CharacterProgressionModal
+            title={modal.title}
+            message={modal.message}
+            onConfirm={() => navigate(modal.redirect)}
+            onClose={
+                modal.canClose
+                    ? () => setModal(null)
+                    : undefined
+            }
+        />
+    )
+}
 
     if (!sheet) {
         return (
@@ -194,6 +219,12 @@ function CharacterSheetPage() {
 
     return (
         <div className="character-sheet-page">
+                <button
+        className="dice-drawer-button"
+        onClick={() => setDiceDrawerOpen(true)}
+    >
+        Rolador de Dados
+    </button>
             <button
                 className="lupida-button"
                 onClick={() =>
@@ -204,6 +235,11 @@ function CharacterSheetPage() {
             >
                 Ir para Lupida
             </button>
+
+            <DiceRollerDrawer
+    isOpen={diceDrawerOpen}
+    onClose={() => setDiceDrawerOpen(false)}
+/>
 
             <CardInfosGerais
                 level={sheet.progression.level}
@@ -241,10 +277,19 @@ function CharacterSheetPage() {
 
             <CollapsibleSection title="Perks">
                 <CardPerks
-                    perks={sheet.perks}
+                    perks={combatPerks}
                     elementsMap={elementsMap}
                 />
             </CollapsibleSection>
+
+            {attributePerks.length > 0 && (
+                <CollapsibleSection title="Perks de Atributo">
+                    <CardPerks
+                        perks={attributePerks}
+                        elementsMap={elementsMap}
+                    />
+                </CollapsibleSection>
+            )}
 
             <CollapsibleSection title="Armadura">
                 <CardArmadura

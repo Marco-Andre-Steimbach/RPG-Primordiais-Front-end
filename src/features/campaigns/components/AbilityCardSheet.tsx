@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import type { Ability, Element } from '../campaigns.types'
 
 type Props = {
@@ -13,13 +14,24 @@ function AbilityCardSheet({
     isOpen,
     onToggle
 }: Props) {
+    const [showFullDescription, setShowFullDescription] = useState(false)
+    const [showArcane, setShowArcane] = useState(false)
+
     const hasDamage =
         ability.dice_formula &&
         ability.dice_formula !== '0'
 
+    useEffect(() => {
+        if (!isOpen) {
+            setShowFullDescription(false)
+            setShowArcane(false)
+        }
+    }, [isOpen])
+
     return (
         <div className="ability-wrapper">
-            <div
+            <button
+                type="button"
                 className="campaign-ability-card"
                 onClick={onToggle}
             >
@@ -30,25 +42,19 @@ function AbilityCardSheet({
                 <span className="campaign-ability-cost">
                     Mana {ability.mana_cost}
                 </span>
-            </div>
+            </button>
 
             {isOpen && (
                 <div className="campaign-ability-expanded">
-                    <p className="ability-description">
-                        {ability.description}
-                    </p>
-
-                    {ability.arcane_title && (
-                        <div className="ability-arcane">
-                            <strong>{ability.arcane_title}</strong>
-                            <p>{ability.arcane_description}</p>
-                        </div>
-                    )}
-
                     <div className="ability-stats">
+                        <div className="ability-stat">
+                            <span>Mana</span>
+                            <strong>{ability.mana_cost}</strong>
+                        </div>
+
                         {hasDamage && (
-                            <div>
-                                <span>Dano: </span>
+                            <div className="ability-stat">
+                                <span>Dano</span>
                                 <strong>
                                     {ability.dice_formula}
                                     {ability.base_damage > 0 &&
@@ -60,26 +66,27 @@ function AbilityCardSheet({
                         )}
 
                         {ability.range > 0 && (
-                            <div>
-                                <span>Alcance: </span>
+                            <div className="ability-stat">
+                                <span>Alcance</span>
                                 <strong>
                                     {ability.range} casas
                                 </strong>
                             </div>
                         )}
 
-                        {ability.arcane_mana_cost !== null && ability.arcane_mana_cost > 0 && (
-                            <div>
-                                <span>Mana Arcana </span>
-                                <strong>
-                                    {ability.arcane_mana_cost}
-                                </strong>
-                            </div>
-                        )}
+                        {ability.arcane_mana_cost !== null &&
+                            ability.arcane_mana_cost > 0 && (
+                                <div className="ability-stat">
+                                    <span>Mana Arcana</span>
+                                    <strong>
+                                        {ability.arcane_mana_cost}
+                                    </strong>
+                                </div>
+                            )}
 
                         {ability.bonus_speed > 0 && (
-                            <div>
-                                <span>Bônus Velocidade</span>
+                            <div className="ability-stat">
+                                <span>Velocidade</span>
                                 <strong>
                                     +{ability.bonus_speed}
                                 </strong>
@@ -98,6 +105,65 @@ function AbilityCardSheet({
                                 </span>
                             ))}
                         </div>
+                    )}
+
+                    <div className="ability-divider" />
+
+                    <div className="ability-description-container">
+                        <p
+                            className={`ability-description ${showFullDescription
+                                    ? 'expanded'
+                                    : 'collapsed'
+                                }`}
+                        >
+                            {ability.description}
+                        </p>
+
+                        <button
+                            type="button"
+                            className="ability-description-toggle"
+                            onClick={() =>
+                                setShowFullDescription(current => !current)
+                            }
+                        >
+                            {showFullDescription
+                                ? 'Mostrar menos'
+                                : 'Ler descrição completa'}
+                        </button>
+                    </div>
+
+                    {ability.arcane_title && (
+                        <>
+                            <div className="ability-divider" />
+
+                            <button
+                                type="button"
+                                className="ability-arcane-toggle"
+                                onClick={() =>
+                                    setShowArcane(current => !current)
+                                }
+                            >
+                                <span>
+                                    Queima Arcana
+                                </span>
+
+                                <strong>
+                                    {showArcane ? '−' : '+'}
+                                </strong>
+                            </button>
+
+                            {showArcane && (
+                                <div className="ability-arcane">
+                                    <strong>
+                                        {ability.arcane_title}
+                                    </strong>
+
+                                    <p>
+                                        {ability.arcane_description}
+                                    </p>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             )}
