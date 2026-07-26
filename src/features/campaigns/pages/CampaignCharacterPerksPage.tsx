@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -11,6 +11,7 @@ import {
 } from '../campaigns.service'
 
 import type {
+    AvailablePerk,
     Character,
     CharacterSheetInfo,
     Perk
@@ -20,6 +21,41 @@ import CharacterProgressionModal from '../components/CharacterProgressionModal'
 import CampaignCharacterPerkCard from '../components/CampaignCharacterPerkCard'
 import '../campaigns.css'
 
+const attributeOptions = [
+    { value: '', label: 'Todos os atributos' },
+    { value: 'str', label: 'Força' },
+    { value: 'dex', label: 'Destreza' },
+    { value: 'con', label: 'Constituição' },
+    { value: 'int', label: 'Inteligência' },
+    { value: 'wis', label: 'Sabedoria' },
+    { value: 'cha', label: 'Carisma' },
+    { value: 'hp_max', label: 'Vida máxima' },
+    { value: 'mana_max', label: 'Mana máxima' },
+    { value: 'sanity', label: 'Sanidade' },
+    { value: 'speed', label: 'Velocidade' },
+    { value: 'armor_class', label: 'Classe de Armadura' }
+]
+
+function normalizeAttributeName(attributeName: string) {
+    if (attributeName === 'intt') {
+        return 'int'
+    }
+
+    return attributeName
+}
+
+function perkHasAttribute(
+    perk: Perk,
+    attributeName: string
+) {
+    return perk.attributes.some(
+        attribute =>
+            normalizeAttributeName(
+                attribute.attribute_name
+            ) === attributeName
+    )
+}
+
 function CampaignCharacterPerksPage() {
     const { campaignId, characterId } = useParams()
     const navigate = useNavigate()
@@ -27,7 +63,8 @@ function CampaignCharacterPerksPage() {
     const [character, setCharacter] = useState<Character | null>(null)
     const [infos, setInfos] = useState<CharacterSheetInfo | null>(null)
     const [ownedPerkIds, setOwnedPerkIds] = useState<number[]>([])
-    const [perks, setPerks] = useState<Perk[]>([])
+    const [perks, setPerks] = useState<AvailablePerk[]>([])
+    const [attributeFilter, setAttributeFilter] = useState('')
 
     const [modalOpen, setModalOpen] = useState(false)
     const [addedModalOpen, setAddedModalOpen] = useState(false)
@@ -39,12 +76,20 @@ function CampaignCharacterPerksPage() {
             setCharacter(res.character.character)
         })
 
-        fetchCharacterSheetInfo(campaignId, characterId).then(res => {
+        fetchCharacterSheetInfo(
+            campaignId,
+            characterId
+        ).then(res => {
             setInfos(res.infos)
         })
 
-        fetchCharacterSheet(campaignId, characterId).then(res => {
-            setOwnedPerkIds(res.sheet.perks.map(p => p.id))
+        fetchCharacterSheet(
+            campaignId,
+            characterId
+        ).then(res => {
+            setOwnedPerkIds(
+                res.sheet.perks.map(perk => perk.id)
+            )
         })
     }, [campaignId, characterId])
 
@@ -54,28 +99,88 @@ function CampaignCharacterPerksPage() {
         Promise.all([
             fetchPerksByRace(character.race_id),
             fetchPerksByOrder(character.order_id)
-        ]).then(([race, order]) => {
-            const all = [...race.perks, ...order.perks]
+        ]).then(([raceResponse, orderResponse]) => {
+            const racePerks: AvailablePerk[] =
+                raceResponse.perks.map(perk => ({
+                    ...perk,
+                    origin: 'race'
+                }))
 
-            const available = all.filter(
+            const orderPerks: AvailablePerk[] =
+                orderResponse.perks.map(perk => ({
+                    ...perk,
+                    origin: 'order'
+                }))
+
+            const availablePerks = [
+                ...racePerks,
+                ...orderPerks
+            ].filter(
                 perk =>
                     perk.required_level <= infos.level &&
                     !ownedPerkIds.includes(perk.id)
             )
 
-            setPerks(available)
+            setPerks(availablePerks)
         })
     }, [character, infos, ownedPerkIds])
 
     useEffect(() => {
         if (!infos) return
 
-        if (infos.perks >= infos.level) {
-            setModalOpen(true)
-        }
+        setModalOpen(infos.perks >= infos.level)
     }, [infos])
 
-    if (!character || !infos) {
+    const sortedPerks = useMemo(() => {
+        return [...perks].sort((firstPerk, secondPerk) => {
+            if (attributeFilter) {
+                const firstHasAttribute = perkHasAttribute(
+                    firstPerk,
+                    attributeFilter
+                )
+
+                const secondHasAttribute = perkHasAttribute(
+                    secondPerk,
+                    attributeFilter
+                )
+
+                if (
+                    firstHasAttribute !==
+                    secondHasAttribute
+                ) {
+                    return firstHasAttribute ? -1 : 1
+                }
+            }
+
+            if (
+                firstPerk.required_level !==
+                secondPerk.required_level
+            ) {
+                return (
+                    firstPerk.required_level -
+                    secondPerk.required_level
+                )
+            }
+
+            if (firstPerk.origin !== secondPerk.origin) {
+                return firstPerk.origin === 'race'
+                    ? -1
+                    : 1
+            }
+
+            return firstPerk.name.localeCompare(
+                secondPerk.name,
+                'pt-BR'
+            )
+        })
+    }, [perks, attributeFilter])
+
+    if (
+        !campaignId ||
+        !characterId ||
+        !character ||
+        !infos
+    ) {
         return (
             <div className="campaign-page-loading">
                 Carregando perks...
@@ -83,50 +188,100 @@ function CampaignCharacterPerksPage() {
         )
     }
 
-    const missing = infos.level - infos.perks
+    const missing = Math.max(
+        infos.level - infos.perks,
+        0
+    )
 
-    const handleAddPerk = (perkId: number) => {
-        if (!infos) return
+    const handleAddPerk = async (perkId: number) => {
+        await addPerkToCampaignCharacter(
+            infos.campaign_character_id,
+            {
+                perk_id: perkId
+            }
+        )
 
-        addPerkToCampaignCharacter(infos.campaign_character_id, {
-            perk_id: perkId
-        }).then(() => {
-            fetchCharacterSheetInfo(campaignId!, characterId!)
-                .then(r => setInfos(r.infos))
+        const [infoResponse, sheetResponse] =
+            await Promise.all([
+                fetchCharacterSheetInfo(
+                    campaignId,
+                    characterId
+                ),
+                fetchCharacterSheet(
+                    campaignId,
+                    characterId
+                )
+            ])
 
-            fetchCharacterSheet(campaignId!, characterId!)
-                .then(r => setOwnedPerkIds(r.sheet.perks.map(p => p.id)))
+        setInfos(infoResponse.infos)
 
-            setAddedModalOpen(true)
-        })
+        setOwnedPerkIds(
+            sheetResponse.sheet.perks.map(
+                perk => perk.id
+            )
+        )
+
+        setAddedModalOpen(true)
     }
 
     return (
         <div className="campaign-perks-page">
             <header className="campaign-perks-header">
                 <h1>Perks disponíveis</h1>
-                <p>Faltam {missing} perk(s)</p>
+
+                <p>
+                    Faltam {missing} perk(s)
+                </p>
             </header>
 
-            {perks.map(perk => {
-                const canAddByLevel = infos.level >= perk.required_level
+            <div className="campaign-perks-filters">
+                <div className="campaign-perks-filter">
+                    <label htmlFor="perk-attribute-filter">
+                        Priorizar atributo
+                    </label>
 
-                return (
-                    <CampaignCharacterPerkCard
-                        key={perk.id}
-                        perk={perk}
-                        canAdd={missing > 0 && canAddByLevel}
-                        onAdd={handleAddPerk}
-                    />
-                )
-            })}
+                    <select
+                        id="perk-attribute-filter"
+                        value={attributeFilter}
+                        onChange={event =>
+                            setAttributeFilter(
+                                event.target.value
+                            )
+                        }
+                    >
+                        {attributeOptions.map(option => (
+                            <option
+                                key={option.value || 'all'}
+                                value={option.value}
+                            >
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            {sortedPerks.map(perk => (
+                <CampaignCharacterPerkCard
+                    key={`${perk.origin}-${perk.id}`}
+                    perk={perk}
+                    canAdd={
+                        missing > 0 &&
+                        infos.level >=
+                            perk.required_level
+                    }
+                    onAdd={handleAddPerk}
+                />
+            ))}
 
             {modalOpen && (
                 <CharacterProgressionModal
                     title="Perks completos"
                     message="Você já distribuiu todos os perks disponíveis. Agora pode voltar para a ficha do personagem."
                     onConfirm={() =>
-                        navigate(`/campaign/${campaignId}/characters/${characterId}/sheet`)
+                        navigate(
+                            `/campaign/${campaignId}/characters/${characterId}/sheet`
+                        )
                     }
                 />
             )}
@@ -135,7 +290,9 @@ function CampaignCharacterPerksPage() {
                 <CharacterProgressionModal
                     title="Perk adicionado"
                     message="O perk foi adicionado com sucesso ao personagem."
-                    onConfirm={() => setAddedModalOpen(false)}
+                    onConfirm={() =>
+                        setAddedModalOpen(false)
+                    }
                 />
             )}
         </div>

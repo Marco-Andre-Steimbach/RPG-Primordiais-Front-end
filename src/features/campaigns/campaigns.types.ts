@@ -143,6 +143,12 @@ export type Perk = {
     updated_at: string
 }
 
+export type PerkOrigin = 'race' | 'order'
+
+export type AvailablePerk = Perk & {
+    origin: PerkOrigin
+}
+
 export type PerkAttribute = {
     id?: number
     perk_id?: number

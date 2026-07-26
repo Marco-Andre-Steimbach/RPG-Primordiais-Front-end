@@ -1,44 +1,95 @@
 import { useState } from 'react'
-import type { Perk } from '../campaigns.types'
-import CampaignCharacterPerkExpanded from './CampaignCharacterPerkExpanded'
 
-type Props = {
-  perk: Perk
-  canAdd: boolean
-  onAdd: (perkId: number) => void
+import type { AvailablePerk } from '../campaigns.types'
+
+import PerkDetailsCard from './PerkDetailsCard'
+
+interface CampaignCharacterPerkCardProps {
+    perk: AvailablePerk
+    canAdd: boolean
+    onAdd: (perkId: number) => void
 }
 
 function CampaignCharacterPerkCard({
-  perk,
-  canAdd,
-  onAdd
-}: Props) {
-  const [open, setOpen] = useState(false)
+    perk,
+    canAdd,
+    onAdd
+}: CampaignCharacterPerkCardProps) {
+    const [expanded, setExpanded] = useState(false)
 
-  return (
-    <>
-      <div
-        className="campaign-perk-card"
-        onClick={() => setOpen(!open)}
-      >
-        <span className="campaign-perk-name">
-          {perk.name}
-        </span>
+    const typeLabel =
+        perk.type === 'active'
+            ? 'Ativo'
+            : 'Passivo'
 
-        <span className="campaign-perk-level">
-          Nv. {perk.required_level}
-        </span>
-      </div>
+    const originLabel =
+        perk.origin === 'race'
+            ? 'Raça'
+            : 'Ordem'
 
-      {open && (
-        <CampaignCharacterPerkExpanded
-          perk={perk}
-          canAdd={canAdd}
-          onAdd={onAdd}
-        />
-      )}
-    </>
-  )
+    return (
+        <article
+            className={`campaign-character-perk-card campaign-character-perk-card--${perk.origin} ${
+                expanded
+                    ? 'campaign-character-perk-card--expanded'
+                    : ''
+            }`}
+        >
+            <button
+                type="button"
+                className="campaign-character-perk-card__header"
+                onClick={() =>
+                    setExpanded(current => !current)
+                }
+                aria-expanded={expanded}
+            >
+                <div className="campaign-character-perk-card__main">
+                    <strong className="campaign-character-perk-card__name">
+                        {perk.name}
+                    </strong>
+
+                    <span className="campaign-character-perk-card__type">
+                        {typeLabel}
+                    </span>
+
+                    <span
+                        className={`campaign-character-perk-card__origin campaign-character-perk-card__origin--${perk.origin}`}
+                    >
+                        {originLabel}
+                    </span>
+                </div>
+
+                <div className="campaign-character-perk-card__meta">
+                    <span>Nv. {perk.required_level}</span>
+
+                    <span
+                        className={`campaign-character-perk-card__arrow ${
+                            expanded
+                                ? 'campaign-character-perk-card__arrow--open'
+                                : ''
+                        }`}
+                    >
+                        ▼
+                    </span>
+                </div>
+            </button>
+
+            {expanded && (
+                <div className="campaign-character-perk-card__content">
+                    <PerkDetailsCard perk={perk} />
+
+                    <button
+                        type="button"
+                        className="campaign-character-perk-card__add"
+                        disabled={!canAdd}
+                        onClick={() => onAdd(perk.id)}
+                    >
+                        Adicionar perk
+                    </button>
+                </div>
+            )}
+        </article>
+    )
 }
 
 export default CampaignCharacterPerkCard
