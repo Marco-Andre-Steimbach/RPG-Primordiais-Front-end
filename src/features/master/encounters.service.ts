@@ -14,7 +14,9 @@ import type {
   SetEncounterInitiativeResponse,
   UpdateEncounterStatusPayload,
   UpdateEncounterStatusResponse,
-  EncounterCombatResponse
+  EncounterCombatResponse,
+  UpdateEncounterResourcesPayload,
+UpdateEncounterResourcesResponse
 } from './encounters.types'
 
 export function fetchEncounters(
@@ -103,5 +105,17 @@ export function fetchEncounterCombat(
 ): Promise<EncounterCombatResponse> {
   return apiFetch<EncounterCombatResponse>(
     `/encounters/${encounterId}/combat`
+  )
+}
+
+export function updateEncounterResources(
+  payload: UpdateEncounterResourcesPayload
+): Promise<UpdateEncounterResourcesResponse> {
+  return apiFetch<UpdateEncounterResourcesResponse>(
+    '/encounters/update-resources',
+    {
+      method: 'PUT',
+      body: JSON.stringify(payload)
+    }
   )
 }

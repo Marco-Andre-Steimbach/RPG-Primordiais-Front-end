@@ -156,3 +156,16 @@ export type EncounterCombat = {
 export type EncounterCombatResponse = {
   combat: EncounterCombat
 }
+
+export type UpdateEncounterResourcesPayload = {
+  type: 'player' | 'monster'
+  encounter_player_id?: number
+  encounter_monster_id?: number
+  current_hp?: number
+  current_mana?: number
+  current_sanity?: number
+}
+
+export type UpdateEncounterResourcesResponse = {
+  message: string
+}

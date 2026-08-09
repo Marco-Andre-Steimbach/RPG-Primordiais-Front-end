@@ -1,33 +1,36 @@
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import type { Element } from '../campaigns.types'
 
-type Perk = {
-    id: number
-    name: string
-    description: string
-    type: string
-    mana_cost: number
-    element_types: number[]
-}
+import type {
+    Element,
+    Perk
+} from '../campaigns.types'
+
+import PerkDetailsCard from './PerkDetailsCard'
 
 type Props = {
     perks: Perk[]
     elementsMap: Map<number, Element>
 }
 
-function CardPerks({ perks, elementsMap }: Props) {
+function CardPerks({
+    perks,
+    elementsMap
+}: Props) {
     const [openId, setOpenId] = useState<number | null>(null)
     const [search, setSearch] = useState('')
-    const navigate = useNavigate()
 
     const filteredPerks = useMemo(() => {
-        const normalizedSearch = search.trim().toLowerCase()
+        const normalizedSearch =
+            search.trim().toLowerCase()
 
-        if (!normalizedSearch) return perks
+        if (!normalizedSearch) {
+            return perks
+        }
 
         return perks.filter(perk =>
-            perk.name.toLowerCase().includes(normalizedSearch)
+            perk.name
+                .toLowerCase()
+                .includes(normalizedSearch)
         )
     }, [perks, search])
 
@@ -42,7 +45,9 @@ function CardPerks({ perks, elementsMap }: Props) {
                 type="text"
                 placeholder="Buscar perk..."
                 value={search}
-                onChange={e => setSearch(e.target.value)}
+                onChange={event =>
+                    setSearch(event.target.value)
+                }
             />
 
             {perks.length === 0 && (
@@ -51,66 +56,117 @@ function CardPerks({ perks, elementsMap }: Props) {
                 </span>
             )}
 
-            {perks.length > 0 && filteredPerks.length === 0 && (
-                <span className="empty-text">
-                    Nenhum perk encontrado
-                </span>
-            )}
+            {perks.length > 0 &&
+                filteredPerks.length === 0 && (
+                    <span className="empty-text">
+                        Nenhum perk encontrado
+                    </span>
+                )}
 
-            {filteredPerks.map(perk => {
-                const resolvedElements = perk.element_types
-                    .map(id => elementsMap.get(id))
-                    .filter(Boolean) as Element[]
+            <div className="sheet-perks-list">
+                {filteredPerks.map(perk => {
+                    const expanded =
+                        openId === perk.id
 
-                return (
-                    <div key={perk.id} className="ability-wrapper">
-                        <div
-                            className="campaign-ability-card"
-                            onClick={() =>
-                                setOpenId(openId === perk.id ? null : perk.id)
-                            }
+                    const resolvedElements =
+                        perk.element_types
+                            .map(id =>
+                                elementsMap.get(id)
+                            )
+                            .filter(Boolean) as Element[]
+
+                    const typeLabel =
+                        perk.type === 'active'
+                            ? 'Ativo'
+                            : 'Passivo'
+
+                    return (
+                        <article
+                            key={perk.id}
+                            className={`sheet-perk-card ${
+                                expanded
+                                    ? 'sheet-perk-card--expanded'
+                                    : ''
+                            }`}
                         >
-                            <span className="campaign-ability-name">
-                                {perk.name}
-                            </span>
+                            <button
+                                type="button"
+                                className="sheet-perk-card__header"
+                                onClick={() =>
+                                    setOpenId(
+                                        expanded
+                                            ? null
+                                            : perk.id
+                                    )
+                                }
+                                aria-expanded={expanded}
+                            >
+                                <div className="sheet-perk-card__main">
+                                    <strong className="sheet-perk-card__name">
+                                        {perk.name}
+                                    </strong>
 
-                            <span className="campaign-ability-cost">
-                                {perk.type === 'passive'
-                                    ? 'Passivo'
-                                    : `Mana ${perk.mana_cost}`}
-                            </span>
-                        </div>
+                                    <span className="sheet-perk-card__type">
+                                        {typeLabel}
+                                    </span>
+                                </div>
 
-                        {openId === perk.id && (
-                            <div className="campaign-ability-expanded">
-                                <p className="ability-description">
-                                    {perk.description}
-                                </p>
-
-                                {resolvedElements.length > 0 && (
-                                    <div className="ability-elements">
-                                        {resolvedElements.map(el => (
-                                            <span
-                                                key={el.id}
-                                                className="item-element-tag"
-                                            >
-                                                {el.name}
+                                <div className="sheet-perk-card__meta">
+                                    {perk.type === 'active' &&
+                                        perk.mana_cost > 0 && (
+                                            <span>
+                                                Mana {perk.mana_cost}
                                             </span>
-                                        ))}
-                                    </div>
-                                )}
+                                        )}
 
-                                <button
-                                    className="perk-details-button"
-                                    onClick={() => navigate(`/perks/${perk.id}`)}
-                                >
-                                    Ver detalhes do perk
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                )
-            })}
+                                    <span
+                                        className={`sheet-perk-card__arrow ${
+                                            expanded
+                                                ? 'sheet-perk-card__arrow--open'
+                                                : ''
+                                        }`}
+                                    >
+                                        ▼
+                                    </span>
+                                </div>
+                            </button>
+
+                            {expanded && (
+                                <div className="sheet-perk-card__content">
+                                    <PerkDetailsCard
+                                        perk={perk}
+                                    />
+
+                                    {resolvedElements.length > 0 && (
+                                        <div className="sheet-perk-elements">
+                                            <span className="sheet-perk-elements__title">
+                                                Elementos
+                                            </span>
+
+                                            <div className="sheet-perk-elements__list">
+                                                {resolvedElements.map(
+                                                    element => (
+                                                        <span
+                                                            key={
+                                                                element.id
+                                                            }
+                                                            className="item-element-tag"
+                                                        >
+                                                            {
+                                                                element.name
+                                                            }
+                                                        </span>
+                                                    )
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </article>
+                    )
+                })}
+            </div>
         </div>
     )
 }

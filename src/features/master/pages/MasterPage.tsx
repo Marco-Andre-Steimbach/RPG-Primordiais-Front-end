@@ -276,6 +276,9 @@ function MasterPage() {
                             onStartCombat={() =>
                                 setEncounterMode('combatSetup')
                             }
+                            onOpenCombat={() =>
+                                setEncounterMode('combat')
+                            }
                         />
                     )}
                 {encounterMode === 'combatSetup' && selectedEncounterId && (

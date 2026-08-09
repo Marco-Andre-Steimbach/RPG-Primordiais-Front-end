@@ -12,6 +12,7 @@ type Props = {
   encounterId: number
   onAddParticipants: () => void
   onStartCombat: () => void
+  onOpenCombat: () => void
 }
 
 const statusLabels = {
@@ -23,7 +24,8 @@ const statusLabels = {
 function MasterEncounterSheet({
   encounterId,
   onAddParticipants,
-  onStartCombat
+  onStartCombat,
+  onOpenCombat
 }: Props) {
   const [encounter, setEncounter] =
     useState<EncounterDetails | null>(null)
@@ -72,6 +74,25 @@ function MasterEncounterSheet({
     )
   }
 
+  const hasParticipants =
+    participants.players.length > 0 ||
+    participants.monsters.length > 0
+
+  const isPending = encounter.status === 'pending'
+  const isActive = encounter.status === 'active'
+  const isFinished = encounter.status === 'finished'
+
+  function handleCombatClick() {
+    if (isActive) {
+      onOpenCombat()
+      return
+    }
+
+    if (isPending) {
+      onStartCombat()
+    }
+  }
+
   return (
     <section className="master-sheet card">
       <div className="master-sheet-header">
@@ -85,6 +106,7 @@ function MasterEncounterSheet({
             className="master-wizard-btn ghost"
             type="button"
             onClick={onAddParticipants}
+            disabled={!isPending}
           >
             Adicionar participantes
           </button>
@@ -92,16 +114,17 @@ function MasterEncounterSheet({
           <button
             className="master-wizard-btn primary"
             type="button"
-            onClick={onStartCombat}
+            onClick={handleCombatClick}
             disabled={
-              encounter.status !== 'pending' ||
-              (
-                participants.players.length === 0 &&
-                participants.monsters.length === 0
-              )
+              isFinished ||
+              (isPending && !hasParticipants)
             }
           >
-            Iniciar combate
+            {isActive
+              ? 'Abrir combate'
+              : isFinished
+                ? 'Combate finalizado'
+                : 'Iniciar combate'}
           </button>
         </div>
       </div>
