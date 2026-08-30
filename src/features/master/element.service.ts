@@ -4,7 +4,6 @@ import type {
   ElementsResponse,
   ElementDamagePayload,
   ElementDamageResponse,
-  DiscoverRelationsResponse,
   DiscoverAttackRelationsResponse,
   EntityElementsResponse
 } from './elements.types'
@@ -19,17 +18,6 @@ export function calculateElementDamage(
   return apiFetch<ElementDamageResponse>('/elements/damage', {
     method: 'POST',
     body: JSON.stringify(payload)
-  })
-}
-
-export function discoverElementRelations(
-  defenseElements: number[]
-): Promise<DiscoverRelationsResponse> {
-  return apiFetch<DiscoverRelationsResponse>('/elements/relations', {
-    method: 'POST',
-    body: JSON.stringify({
-      defense_elements: defenseElements
-    })
   })
 }
 
