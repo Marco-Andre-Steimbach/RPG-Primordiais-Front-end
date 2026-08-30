@@ -93,6 +93,15 @@ export type SetEncounterInitiativeResponse = {
   message: string
 }
 
+export type UpdateEncounterInitiativePayload = {
+  initiative_id: number
+  initiative_value: number
+}
+
+export type UpdateEncounterInitiativeResponse = {
+  message: string
+}
+
 export type UpdateEncounterStatusPayload = {
   encounter_id: number
   status: EncounterStatus
@@ -157,15 +166,53 @@ export type EncounterCombatResponse = {
   combat: EncounterCombat
 }
 
-export type UpdateEncounterResourcesPayload = {
-  type: 'player' | 'monster'
-  encounter_player_id?: number
-  encounter_monster_id?: number
-  current_hp?: number
-  current_mana?: number
-  current_sanity?: number
+export type EncounterResource = 'hp' | 'mana' | 'sanity'
+
+export type EncounterResourceUpdateMode = 'delta' | 'set'
+
+export type UpdateEncounterPlayerResourcesPayload = {
+  type: 'player'
+  encounter_player_id: number
+  resource: EncounterResource
+  mode: EncounterResourceUpdateMode
+  value: number
 }
+
+export type UpdateEncounterMonsterResourcesPayload = {
+  type: 'monster'
+  encounter_monster_id: number
+  resource: 'hp'
+  mode: EncounterResourceUpdateMode
+  value: number
+}
+
+export type UpdateEncounterResourcesPayload =
+  | UpdateEncounterPlayerResourcesPayload
+  | UpdateEncounterMonsterResourcesPayload
+
+export type UpdatedEncounterPlayerResources = {
+  type: 'player'
+  encounter_player_id: number
+  current_hp: number
+  max_hp: number
+  current_mana: number
+  max_mana: number
+  current_sanity: number
+  max_sanity: number
+}
+
+export type UpdatedEncounterMonsterResources = {
+  type: 'monster'
+  encounter_monster_id: number
+  current_hp: number
+  max_hp: number
+}
+
+export type UpdatedEncounterResources =
+  | UpdatedEncounterPlayerResources
+  | UpdatedEncounterMonsterResources
 
 export type UpdateEncounterResourcesResponse = {
   message: string
+  resources: UpdatedEncounterResources
 }

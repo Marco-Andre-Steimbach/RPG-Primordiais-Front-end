@@ -1,11 +1,12 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+
 import MasterNavbar from '../components/MasterNavbar'
 import MasterMonsterList from '../components/MasterMonsterList'
 import MasterMonsterSheet from '../components/MasterMonsterSheet'
 import MasterMonsterWizard from '../components/MasterMonsterWizard'
 import MasterElementTools from '../components/MasterElementTools'
 import ElementDamageCalculator from '../components/ElementDamageCalculator'
-import DiscoverElementRelations from '../components/DiscoverElementRelations'
 import DiscoverElementAttackRelations from '../components/DiscoverElementAttackRelations'
 import MasterCharacterTools from '../components/MasterCharacterTools'
 import MasterGiveGold from '../components/MasterGiveGold'
@@ -27,11 +28,39 @@ import MasterEncounterCombat from '../components/MasterEncounterCombat'
 
 import '../master.css'
 
-type ActiveSection = 'monsters' | 'elements' | 'characters' | 'items' | 'encounters' | null
-type EncounterTool = 'search' | 'create' | null
-type ElementTool = 'damage' | 'weakness' | 'attack' | null
-type CharacterTool = 'sheet' | 'gold' | 'xp' | 'item' | 'weapon' | 'armor' | null
-type ItemTool = 'item' | 'weapon' | 'armor' | null
+type ActiveSection =
+    | 'monsters'
+    | 'elements'
+    | 'characters'
+    | 'items'
+    | 'encounters'
+    | null
+
+type EncounterTool =
+    | 'search'
+    | 'create'
+    | null
+
+type ElementTool =
+    | 'damage'
+    | 'attack'
+    | null
+
+type CharacterTool =
+    | 'sheet'
+    | 'gold'
+    | 'xp'
+    | 'item'
+    | 'weapon'
+    | 'armor'
+    | null
+
+type ItemTool =
+    | 'item'
+    | 'weapon'
+    | 'armor'
+    | null
+
 type EncounterMode =
     | 'sheet'
     | 'participants'
@@ -39,8 +68,15 @@ type EncounterMode =
     | 'combat'
 
 function MasterPage() {
-    const [collapsed, setCollapsed] = useState(false)
-    const [activeSection, setActiveSection] = useState<ActiveSection>(null)
+    const { id } = useParams()
+
+    const campaignId = Number(id)
+
+    const [collapsed, setCollapsed] =
+        useState(false)
+
+    const [activeSection, setActiveSection] =
+        useState<ActiveSection>(null)
 
     const [activeElementTool, setActiveElementTool] =
         useState<ElementTool>(null)
@@ -63,15 +99,21 @@ function MasterPage() {
     const [selectedEncounterId, setSelectedEncounterId] =
         useState<number | null>(null)
 
-
-    const [mode, setMode] = useState<'sheet' | 'create'>('sheet')
+    const [mode, setMode] =
+        useState<'sheet' | 'create'>('sheet')
 
     return (
-        <div className={`master-layout ${collapsed ? 'collapsed' : ''}`}>
+        <div
+            className={`master-layout ${
+                collapsed ? 'collapsed' : ''
+            }`}
+        >
             <MasterNavbar
                 collapsed={collapsed}
-                onToggle={() => setCollapsed(v => !v)}
-                onSelect={(section) => {
+                onToggle={() =>
+                    setCollapsed(value => !value)
+                }
+                onSelect={section => {
                     setActiveSection(section)
                     setMode('sheet')
                     setSelectedMonsterId(null)
@@ -93,7 +135,7 @@ function MasterPage() {
                         setSelectedMonsterId(null)
                     }}
                     selectedMonsterId={selectedMonsterId}
-                    onSelectMonster={(id) => {
+                    onSelectMonster={id => {
                         setSelectedMonsterId(id)
                         setMode('sheet')
                     }}
@@ -121,26 +163,30 @@ function MasterPage() {
                 />
             )}
 
-            {activeSection === 'encounters' && activeEncounterTool !== 'search' && (
-                <MasterEncounterTools
-                    activeTool={activeEncounterTool}
-                    onSelectTool={(tool) => {
-                        setActiveEncounterTool(tool)
-                        setSelectedEncounterId(null)
-                    }}
-                />
-            )}
+            {activeSection === 'encounters' &&
+                activeEncounterTool !== 'search' && (
+                    <MasterEncounterTools
+                        activeTool={activeEncounterTool}
+                        onSelectTool={tool => {
+                            setActiveEncounterTool(tool)
+                            setSelectedEncounterId(null)
+                        }}
+                    />
+                )}
 
-            {activeSection === 'encounters' && activeEncounterTool === 'search' && (
-                <MasterEncounterList
-                    selectedEncounterId={selectedEncounterId}
-                    onSelectEncounter={(id) => {
-                        setSelectedEncounterId(id)
-                        setEncounterMode('sheet')
-                    }}
-                />
-            )}
-
+            {activeSection === 'encounters' &&
+                activeEncounterTool === 'search' && (
+                    <MasterEncounterList
+                        campaignId={campaignId}
+                        selectedEncounterId={
+                            selectedEncounterId
+                        }
+                        onSelectEncounter={id => {
+                            setSelectedEncounterId(id)
+                            setEncounterMode('sheet')
+                        }}
+                    />
+                )}
 
             {/* ============== CONTEÚDO CENTRAL ============== */}
 
@@ -153,108 +199,135 @@ function MasterPage() {
 
                 {/* ================= PERSONAGENS ================= */}
 
-                {activeSection === 'characters' && !activeCharacterTool && (
-                    <div className="master-placeholder">
-                        Selecione uma ação para personagens
-                    </div>
-                )}
+                {activeSection === 'characters' &&
+                    !activeCharacterTool && (
+                        <div className="master-placeholder">
+                            Selecione uma ação para personagens
+                        </div>
+                    )}
 
-                {activeSection === 'characters' && activeCharacterTool === 'gold' && (
-                    <MasterGiveGold />
-                )}
+                {activeSection === 'characters' &&
+                    activeCharacterTool === 'gold' && (
+                        <MasterGiveGold />
+                    )}
 
-                {activeSection === 'characters' && activeCharacterTool === 'xp' && (
-                    <MasterGiveXP />
-                )}
+                {activeSection === 'characters' &&
+                    activeCharacterTool === 'xp' && (
+                        <MasterGiveXP />
+                    )}
 
-                {activeSection === 'characters' && activeCharacterTool === 'item' && (
-                    <MasterGiveItem />
-                )}
+                {activeSection === 'characters' &&
+                    activeCharacterTool === 'item' && (
+                        <MasterGiveItem />
+                    )}
 
-                {activeSection === 'characters' && activeCharacterTool === 'weapon' && (
-                    <MasterGiveWeapon />
-                )}
+                {activeSection === 'characters' &&
+                    activeCharacterTool === 'weapon' && (
+                        <MasterGiveWeapon />
+                    )}
 
-                {activeSection === 'characters' && activeCharacterTool === 'armor' && (
-                    <MasterGiveArmor />
-                )}
+                {activeSection === 'characters' &&
+                    activeCharacterTool === 'armor' && (
+                        <MasterGiveArmor />
+                    )}
 
                 {/* ================= MONSTROS ================= */}
 
-                {activeSection === 'monsters' && mode === 'sheet' && selectedMonsterId && (
-                    <MasterMonsterSheet monsterId={selectedMonsterId} />
-                )}
+                {activeSection === 'monsters' &&
+                    mode === 'sheet' &&
+                    selectedMonsterId && (
+                        <MasterMonsterSheet
+                            monsterId={selectedMonsterId}
+                        />
+                    )}
 
-                {activeSection === 'monsters' && mode === 'sheet' && !selectedMonsterId && (
-                    <div className="master-placeholder">
-                        Selecione um monstro na lista
-                    </div>
-                )}
+                {activeSection === 'monsters' &&
+                    mode === 'sheet' &&
+                    !selectedMonsterId && (
+                        <div className="master-placeholder">
+                            Selecione um monstro na lista
+                        </div>
+                    )}
 
-                {activeSection === 'monsters' && mode === 'create' && (
-                    <MasterMonsterWizard
-                        onCancel={() => setMode('sheet')}
-                        onDone={(id) => {
-                            setSelectedMonsterId(id)
-                            setMode('sheet')
-                        }}
-                    />
-                )}
+                {activeSection === 'monsters' &&
+                    mode === 'create' && (
+                        <MasterMonsterWizard
+                            onCancel={() =>
+                                setMode('sheet')
+                            }
+                            onDone={id => {
+                                setSelectedMonsterId(id)
+                                setMode('sheet')
+                            }}
+                        />
+                    )}
 
                 {/* ================= ELEMENTOS ================= */}
 
-                {activeSection === 'elements' && !activeElementTool && (
-                    <div className="master-placeholder">
-                        Selecione uma ferramenta de elementos
-                    </div>
-                )}
+                {activeSection === 'elements' &&
+                    !activeElementTool && (
+                        <div className="master-placeholder">
+                            Selecione uma ferramenta de elementos
+                        </div>
+                    )}
 
-                {activeSection === 'elements' && activeElementTool === 'damage' && (
-                    <ElementDamageCalculator />
-                )}
+                {activeSection === 'elements' &&
+                    activeElementTool === 'damage' && (
+                        <ElementDamageCalculator />
+                    )}
 
-                {activeSection === 'elements' && activeElementTool === 'weakness' && (
-                    <DiscoverElementRelations />
-                )}
-
-                {activeSection === 'elements' && activeElementTool === 'attack' && (
-                    <DiscoverElementAttackRelations />
-                )}
+                {activeSection === 'elements' &&
+                    activeElementTool === 'attack' && (
+                        <DiscoverElementAttackRelations />
+                    )}
 
                 {/* ================= ITEMS ================= */}
 
-                {activeSection === 'items' && !activeItemTool && (
-                    <div className="master-placeholder">
-                        Selecione uma ação de itens
-                    </div>
-                )}
+                {activeSection === 'items' &&
+                    !activeItemTool && (
+                        <div className="master-placeholder">
+                            Selecione uma ação de itens
+                        </div>
+                    )}
 
-                {activeSection === 'items' && activeItemTool === 'item' && (
-                    <MasterItemWizard
-                        onCancel={() => setActiveItemTool(null)}
-                        onDone={() => setActiveItemTool(null)}
-                    />
-                )}
+                {activeSection === 'items' &&
+                    activeItemTool === 'item' && (
+                        <MasterItemWizard
+                            onCancel={() =>
+                                setActiveItemTool(null)
+                            }
+                            onDone={() =>
+                                setActiveItemTool(null)
+                            }
+                        />
+                    )}
 
-                {activeSection === 'items' && activeItemTool === 'weapon' && (
-                    <MasterWeaponWizard
-                        onCancel={() => setActiveItemTool(null)}
-                    />
-                )}
+                {activeSection === 'items' &&
+                    activeItemTool === 'weapon' && (
+                        <MasterWeaponWizard
+                            onCancel={() =>
+                                setActiveItemTool(null)
+                            }
+                        />
+                    )}
 
-                {activeSection === 'items' && activeItemTool === 'armor' && (
-                    <MasterArmorWizard
-                        onCancel={() => setActiveItemTool(null)}
-                    />
-                )}
+                {activeSection === 'items' &&
+                    activeItemTool === 'armor' && (
+                        <MasterArmorWizard
+                            onCancel={() =>
+                                setActiveItemTool(null)
+                            }
+                        />
+                    )}
 
                 {/* ================= ENCOUNTERS ================= */}
 
-                {activeSection === 'encounters' && !activeEncounterTool && (
-                    <div className="master-placeholder">
-                        Selecione uma ação para encontros
-                    </div>
-                )}
+                {activeSection === 'encounters' &&
+                    !activeEncounterTool && (
+                        <div className="master-placeholder">
+                            Selecione uma ação para encontros
+                        </div>
+                    )}
 
                 {activeSection === 'encounters' &&
                     activeEncounterTool === 'search' &&
@@ -269,36 +342,66 @@ function MasterPage() {
                     selectedEncounterId &&
                     encounterMode === 'sheet' && (
                         <MasterEncounterSheet
-                            encounterId={selectedEncounterId}
+                            encounterId={
+                                selectedEncounterId
+                            }
                             onAddParticipants={() =>
-                                setEncounterMode('participants')
+                                setEncounterMode(
+                                    'participants'
+                                )
                             }
                             onStartCombat={() =>
-                                setEncounterMode('combatSetup')
+                                setEncounterMode(
+                                    'combatSetup'
+                                )
                             }
                             onOpenCombat={() =>
-                                setEncounterMode('combat')
+                                setEncounterMode(
+                                    'combat'
+                                )
                             }
                         />
                     )}
-                {encounterMode === 'combatSetup' && selectedEncounterId && (
-                    <MasterEncounterCombatSetup
-                        encounterId={selectedEncounterId}
-                        onBack={() => setEncounterMode('sheet')}
-                        onCombatStarted={() => setEncounterMode('combat')}
-                    />
-                )}
 
-
+                {activeSection === 'encounters' &&
+                    activeEncounterTool === 'search' &&
+                    selectedEncounterId &&
+                    encounterMode === 'combatSetup' && (
+                        <MasterEncounterCombatSetup
+                            encounterId={
+                                selectedEncounterId
+                            }
+                            onBack={() =>
+                                setEncounterMode(
+                                    'sheet'
+                                )
+                            }
+                            onCombatStarted={() =>
+                                setEncounterMode(
+                                    'combat'
+                                )
+                            }
+                        />
+                    )}
 
                 {activeSection === 'encounters' &&
                     activeEncounterTool === 'search' &&
                     selectedEncounterId &&
                     encounterMode === 'participants' && (
                         <MasterEncounterParticipantsWizard
-                            encounterId={selectedEncounterId}
-                            onCancel={() => setEncounterMode('sheet')}
-                            onDone={() => setEncounterMode('sheet')}
+                            encounterId={
+                                selectedEncounterId
+                            }
+                            onCancel={() =>
+                                setEncounterMode(
+                                    'sheet'
+                                )
+                            }
+                            onDone={() =>
+                                setEncounterMode(
+                                    'sheet'
+                                )
+                            }
                         />
                     )}
 
@@ -307,22 +410,33 @@ function MasterPage() {
                     selectedEncounterId &&
                     encounterMode === 'combat' && (
                         <MasterEncounterCombat
-                            encounterId={selectedEncounterId}
-                            onBack={() => setEncounterMode('sheet')}
+                            encounterId={
+                                selectedEncounterId
+                            }
+                            onBack={() =>
+                                setEncounterMode(
+                                    'sheet'
+                                )
+                            }
                         />
                     )}
 
                 {activeSection === 'encounters' &&
                     activeEncounterTool === 'create' && (
                         <MasterEncounterWizard
-                            onCancel={() => setActiveEncounterTool(null)}
-                            onDone={(id) => {
+                            onCancel={() =>
+                                setActiveEncounterTool(
+                                    null
+                                )
+                            }
+                            onDone={id => {
                                 setSelectedEncounterId(id)
-                                setActiveEncounterTool('search')
+                                setActiveEncounterTool(
+                                    'search'
+                                )
                             }}
                         />
                     )}
-
             </main>
         </div>
     )

@@ -1,9 +1,11 @@
 import { apiFetch } from '../../app/http/api'
+
 import type {
   ElementsResponse,
   ElementDamagePayload,
   ElementDamageResponse,
   DiscoverRelationsResponse,
+  DiscoverAttackRelationsResponse,
   EntityElementsResponse
 } from './elements.types'
 
@@ -33,23 +35,30 @@ export function discoverElementRelations(
 
 export function discoverElementAttackRelations(
   attackElements: number[]
-): Promise<DiscoverRelationsResponse> {
-  return apiFetch<DiscoverRelationsResponse>('/elements/relations/attack', {
-    method: 'POST',
-    body: JSON.stringify({
-      attack_elements: attackElements
-    })
-  })
+): Promise<DiscoverAttackRelationsResponse> {
+  return apiFetch<DiscoverAttackRelationsResponse>(
+    '/elements/relations/attack',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        attack_elements: attackElements
+      })
+    }
+  )
 }
 
 export function fetchMonsterElements(
   monsterId: number
 ): Promise<EntityElementsResponse> {
-  return apiFetch<EntityElementsResponse>(`/elements/monster/${monsterId}`)
+  return apiFetch<EntityElementsResponse>(
+    `/elements/monster/${monsterId}`
+  )
 }
 
 export function fetchCharacterElements(
   characterId: number
 ): Promise<EntityElementsResponse> {
-  return apiFetch<EntityElementsResponse>(`/elements/character/${characterId}`)
+  return apiFetch<EntityElementsResponse>(
+    `/elements/character/${characterId}`
+  )
 }

@@ -17,7 +17,7 @@ type Props = {
 
 const statusLabels = {
   pending: 'Pendente',
-  active: 'Ativo',
+  active: 'Em combate',
   finished: 'Finalizado'
 }
 
@@ -60,27 +60,44 @@ function MasterEncounterSheet({
 
   if (loading) {
     return (
-      <section className="master-sheet card">
-        Carregando encontro...
+      <section className="master-encounter-sheet">
+        <div className="master-encounter-state">
+          Carregando encontro...
+        </div>
       </section>
     )
   }
 
   if (error || !encounter || !participants) {
     return (
-      <section className="master-sheet card">
-        {error ?? 'Encontro não encontrado.'}
+      <section className="master-encounter-sheet">
+        <div className="master-encounter-state error">
+          {error ?? 'Encontro não encontrado.'}
+        </div>
       </section>
     )
   }
 
-  const hasParticipants =
-    participants.players.length > 0 ||
-    participants.monsters.length > 0
+  const playerCount =
+    participants.players.length
 
-  const isPending = encounter.status === 'pending'
-  const isActive = encounter.status === 'active'
-  const isFinished = encounter.status === 'finished'
+  const monsterCount =
+    participants.monsters.length
+
+  const totalParticipants =
+    playerCount + monsterCount
+
+  const hasParticipants =
+    totalParticipants > 0
+
+  const isPending =
+    encounter.status === 'pending'
+
+  const isActive =
+    encounter.status === 'active'
+
+  const isFinished =
+    encounter.status === 'finished'
 
   function handleCombatClick() {
     if (isActive) {
@@ -94,16 +111,34 @@ function MasterEncounterSheet({
   }
 
   return (
-    <section className="master-sheet card">
-      <div className="master-sheet-header">
-        <div>
-          <h2>{encounter.name}</h2>
-          <span>{statusLabels[encounter.status]}</span>
+    <section className="master-encounter-sheet">
+      <header className="master-encounter-hero">
+        <div className="master-encounter-hero-info">
+          <div className="master-encounter-title-row">
+            <h1>{encounter.name}</h1>
+
+            <span
+              className={`master-encounter-status ${encounter.status}`}
+            >
+              {statusLabels[encounter.status]}
+            </span>
+          </div>
+
+          <p>
+            {isPending &&
+              'Prepare os participantes e configure o encontro antes de iniciar o combate.'}
+
+            {isActive &&
+              'Este encontro está em andamento. Continue de onde a batalha parou.'}
+
+            {isFinished &&
+              'Este encontro já foi finalizado.'}
+          </p>
         </div>
 
-        <div className="master-wizard-actions">
+        <div className="master-encounter-actions">
           <button
-            className="master-wizard-btn ghost"
+            className="master-encounter-button secondary"
             type="button"
             onClick={onAddParticipants}
             disabled={!isPending}
@@ -112,7 +147,7 @@ function MasterEncounterSheet({
           </button>
 
           <button
-            className="master-wizard-btn primary"
+            className="master-encounter-button primary"
             type="button"
             onClick={handleCombatClick}
             disabled={
@@ -127,49 +162,163 @@ function MasterEncounterSheet({
                 : 'Iniciar combate'}
           </button>
         </div>
-      </div>
+      </header>
 
-      <div className="master-wizard-panel">
-        <h3>Descrição</h3>
-
-        <p>
-          {encounter.description || 'Sem descrição.'}
-        </p>
-      </div>
-
-      <div className="master-wizard-panel">
-        <h3>Participantes</h3>
-
-        <div>
-          <h4>Personagens</h4>
-
-          {participants.players.length === 0 ? (
-            <p>Nenhum personagem adicionado.</p>
-          ) : (
-            <ul>
-              {participants.players.map(player => (
-                <li key={player.encounter_player_id}>
-                  {player.character_name}
-                </li>
-              ))}
-            </ul>
-          )}
+      <div className="master-encounter-summary">
+        <div className="master-encounter-summary-card">
+          <span>Participantes</span>
+          <strong>{totalParticipants}</strong>
         </div>
 
-        <div>
-          <h4>Monstros</h4>
+        <div className="master-encounter-summary-card player">
+          <span>Personagens</span>
+          <strong>{playerCount}</strong>
+        </div>
 
-          {participants.monsters.length === 0 ? (
-            <p>Nenhum monstro adicionado.</p>
-          ) : (
-            <ul>
-              {participants.monsters.map(monster => (
-                <li key={monster.encounter_monster_id}>
-                  {monster.monster_name}
-                </li>
-              ))}
-            </ul>
-          )}
+        <div className="master-encounter-summary-card monster">
+          <span>Monstros</span>
+          <strong>{monsterCount}</strong>
+        </div>
+
+        <div className="master-encounter-summary-card">
+          <span>Estado</span>
+          <strong>
+            {statusLabels[encounter.status]}
+          </strong>
+        </div>
+      </div>
+
+      <div className="master-encounter-content-grid">
+        <div className="master-encounter-section">
+          <div className="master-encounter-section-header">
+            <div>
+              <span className="master-encounter-section-eyebrow">
+                Informações
+              </span>
+
+              <h2>Descrição</h2>
+            </div>
+          </div>
+
+          <div className="master-encounter-description">
+            {encounter.description?.trim() ? (
+              <p>{encounter.description}</p>
+            ) : (
+              <p className="empty">
+                Nenhuma descrição definida para este encontro.
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="master-encounter-section participants">
+          <div className="master-encounter-section-header">
+            <div>
+              <span className="master-encounter-section-eyebrow">
+                Formação
+              </span>
+
+              <h2>Participantes</h2>
+            </div>
+
+            {isPending && (
+              <button
+                type="button"
+                className="master-encounter-small-action"
+                onClick={onAddParticipants}
+              >
+                + Adicionar
+              </button>
+            )}
+          </div>
+
+          <div className="master-encounter-participant-columns">
+            <div className="master-encounter-participant-group">
+              <div className="master-encounter-participant-group-header">
+                <div>
+                  <span className="master-encounter-group-indicator player" />
+
+                  <h3>Personagens</h3>
+                </div>
+
+                <span className="master-encounter-count">
+                  {playerCount}
+                </span>
+              </div>
+
+              {playerCount === 0 ? (
+                <div className="master-encounter-empty-list">
+                  Nenhum personagem adicionado.
+                </div>
+              ) : (
+                <div className="master-encounter-participant-list">
+                  {participants.players.map(
+                    (player, index) => (
+                      <div
+                        key={player.encounter_player_id}
+                        className="master-encounter-participant-card player"
+                      >
+                        <div className="master-encounter-participant-avatar player">
+                          {index + 1}
+                        </div>
+
+                        <div className="master-encounter-participant-info">
+                          <strong>
+                            {player.character_name}
+                          </strong>
+
+                          <span>Personagem</span>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="master-encounter-participant-group">
+              <div className="master-encounter-participant-group-header">
+                <div>
+                  <span className="master-encounter-group-indicator monster" />
+
+                  <h3>Monstros</h3>
+                </div>
+
+                <span className="master-encounter-count">
+                  {monsterCount}
+                </span>
+              </div>
+
+              {monsterCount === 0 ? (
+                <div className="master-encounter-empty-list">
+                  Nenhum monstro adicionado.
+                </div>
+              ) : (
+                <div className="master-encounter-participant-list">
+                  {participants.monsters.map(
+                    (monster, index) => (
+                      <div
+                        key={monster.encounter_monster_id}
+                        className="master-encounter-participant-card monster"
+                      >
+                        <div className="master-encounter-participant-avatar monster">
+                          {index + 1}
+                        </div>
+
+                        <div className="master-encounter-participant-info">
+                          <strong>
+                            {monster.monster_name}
+                          </strong>
+
+                          <span>Monstro</span>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>

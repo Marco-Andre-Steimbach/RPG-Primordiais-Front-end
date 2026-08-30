@@ -1,40 +1,41 @@
 import { useCallback, useState } from 'react'
 import { discoverElementAttackRelations } from '../element.service'
 import type {
-  ElementRelation,
-  GroupedElementRelations
+  DiscoverAttackRelationsResult
 } from '../elements.types'
-import { groupRelationsByMultiplier } from './groupRelationsByMultiplier'
 
 export function useDiscoverElementAttackRelations() {
   const [selectedElements, setSelectedElements] = useState<number[]>([])
-  const [immune, setImmune] = useState<ElementRelation[]>([])
-  const [groups, setGroups] = useState<GroupedElementRelations[]>([])
+  const [result, setResult] = useState<DiscoverAttackRelationsResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const toggleElement = useCallback((id: number) => {
     setSelectedElements(prev =>
       prev.includes(id)
-        ? prev.filter(e => e !== id)
+        ? prev.filter(elementId => elementId !== id)
         : [...prev, id]
     )
   }, [])
 
   const discover = useCallback(async () => {
-    if (selectedElements.length === 0) return
+    if (selectedElements.length === 0) {
+      setResult(null)
+      return
+    }
 
     try {
       setLoading(true)
       setError(null)
 
-      const res = await discoverElementAttackRelations(selectedElements)
-      const { immune, groups } = groupRelationsByMultiplier(res.relations)
+      const response = await discoverElementAttackRelations(selectedElements)
 
-      setImmune(immune)
-      setGroups(groups)
+      console.log('RESPONSE RELATIONS:', response)
+
+      setResult(response.relations)
     } catch {
-      setError('Erro ao descobrir ofensiva')
+      setError('Erro ao descobrir relações dos elementos')
+      setResult(null)
     } finally {
       setLoading(false)
     }
@@ -42,8 +43,7 @@ export function useDiscoverElementAttackRelations() {
 
   const reset = useCallback(() => {
     setSelectedElements([])
-    setImmune([])
-    setGroups([])
+    setResult(null)
     setError(null)
   }, [])
 
@@ -52,8 +52,10 @@ export function useDiscoverElementAttackRelations() {
     toggleElement,
     discover,
     reset,
-    immune,
-    groups,
+    result,
+    relations: result?.relations ?? null,
+    attack: result?.attack ?? null,
+    defense: result?.defense ?? null,
     loading,
     error
   }

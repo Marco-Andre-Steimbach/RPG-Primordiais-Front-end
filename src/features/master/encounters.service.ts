@@ -12,28 +12,42 @@ import type {
   EncounterParticipantsResponse,
   SetEncounterInitiativePayload,
   SetEncounterInitiativeResponse,
+  UpdateEncounterInitiativePayload,
+  UpdateEncounterInitiativeResponse,
   UpdateEncounterStatusPayload,
   UpdateEncounterStatusResponse,
   EncounterCombatResponse,
   UpdateEncounterResourcesPayload,
-UpdateEncounterResourcesResponse
+  UpdateEncounterResourcesResponse
 } from './encounters.types'
 
 export function fetchEncounters(
+  campaignId: number,
   status?: EncounterStatus
 ): Promise<EncountersResponse> {
-  const query = status ? `?status=${status}` : ''
+  const params = new URLSearchParams({
+    campaign_id: String(campaignId)
+  })
 
-  return apiFetch<EncountersResponse>(`/encounters${query}`)
+  if (status) {
+    params.set('status', status)
+  }
+
+  return apiFetch<EncountersResponse>(
+    `/encounters?${params.toString()}`
+  )
 }
 
 export function createEncounter(
   payload: CreateEncounterPayload
 ): Promise<CreateEncounterResponse> {
-  return apiFetch<CreateEncounterResponse>('/encounters', {
-    method: 'POST',
-    body: JSON.stringify(payload)
-  })
+  return apiFetch<CreateEncounterResponse>(
+    '/encounters',
+    {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    }
+  )
 }
 
 export function fetchEncounterById(
@@ -83,6 +97,18 @@ export function setEncounterInitiative(
     '/encounters/set-initiative',
     {
       method: 'POST',
+      body: JSON.stringify(payload)
+    }
+  )
+}
+
+export function updateEncounterInitiative(
+  payload: UpdateEncounterInitiativePayload
+): Promise<UpdateEncounterInitiativeResponse> {
+  return apiFetch<UpdateEncounterInitiativeResponse>(
+    '/encounters/update-initiative',
+    {
+      method: 'PUT',
       body: JSON.stringify(payload)
     }
   )
