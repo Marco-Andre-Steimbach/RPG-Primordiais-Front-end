@@ -1,5 +1,8 @@
 import { useState } from 'react'
-import type { Element } from '../campaigns.types'
+import type {
+    Element,
+    SheetArmor
+} from '../campaigns.types'
 import { removeArmorFromCampaignCharacter } from '../campaigns.service'
 
 const DAMAGE_TYPE_MAP: Record<number, string> = {
@@ -9,7 +12,7 @@ const DAMAGE_TYPE_MAP: Record<number, string> = {
 }
 
 type Props = {
-    armor: any
+    armor: SheetArmor
     elementsMap: Map<number, Element>
     isOpen: boolean
     onToggle: () => void
@@ -31,12 +34,15 @@ function ArmorCardSheet({
 
     const weakDamage =
         armor.armor.weak_damage_type_id
-            ? DAMAGE_TYPE_MAP[armor.armor.weak_damage_type_id]
+            ? DAMAGE_TYPE_MAP[
+                  armor.armor.weak_damage_type_id
+              ]
             : null
 
-    const resolvedElements = armor.elements
-        .map((id: number) => elementsMap.get(id))
-        .filter(Boolean) as Element[]
+    const resolvedElements =
+        (armor.elements ?? [])
+            .map(id => elementsMap.get(id))
+            .filter(Boolean) as Element[]
 
     async function handleUnequipArmor() {
         try {
@@ -73,7 +79,7 @@ function ArmorCardSheet({
             {isOpen && (
                 <div className="armor-card-expanded parchment">
                     {armor.armor.item_description && (
-                        <p className="ability-description">
+                        <p className="armor-description">
                             {armor.armor.item_description}
                         </p>
                     )}
@@ -81,41 +87,53 @@ function ArmorCardSheet({
                     <div className="armor-divider" />
 
                     <div className="armor-stats-grid">
-                        <div>
-                            <span>Slot </span>
-                            <strong>{armor.slot.name}</strong>
+                        <div className="armor-stat">
+                            <span>Slot</span>
+
+                            <strong>
+                                {armor.slot.name}
+                            </strong>
                         </div>
 
-                        <div>
-                            <span>Bônus CA </span>
+                        <div className="armor-stat">
+                            <span>Bônus CA</span>
+
                             <strong>
                                 +{armor.armor.armor_class_bonus}
                             </strong>
                         </div>
 
-                        <div>
-                            <span>Força mínima </span>
+                        <div className="armor-stat">
+                            <span>Força mínima</span>
+
                             <strong>
                                 {armor.armor.min_strength_required}
                             </strong>
                         </div>
 
-                        {armor.armor.speed_penalty > 0 && (
-                            <div>
-                                <span>Penalidade de movimento</span>
-                                <strong>
-                                    -{armor.armor.speed_penalty}
-                                </strong>
-                            </div>
-                        )}
+                        <div className="armor-stat">
+                            <span>
+                                Penalidade de movimento
+                            </span>
+
+                            <strong>
+                                {armor.armor.speed_penalty > 0
+                                    ? `-${armor.armor.speed_penalty}`
+                                    : '0'}
+                            </strong>
+                        </div>
                     </div>
 
                     {isChest && weakDamage && (
                         <>
                             <div className="armor-divider" />
+
                             <div className="armor-weakness">
                                 <span>Fraqueza</span>
-                                <strong>{weakDamage}</strong>
+
+                                <strong>
+                                    {weakDamage}
+                                </strong>
                             </div>
                         </>
                     )}
@@ -123,15 +141,18 @@ function ArmorCardSheet({
                     {resolvedElements.length > 0 && (
                         <>
                             <div className="armor-divider" />
-                            <div className="ability-elements">
-                                {resolvedElements.map(el => (
-                                    <span
-                                        key={el.id}
-                                        className="item-element-tag"
-                                    >
-                                        {el.name}
-                                    </span>
-                                ))}
+
+                            <div className="armor-elements">
+                                {resolvedElements.map(
+                                    element => (
+                                        <span
+                                            key={element.id}
+                                            className="item-element-tag"
+                                        >
+                                            {element.name}
+                                        </span>
+                                    )
+                                )}
                             </div>
                         </>
                     )}
@@ -139,27 +160,97 @@ function ArmorCardSheet({
                     {armor.abilities.length > 0 && (
                         <>
                             <div className="armor-divider" />
-                            <h4 className="section-title">
+
+                            <h4 className="armor-section-title">
                                 Habilidades
                             </h4>
 
-                            {armor.abilities.map((ab: any) => (
-                                <div
-                                    key={ab.id}
-                                    className="armor-ability-card"
-                                >
-                                    <div className="armor-ability-header">
-                                        <strong>{ab.title}</strong>
-                                        {ab.range > 0 && (
-                                            <span>
-                                                Alcance {ab.range}
-                                            </span>
-                                        )}
-                                    </div>
+                            <div className="armor-abilities">
+                                {armor.abilities.map(
+                                    ability => (
+                                        <div
+                                            key={ability.id}
+                                            className="armor-ability-card"
+                                        >
+                                            <div className="armor-ability-header">
+                                                <strong>
+                                                    {ability.title}
+                                                </strong>
+                                            </div>
 
-                                    <p>{ab.description}</p>
-                                </div>
-                            ))}
+                                            <p className="armor-ability-description">
+                                                {
+                                                    ability.description
+                                                }
+                                            </p>
+
+                                            <div className="armor-ability-stats">
+                                                <div className="armor-ability-stat">
+                                                    <span>
+                                                        Dado
+                                                    </span>
+
+                                                    <strong>
+                                                        {ability.dice_formula ||
+                                                            'N/D'}
+                                                    </strong>
+                                                </div>
+
+                                                <div className="armor-ability-stat">
+                                                    <span>
+                                                        Dano base
+                                                    </span>
+
+                                                    <strong>
+                                                        {
+                                                            ability.base_damage
+                                                        }
+                                                    </strong>
+                                                </div>
+
+                                                <div className="armor-ability-stat">
+                                                    <span>
+                                                        Bônus CA
+                                                    </span>
+
+                                                    <strong>
+                                                        {ability.armor_class_bonus >=
+                                                        0
+                                                            ? `+${ability.armor_class_bonus}`
+                                                            : ability.armor_class_bonus}
+                                                    </strong>
+                                                </div>
+
+                                                <div className="armor-ability-stat">
+                                                    <span>
+                                                        Velocidade
+                                                    </span>
+
+                                                    <strong>
+                                                        {ability.bonus_speed >=
+                                                        0
+                                                            ? `+${ability.bonus_speed}`
+                                                            : ability.bonus_speed}
+                                                    </strong>
+                                                </div>
+
+                                                <div className="armor-ability-stat">
+                                                    <span>
+                                                        Alcance
+                                                    </span>
+
+                                                    <strong>
+                                                        {ability.range >
+                                                        0
+                                                            ? `${ability.range} casas`
+                                                            : '0'}
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                )}
+                            </div>
                         </>
                     )}
 
@@ -168,7 +259,9 @@ function ArmorCardSheet({
                     <button
                         type="button"
                         className="armor-remove-button"
-                        onClick={() => setShowConfirm(true)}
+                        onClick={() =>
+                            setShowConfirm(true)
+                        }
                     >
                         Desequipar armadura
                     </button>
@@ -178,21 +271,31 @@ function ArmorCardSheet({
             {showConfirm && (
                 <div className="unequip-modal-backdrop">
                     <div className="unequip-modal">
-                        <h3>Desequipar armadura?</h3>
+                        <h3>
+                            Desequipar armadura?
+                        </h3>
 
                         <p>
-                            Tem certeza que deseja desequipar <strong>{armor.armor.item_name}</strong>?
+                            Tem certeza que deseja
+                            desequipar{' '}
+                            <strong>
+                                {armor.armor.item_name}
+                            </strong>
+                            ?
                         </p>
 
                         <p>
-                            Essa ação não poderá ser desfeita.
+                            Essa ação não poderá ser
+                            desfeita.
                         </p>
 
                         <div className="unequip-modal-actions">
                             <button
                                 type="button"
                                 className="secondary"
-                                onClick={() => setShowConfirm(false)}
+                                onClick={() =>
+                                    setShowConfirm(false)
+                                }
                                 disabled={loading}
                             >
                                 Cancelar
@@ -201,10 +304,14 @@ function ArmorCardSheet({
                             <button
                                 type="button"
                                 className="danger"
-                                onClick={handleUnequipArmor}
+                                onClick={
+                                    handleUnequipArmor
+                                }
                                 disabled={loading}
                             >
-                                {loading ? 'Desequipando...' : 'Desequipar'}
+                                {loading
+                                    ? 'Desequipando...'
+                                    : 'Desequipar'}
                             </button>
                         </div>
                     </div>

@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import type { Element, Item, SheetWeapon } from '../campaigns.types'
+import type {
+  Element,
+  Item,
+  SheetWeapon
+} from '../campaigns.types'
 import { fetchItemById } from '../campaigns.service'
 
 type Props = {
@@ -40,7 +44,7 @@ function WeaponCardSheet({
     weapon.ammo_item_id
   ])
 
-  const resolvedElements = weapon.element_types
+  const resolvedElements = (weapon.element_types ?? [])
     .map(id => elementsMap.get(id))
     .filter(Boolean) as Element[]
 
@@ -61,49 +65,79 @@ function WeaponCardSheet({
 
       {isOpen && (
         <div className="weapon-card-expanded">
-          {item?.description && (
-            <p className="weapon-description">
-              {item.description}
-            </p>
-          )}
+          <p className="weapon-description">
+            {item?.description ??
+              weapon.item_description}
+          </p>
 
           <div className="weapon-divider" />
 
           <div className="weapon-stats">
-            <div>
+            <div className="weapon-stat">
               <span>Dano</span>
+
               <strong>
                 {weapon.dice_formula}
-                {weapon.base_damage > 0 &&
+
+                {weapon.base_damage !== 0 &&
                   ` + ${weapon.base_damage}`}
               </strong>
             </div>
 
-            <div>
+            <div className="weapon-stat">
               <span>Tipo</span>
-              <strong>{weapon.damage_type}</strong>
+
+              <strong>
+                {weapon.damage_type}
+              </strong>
+            </div>
+
+            <div className="weapon-stat">
+              <span>Precisão</span>
+
+              <strong>
+                {weapon.bonus_accuracy >= 0
+                  ? `+${weapon.bonus_accuracy}`
+                  : weapon.bonus_accuracy}
+              </strong>
+            </div>
+
+            <div className="weapon-stat">
+              <span>Velocidade</span>
+
+              <strong>
+                {weapon.bonus_speed >= 0
+                  ? `+${weapon.bonus_speed}`
+                  : weapon.bonus_speed}
+              </strong>
             </div>
 
             {weapon.range > 0 && (
-              <div>
+              <div className="weapon-stat">
                 <span>Alcance</span>
-                <strong>{weapon.range} casas</strong>
+
+                <strong>
+                  {weapon.range} casas
+                </strong>
               </div>
             )}
 
             {weapon.ammo_item_id && (
-              <div>
+              <div className="weapon-stat">
                 <span>Munição</span>
+
                 <strong>
-                  {ammoItem?.name ?? 'Carregando...'}
+                  {ammoItem?.name ??
+                    'Carregando...'}
                 </strong>
               </div>
             )}
 
             {weapon.ammo_item_id &&
               weapon.ammo_per_use > 0 && (
-                <div>
+                <div className="weapon-stat">
                   <span>Consumo</span>
+
                   <strong>
                     {weapon.ammo_per_use} por ataque
                   </strong>
@@ -116,12 +150,12 @@ function WeaponCardSheet({
               <div className="weapon-divider" />
 
               <div className="weapon-elements">
-                {resolvedElements.map(el => (
+                {resolvedElements.map(element => (
                   <span
-                    key={el.id}
+                    key={element.id}
                     className="item-element-tag"
                   >
-                    {el.name}
+                    {element.name}
                   </span>
                 ))}
               </div>
@@ -137,33 +171,103 @@ function WeaponCardSheet({
               </h4>
 
               <div className="weapon-abilities">
-                {weapon.abilities.map(ab => (
-                  <div
-                    key={ab.id}
-                    className="weapon-ability-card"
-                  >
-                    <div className="weapon-ability-header">
-                      <strong>{ab.title}</strong>
+                {weapon.abilities.map(ability => {
+                  const abilityElements =
+                    (ability.element_types ?? [])
+                      .map(id =>
+                        elementsMap.get(id)
+                      )
+                      .filter(Boolean) as Element[]
 
-                      {ab.range > 0 && (
-                        <span>
-                          Alcance {ab.range}
-                        </span>
+                  return (
+                    <div
+                      key={ability.id}
+                      className="weapon-ability-card"
+                    >
+                      <div className="weapon-ability-header">
+                        <strong>
+                          {ability.title}
+                        </strong>
+                      </div>
+
+                      <p className="weapon-ability-description">
+                        {ability.description}
+                      </p>
+
+                      <div className="weapon-ability-stats">
+                        <div className="weapon-ability-stat">
+                          <span>Dado</span>
+
+                          <strong>
+                            {ability.dice_formula ||
+                              'N/D'}
+                          </strong>
+                        </div>
+
+                        <div className="weapon-ability-stat">
+                          <span>Dano base</span>
+
+                          <strong>
+                            {ability.base_damage}
+                          </strong>
+                        </div>
+
+                        <div className="weapon-ability-stat">
+                          <span>Bônus de dano</span>
+
+                          <strong>
+                            {ability.bonus_damage >= 0
+                              ? `+${ability.bonus_damage}`
+                              : ability.bonus_damage}
+                          </strong>
+                        </div>
+
+                        <div className="weapon-ability-stat">
+                          <span>Precisão</span>
+
+                          <strong>
+                            {ability.bonus_accuracy >= 0
+                              ? `+${ability.bonus_accuracy}`
+                              : ability.bonus_accuracy}
+                          </strong>
+                        </div>
+
+                        <div className="weapon-ability-stat">
+                          <span>Velocidade</span>
+
+                          <strong>
+                            {ability.bonus_speed >= 0
+                              ? `+${ability.bonus_speed}`
+                              : ability.bonus_speed}
+                          </strong>
+                        </div>
+
+                        <div className="weapon-ability-stat">
+                          <span>Alcance</span>
+
+                          <strong>
+                            {ability.range > 0
+                              ? `${ability.range} casas`
+                              : '0'}
+                          </strong>
+                        </div>
+                      </div>
+
+                      {abilityElements.length > 0 && (
+                        <div className="weapon-ability-elements">
+                          {abilityElements.map(element => (
+                            <span
+                              key={element.id}
+                              className="item-element-tag"
+                            >
+                              {element.name}
+                            </span>
+                          ))}
+                        </div>
                       )}
                     </div>
-
-                    {(ab.dice_formula ||
-                      ab.base_damage > 0) && (
-                      <div className="weapon-ability-damage">
-                        Dano {ab.dice_formula}
-                        {ab.base_damage > 0 &&
-                          ` + ${ab.base_damage}`}
-                      </div>
-                    )}
-
-                    <p>{ab.description}</p>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </>
           )}

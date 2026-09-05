@@ -413,11 +413,13 @@ export type SheetArmorAbility = {
     description: string
     dice_formula: string | null
     base_damage: number
+    range: number
     armor_class_bonus: number
     bonus_speed: number
     created_at: string
     updated_at: string | null
 }
+
 
 export type SheetArmorSlot = {
     id: number
@@ -434,15 +436,19 @@ export type SheetArmor = {
         armor_class_bonus: number
         min_strength_required: number
         speed_penalty: number
+        weak_damage_type_id: number | null
         element_types: number[]
         armor_abilities: any[]
         created_at: string
+        item_name: string
+        item_description: string
     }
     slot: SheetArmorSlot
     elements: number[]
     abilities: SheetArmorAbility[]
     is_equipped: boolean
 }
+
 
 export type SheetItem = {
     item: {
