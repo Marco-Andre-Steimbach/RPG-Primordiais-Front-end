@@ -8,7 +8,10 @@ import {
   fetchMonsterElements,
   fetchCharacterElements
 } from '../element.service'
-import type { ElementType } from '../elements.types'
+import type {
+  ElementType,
+  ElementDamageResponse
+} from '../elements.types'
 import type { CampaignCharacter } from '../campaigns.types'
 import type { MonsterListItem } from '../monsters.types'
 
@@ -28,7 +31,10 @@ function ElementDamageCalculator() {
   const [monsters, setMonsters] = useState<MonsterListItem[]>([])
   const [selectedEntityId, setSelectedEntityId] = useState('')
 
-  const [result, setResult] = useState<any>(null)
+  const [result, setResult] = useState<
+    ElementDamageResponse['damage'] | null
+  >(null)
+
   const [loading, setLoading] = useState(false)
   const [loadingEntities, setLoadingEntities] = useState(false)
 
@@ -48,6 +54,7 @@ function ElementDamageCalculator() {
       fetchCampaignById(campaignId)
         .then(res => setCharacters(res.campaign.characters))
         .finally(() => setLoadingEntities(false))
+
       return
     }
 
@@ -88,26 +95,36 @@ function ElementDamageCalculator() {
 
     if (defenseFilter === 'player') {
       const res = await fetchCharacterElements(entityId)
-      setDefenseElements(res.elements.map(el => el.id))
+
+      setDefenseElements(
+        res.elements.map(el => el.id)
+      )
+
       return
     }
 
     const res = await fetchMonsterElements(entityId)
-    setDefenseElements(res.elements.map(el => el.id))
+
+    setDefenseElements(
+      res.elements.map(el => el.id)
+    )
   }
 
   async function handleCalculate() {
     setLoading(true)
     setResult(null)
 
-    const res = await calculateElementDamage({
-      attack_elements: attackElements,
-      defense_elements: defenseElements,
-      base_damage: baseDamage
-    })
+    try {
+      const res = await calculateElementDamage({
+        attack_elements: attackElements,
+        defense_elements: defenseElements,
+        base_damage: baseDamage
+      })
 
-    setResult(res.damage)
-    setLoading(false)
+      setResult(res.damage)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -118,8 +135,18 @@ function ElementDamageCalculator() {
         {elements.map(el => (
           <button
             key={el.id}
-            className={`element-btn ${attackElements.includes(el.id) ? 'active' : ''}`}
-            onClick={() => toggle(attackElements, setAttackElements, el.id)}
+            className={`element-btn ${
+              attackElements.includes(el.id)
+                ? 'active'
+                : ''
+            }`}
+            onClick={() =>
+              toggle(
+                attackElements,
+                setAttackElements,
+                el.id
+              )
+            }
           >
             {el.name}
           </button>
@@ -132,19 +159,42 @@ function ElementDamageCalculator() {
         <input
           type="number"
           value={baseDamage}
-          onChange={e => setBaseDamage(Number(e.target.value))}
+          onChange={e =>
+            setBaseDamage(Number(e.target.value))
+          }
         />
 
-        <button onClick={handleCalculate} disabled={loading}>
-          Calcular
+        <button
+          onClick={handleCalculate}
+          disabled={loading}
+        >
+          {loading ? 'Calculando...' : 'Calcular'}
         </button>
 
         {result && (
           <div className="damage-result">
-            <p>Dano Base: {result.base_damage}</p>
-            <p>Multiplicador: x{result.multiplier}</p>
-            <p>Modificador: {result.modifier}</p>
-            <p>Dano Final: {result.final_damage}</p>
+            <p>
+              Dano Base: {result.base_damage}
+            </p>
+
+            <p>
+              Multiplicador: x{result.multiplier}
+            </p>
+
+            <p>
+              Modificador: {result.modifier}
+            </p>
+
+            {result.damage_zeroed && (
+              <p>
+                Dano zerado — aplicado{' '}
+                {result.zero_damage_percentage}% do dano base.
+              </p>
+            )}
+
+            <p>
+              Dano Final: {result.final_damage}
+            </p>
           </div>
         )}
       </div>
@@ -157,11 +207,23 @@ function ElementDamageCalculator() {
 
           <select
             value={defenseFilter}
-            onChange={e => setDefenseFilter(e.target.value as DefenseFilter)}
+            onChange={e =>
+              setDefenseFilter(
+                e.target.value as DefenseFilter
+              )
+            }
           >
-            <option value="">Selecione...</option>
-            <option value="player">Player</option>
-            <option value="monster">Monstro</option>
+            <option value="">
+              Selecione...
+            </option>
+
+            <option value="player">
+              Player
+            </option>
+
+            <option value="monster">
+              Monstro
+            </option>
           </select>
 
           {defenseFilter && (
@@ -174,11 +236,15 @@ function ElementDamageCalculator() {
 
               <select
                 value={selectedEntityId}
-                onChange={e => handleSelectEntity(e.target.value)}
+                onChange={e =>
+                  handleSelectEntity(e.target.value)
+                }
                 disabled={loadingEntities}
               >
                 <option value="">
-                  {loadingEntities ? 'Carregando...' : 'Selecione...'}
+                  {loadingEntities
+                    ? 'Carregando...'
+                    : 'Selecione...'}
                 </option>
 
                 {defenseFilter === 'player' &&
@@ -193,7 +259,10 @@ function ElementDamageCalculator() {
 
                 {defenseFilter === 'monster' &&
                   monsters.map(monster => (
-                    <option key={monster.id} value={monster.id}>
+                    <option
+                      key={monster.id}
+                      value={monster.id}
+                    >
                       {monster.name}
                     </option>
                   ))}
@@ -202,15 +271,28 @@ function ElementDamageCalculator() {
           )}
 
           {defenseElements.length > 0 && (
-            <p>Tipos selecionados: {selectedDefenseNames}</p>
+            <p>
+              Tipos selecionados:{' '}
+              {selectedDefenseNames}
+            </p>
           )}
         </div>
 
         {elements.map(el => (
           <button
             key={el.id}
-            className={`element-btn ${defenseElements.includes(el.id) ? 'active' : ''}`}
-            onClick={() => toggle(defenseElements, setDefenseElements, el.id)}
+            className={`element-btn ${
+              defenseElements.includes(el.id)
+                ? 'active'
+                : ''
+            }`}
+            onClick={() =>
+              toggle(
+                defenseElements,
+                setDefenseElements,
+                el.id
+              )
+            }
           >
             {el.name}
           </button>

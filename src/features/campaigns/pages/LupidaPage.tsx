@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import {
+    useLocation,
+    useNavigate,
+    useParams
+} from 'react-router-dom'
 import {
     fetchLupida,
     fetchCharacterSheetInfo,
-    fetchFullCharacterSheet,
     spendCampaignCharacterGold,
     addArmorToCampaignCharacter,
     addWeaponToCampaignCharacter,
@@ -12,7 +15,8 @@ import {
 import type {
     LupidaArmor,
     LupidaWeapon,
-    LupidaItem
+    LupidaItem,
+    CharacterModifiers
 } from '../campaigns.types'
 
 import '../campaigns.css'
@@ -23,6 +27,8 @@ import LupidaItemCard from '../components/LupidaItemCard'
 import ConfirmArmorReplaceModal from '../components/ConfirmArmorReplaceModal'
 import ConfirmWeaponReplaceModal from '../components/ConfirmWeaponReplaceModal'
 import StrengthRequirementModal from '../components/StrengthRequirementModal'
+import WeaponRequirementModal from '../components/WeaponRequirementModal'
+
 
 type TabType =
     | 'armors'
@@ -40,9 +46,39 @@ type EquippedWeapon = {
     item_name: string
 }
 
+type WeaponModifierFilter =
+    | 'all'
+    | LupidaWeapon['required_modifier']
+
+type WeaponSortField =
+    | 'value'
+    | 'required_modifier_value'
+
+type WeaponSortDirection =
+    | 'asc'
+    | 'desc'
+
 function LupidaPage() {
     const { campaignId, characterId } = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
+
+    const routeState = location.state as {
+        modifiers?: CharacterModifiers
+    } | null
+
+    const modifiers: CharacterModifiers =
+        routeState?.modifiers ?? {
+            str: 0,
+            dex: 0,
+            con: 0,
+            intt: 0,
+            wis: 0,
+            cha: 0
+        }
+
+    const strengthModifier =
+        modifiers.str
 
     const [activeTab, setActiveTab] =
         useState<TabType>('armors')
@@ -70,8 +106,14 @@ function LupidaPage() {
     const [gold, setGold] =
         useState(0)
 
-    const [strengthModifier, setStrengthModifier] =
-        useState(0)
+    const [weaponModifierFilter, setWeaponModifierFilter] =
+        useState<WeaponModifierFilter>('all')
+
+    const [weaponSortField, setWeaponSortField] =
+        useState<WeaponSortField>('value')
+
+    const [weaponSortDirection, setWeaponSortDirection] =
+        useState<WeaponSortDirection>('asc')
 
     const [loading, setLoading] =
         useState(true)
@@ -92,6 +134,52 @@ function LupidaPage() {
 
     const [weaponModalOpen, setWeaponModalOpen] =
         useState(false)
+
+    const [
+        modifierBlockedWeapon,
+        setModifierBlockedWeapon
+    ] = useState<LupidaWeapon | null>(null)
+
+    const filteredWeapons = useMemo(() => {
+        const result =
+            weaponModifierFilter === 'all'
+                ? [...weapons]
+                : weapons.filter(
+                    weapon =>
+                        weapon.required_modifier ===
+                        weaponModifierFilter
+                )
+
+        result.sort((a, b) => {
+            const firstValue =
+                weaponSortField === 'value'
+                    ? a.value
+                    : a.required_modifier_value
+
+            const secondValue =
+                weaponSortField === 'value'
+                    ? b.value
+                    : b.required_modifier_value
+
+            if (firstValue === secondValue) {
+                return a.item_name.localeCompare(
+                    b.item_name,
+                    'pt-BR'
+                )
+            }
+
+            return weaponSortDirection === 'asc'
+                ? firstValue - secondValue
+                : secondValue - firstValue
+        })
+
+        return result
+    }, [
+        weapons,
+        weaponModifierFilter,
+        weaponSortField,
+        weaponSortDirection
+    ])
 
     useEffect(() => {
         if (!campaignId || !characterId) {
@@ -159,15 +247,6 @@ function LupidaPage() {
                         weapon.item_name
                 }))
             )
-
-            const sheetRes = await fetchFullCharacterSheet(
-    campaignId!,
-    characterId!
-)
-
-setStrengthModifier(
-    sheetRes.sheet.base.modifiers.str
-)
         }
 
         load()
@@ -230,15 +309,24 @@ setStrengthModifier(
                     weapon.item_name
             }))
         )
+    }
+    function continueBuyArmor(
+        armor: LupidaArmor
+    ) {
+        const conflict =
+            equippedArmors.find(
+                equippedArmor =>
+                    equippedArmor.armor_slot_id ===
+                    armor.armor_slot_id
+            )
 
-        const sheetRes = await fetchFullCharacterSheet(
-    campaignId,
-    characterId
-)
+        if (conflict) {
+            setPendingArmor(armor)
+            setArmorModalOpen(true)
+            return
+        }
 
-setStrengthModifier(
-    sheetRes.sheet.base.modifiers.str
-)
+        void confirmBuyArmor(armor)
     }
 
     function tryBuyArmor(
@@ -256,30 +344,11 @@ setStrengthModifier(
             strengthModifier <
             armor.min_strength_required
         ) {
-            setStrengthBlockedArmor(
-                armor
-            )
-
+            setStrengthBlockedArmor(armor)
             return
         }
 
-        const conflict =
-            equippedArmors.find(
-                equippedArmor =>
-                    equippedArmor
-                        .armor_slot_id ===
-                    armor.armor_slot_id
-            )
-
-        if (conflict) {
-            setPendingArmor(armor)
-            setArmorModalOpen(true)
-            return
-        }
-
-        void confirmBuyArmor(
-            armor
-        )
+        continueBuyArmor(armor)
     }
 
     async function confirmBuyArmor(
@@ -331,6 +400,17 @@ setStrengthModifier(
         await refreshCharacterInfos()
     }
 
+    function getWeaponModifier(
+        weapon: LupidaWeapon
+    ): number {
+        const modifierKey: keyof CharacterModifiers =
+            weapon.required_modifier === 'int'
+                ? 'intt'
+                : weapon.required_modifier
+
+        return modifiers[modifierKey]
+    }
+
     function tryBuyWeapon(
         weapon: LupidaWeapon
     ) {
@@ -339,6 +419,14 @@ setStrengthModifier(
         }
 
         if (gold < weapon.value) {
+            return
+        }
+
+        if (
+            getWeaponModifier(weapon) <
+            weapon.required_modifier_value
+        ) {
+            setModifierBlockedWeapon(weapon)
             return
         }
 
@@ -455,7 +543,7 @@ setStrengthModifier(
                     .map(currentItem =>
                         currentItem
                             .item_id ===
-                        item.item_id
+                            item.item_id
                             ? {
                                 ...currentItem,
                                 quantity:
@@ -511,7 +599,7 @@ setStrengthModifier(
                 <button
                     className={
                         activeTab ===
-                        'armors'
+                            'armors'
                             ? 'active'
                             : ''
                     }
@@ -527,7 +615,7 @@ setStrengthModifier(
                 <button
                     className={
                         activeTab ===
-                        'weapons'
+                            'weapons'
                             ? 'active'
                             : ''
                     }
@@ -543,7 +631,7 @@ setStrengthModifier(
                 <button
                     className={
                         activeTab ===
-                        'items'
+                            'items'
                             ? 'active'
                             : ''
                     }
@@ -556,6 +644,109 @@ setStrengthModifier(
                     Itens
                 </button>
             </div>
+
+            {activeTab === 'weapons' && (
+                <div className="lupida-weapon-filters">
+                    <div className="lupida-weapon-filter-group">
+                        <label htmlFor="weapon-modifier-filter">
+                            Modificador
+                        </label>
+
+                        <select
+                            id="weapon-modifier-filter"
+                            value={weaponModifierFilter}
+                            onChange={event =>
+                                setWeaponModifierFilter(
+                                    event.target.value as WeaponModifierFilter
+                                )
+                            }
+                        >
+                            <option value="all">
+                                Todos
+                            </option>
+
+                            <option value="str">
+                                Força
+                            </option>
+
+                            <option value="dex">
+                                Destreza
+                            </option>
+
+                            <option value="con">
+                                Constituição
+                            </option>
+
+                            <option value="int">
+                                Inteligência
+                            </option>
+
+                            <option value="wis">
+                                Sabedoria
+                            </option>
+
+                            <option value="cha">
+                                Carisma
+                            </option>
+                        </select>
+                    </div>
+
+                    <div className="lupida-weapon-filter-group">
+                        <label htmlFor="weapon-sort-field">
+                            Ordenar por
+                        </label>
+
+                        <select
+                            id="weapon-sort-field"
+                            value={weaponSortField}
+                            onChange={event =>
+                                setWeaponSortField(
+                                    event.target.value as WeaponSortField
+                                )
+                            }
+                        >
+                            <option value="value">
+                                Valor em ouro
+                            </option>
+
+                            <option value="required_modifier_value">
+                                Requisito
+                            </option>
+                        </select>
+                    </div>
+
+                    <div className="lupida-weapon-filter-group">
+                        <label htmlFor="weapon-sort-direction">
+                            Ordem
+                        </label>
+
+                        <select
+                            id="weapon-sort-direction"
+                            value={weaponSortDirection}
+                            onChange={event =>
+                                setWeaponSortDirection(
+                                    event.target.value as WeaponSortDirection
+                                )
+                            }
+                        >
+                            <option value="asc">
+                                Menor primeiro
+                            </option>
+
+                            <option value="desc">
+                                Maior primeiro
+                            </option>
+                        </select>
+                    </div>
+
+                    <div className="lupida-weapon-filter-count">
+                        {filteredWeapons.length}{' '}
+                        {filteredWeapons.length === 1
+                            ? 'arma'
+                            : 'armas'}
+                    </div>
+                </div>
+            )}
 
             <div className="lupida-content">
                 {activeTab ===
@@ -580,7 +771,7 @@ setStrengthModifier(
 
                 {activeTab ===
                     'weapons' &&
-                    weapons.map(weapon => (
+                    filteredWeapons.map(weapon => (
                         <LupidaWeaponCard
                             key={
                                 weapon.id
@@ -639,16 +830,31 @@ setStrengthModifier(
 
             {strengthBlockedArmor && (
                 <StrengthRequirementModal
-                    armor={
-                        strengthBlockedArmor
+                    armor={strengthBlockedArmor}
+                    strengthModifier={strengthModifier}
+                    onClose={() =>
+                        setStrengthBlockedArmor(null)
                     }
-                    strengthModifier={
-                        strengthModifier
+                    onConfirm={() => {
+                        const armor = strengthBlockedArmor
+
+                        setStrengthBlockedArmor(null)
+
+                        continueBuyArmor(armor)
+                    }}
+                />
+            )}
+
+            {modifierBlockedWeapon && (
+                <WeaponRequirementModal
+                    weapon={modifierBlockedWeapon}
+                    currentModifier={
+                        getWeaponModifier(
+                            modifierBlockedWeapon
+                        )
                     }
                     onClose={() =>
-                        setStrengthBlockedArmor(
-                            null
-                        )
+                        setModifierBlockedWeapon(null)
                     }
                 />
             )}

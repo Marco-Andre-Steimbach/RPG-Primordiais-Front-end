@@ -21,6 +21,8 @@ export type ElementDamageResponse = {
     final_damage: number
     multiplier: number
     modifier: number
+    damage_zeroed: boolean
+    zero_damage_percentage: number | null
   }
 }
 

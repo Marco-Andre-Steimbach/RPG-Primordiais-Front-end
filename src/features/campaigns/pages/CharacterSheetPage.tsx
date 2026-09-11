@@ -66,12 +66,12 @@ function CharacterSheetPage() {
     const [infos, setInfos] = useState<CharacterSheetInfo | null>(null)
     const [sheet, setSheet] = useState<FullCharacterSheet | null>(null)
     const [elements, setElements] = useState<Element[]>([])
-const [modal, setModal] = useState<null | {
-    title: string
-    message: string
-    redirect: string
-    canClose?: boolean
-}>(null)
+    const [modal, setModal] = useState<null | {
+        title: string
+        message: string
+        redirect: string
+        canClose?: boolean
+    }>(null)
 
     useEffect(() => {
         if (!campaignId || !characterId) return
@@ -124,15 +124,15 @@ const [modal, setModal] = useState<null | {
             return
         }
 
-if (infos.abilities < expectedAbilities) {
-    setModal({
-        title: 'Habilidades pendentes',
-        message: `Este personagem possui ${infos.abilities} habilidades, mas deveria possuir ${expectedAbilities}. Você ainda pode acessar a ficha e escolher as habilidades posteriormente.`,
-        redirect: `/campaign/${campaignId}/characters/${characterId}/abilities`,
-        canClose: true
-    })
-    return
-}
+        if (infos.abilities < expectedAbilities) {
+            setModal({
+                title: 'Habilidades pendentes',
+                message: `Este personagem possui ${infos.abilities} habilidades, mas deveria possuir ${expectedAbilities}. Você ainda pode acessar a ficha e escolher as habilidades posteriormente.`,
+                redirect: `/campaign/${campaignId}/characters/${characterId}/abilities`,
+                canClose: true
+            })
+            return
+        }
 
         setModal(null)
     }, [campaign, infos, sheet, campaignId, characterId])
@@ -194,20 +194,20 @@ if (infos.abilities < expectedAbilities) {
         }))
     }, [weakDamageTypeIds])
 
-if (modal) {
-    return (
-        <CharacterProgressionModal
-            title={modal.title}
-            message={modal.message}
-            onConfirm={() => navigate(modal.redirect)}
-            onClose={
-                modal.canClose
-                    ? () => setModal(null)
-                    : undefined
-            }
-        />
-    )
-}
+    if (modal) {
+        return (
+            <CharacterProgressionModal
+                title={modal.title}
+                message={modal.message}
+                onConfirm={() => navigate(modal.redirect)}
+                onClose={
+                    modal.canClose
+                        ? () => setModal(null)
+                        : undefined
+                }
+            />
+        )
+    }
 
     if (!sheet) {
         return (
@@ -219,17 +219,22 @@ if (modal) {
 
     return (
         <div className="character-sheet-page">
-                <button
-        className="dice-drawer-button"
-        onClick={() => setDiceDrawerOpen(true)}
-    >
-        Rolador de Dados
-    </button>
+            <button
+                className="dice-drawer-button"
+                onClick={() => setDiceDrawerOpen(true)}
+            >
+                Rolador de Dados
+            </button>
             <button
                 className="lupida-button"
                 onClick={() =>
                     navigate(
-                        `/campaign/${campaignId}/characters/${characterId}/lupida`
+                        `/campaign/${campaignId}/characters/${characterId}/lupida`,
+                        {
+                            state: {
+                                modifiers: sheet.base.modifiers
+                            }
+                        }
                     )
                 }
             >
@@ -237,9 +242,9 @@ if (modal) {
             </button>
 
             <DiceRollerDrawer
-    isOpen={diceDrawerOpen}
-    onClose={() => setDiceDrawerOpen(false)}
-/>
+                isOpen={diceDrawerOpen}
+                onClose={() => setDiceDrawerOpen(false)}
+            />
 
             <CardInfosGerais
                 level={sheet.progression.level}

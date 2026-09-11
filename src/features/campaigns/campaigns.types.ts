@@ -571,6 +571,14 @@ export type LupidaArmor = {
     abilities: LupidaArmorAbility[]
 }
 
+export type WeaponRequiredModifier =
+    | 'str'
+    | 'dex'
+    | 'con'
+    | 'int'
+    | 'wis'
+    | 'cha'
+
 export type LupidaWeapon = {
     id: number
     item_id: number
@@ -589,6 +597,8 @@ export type LupidaWeapon = {
     value: number
     abilities: LupidaWeaponAbility[]
     range: number
+    required_modifier: WeaponRequiredModifier
+    required_modifier_value: number
 }
 
 export type LupidaItem = {

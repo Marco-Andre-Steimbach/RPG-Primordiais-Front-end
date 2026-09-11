@@ -1,20 +1,33 @@
-import type { LupidaArmor } from '../campaigns.types'
+import type { LupidaWeapon } from '../campaigns.types'
 
 type Props = {
-    armor: LupidaArmor
-    strengthModifier: number
+    weapon: LupidaWeapon
+    currentModifier: number
     onClose: () => void
-    onConfirm: () => void
 }
 
-function StrengthRequirementModal({
-    armor,
-    strengthModifier,
-    onClose,
-    onConfirm
+const MODIFIER_LABELS: Record<
+    LupidaWeapon['required_modifier'],
+    string
+> = {
+    str: 'Força',
+    dex: 'Destreza',
+    con: 'Constituição',
+    int: 'Inteligência',
+    wis: 'Sabedoria',
+    cha: 'Carisma'
+}
+
+function WeaponRequirementModal({
+    weapon,
+    currentModifier,
+    onClose
 }: Props) {
-    const missingStrength =
-        armor.min_strength_required - strengthModifier
+    const modifierLabel =
+        MODIFIER_LABELS[weapon.required_modifier]
+
+    const missingModifier =
+        weapon.required_modifier_value - currentModifier
 
     return (
         <div
@@ -40,21 +53,24 @@ function StrengthRequirementModal({
                     </span>
 
                     <h2>
-                        Tem certeza disso?
+                        Você ainda não pode comprar esta arma
                     </h2>
 
                     <p className="lupida-strength-modal-text">
-                        Você não possui Força suficiente para utilizar{' '}
-                        <strong>{armor.item_name}</strong> sem sofrer
-                        consequências.
+                        Você não possui modificador de{' '}
+                        <strong>{modifierLabel}</strong>{' '}
+                        suficiente para comprar{' '}
+                        <strong>{weapon.item_name}</strong>.
                     </p>
 
                     <div className="lupida-strength-comparison">
                         <div className="lupida-strength-value current">
-                            <span>Sua Força</span>
+                            <span>
+                                Sua {modifierLabel}
+                            </span>
 
                             <strong>
-                                +{strengthModifier}
+                                +{currentModifier}
                             </strong>
                         </div>
 
@@ -63,10 +79,12 @@ function StrengthRequirementModal({
                         </div>
 
                         <div className="lupida-strength-value required">
-                            <span>Necessária</span>
+                            <span>
+                                Necessária
+                            </span>
 
                             <strong>
-                                +{armor.min_strength_required}
+                                +{weapon.required_modifier_value}
                             </strong>
                         </div>
                     </div>
@@ -74,21 +92,13 @@ function StrengthRequirementModal({
                     <div className="lupida-strength-missing">
                         Faltam{' '}
                         <strong>
-                            {missingStrength}
+                            {missingModifier}
                         </strong>{' '}
-                        pontos de modificador de Força.
-                    </div>
-
-                    <div className="lupida-strength-missing">
-                        Se equipar esta armadura, você sofrerá uma penalidade de{' '}
-                        <strong>
-                            -{armor.speed_penalty} Speed
-                        </strong>.
+                        pontos de modificador de {modifierLabel}.
                     </div>
 
                     <blockquote className="lupida-demon-quote">
-                        “Eu não vou impedir você... mas certamente vou rir
-                        das consequências.”
+                        “Volte quando estiver à altura da arma que deseja.”
                     </blockquote>
 
                     <div className="lupida-strength-actions">
@@ -97,15 +107,7 @@ function StrengthRequirementModal({
                             className="lupida-strength-close"
                             onClick={onClose}
                         >
-                            Pensar melhor
-                        </button>
-
-                        <button
-                            type="button"
-                            className="lupida-strength-confirm"
-                            onClick={onConfirm}
-                        >
-                            Comprar mesmo assim
+                            Entendido
                         </button>
                     </div>
                 </div>
@@ -114,4 +116,4 @@ function StrengthRequirementModal({
     )
 }
 
-export default StrengthRequirementModal
+export default WeaponRequirementModal
