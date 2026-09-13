@@ -184,10 +184,158 @@ export type CharacterSheetResponse = {
     }
 }
 
-export type CampaignCharacterAbility = {
+export type AbilityFormType =
+    | 'normal'
+    | 'arcane'
+
+export type AbilityActivationType =
+    | 'action'
+    | 'free_action'
+    | 'reaction'
+    | 'automatic'
+    | 'custom'
+
+export type AbilityTargetType =
+    | 'self'
+    | 'single'
+    | 'multiple'
+    | 'area'
+    | 'all'
+    | 'ally'
+    | 'enemy'
+    | 'any'
+    | 'custom'
+
+export type AbilityRuleType =
+    | 'direct'
+    | 'improvement'
+    | 'ability_test'
+    | 'attack'
+    | 'opposed_test'
+    | 'random_table'
+    | 'custom'
+
+export type AbilityRuleNodeType =
+    | 'section'
+    | 'test'
+    | 'critical_success'
+    | 'success'
+    | 'failure'
+    | 'critical_failure'
+    | 'random_table'
+    | 'random_result'
+    | 'condition'
+    | 'effect'
+    | 'summon'
+    | 'attack'
+    | 'custom'
+
+export type AbilityRuleNode = {
+    id: number
+    ability_form_id: number
+    parent_id: number | null
+    node_type: AbilityRuleNodeType
+    title: string | null
+    description: string | null
+    sort_order: number
+
+    roll_formula: string | null
+    roll_min: number | null
+    roll_max: number | null
+
+    rule_type: AbilityRuleType | null
+    actor_roll_formula: string | null
+    defender_roll_formula: string | null
+
+    actor_attribute_id: number | null
+    defender_attribute_id: number | null
+
+    range_formula: string | null
+    area_formula: string | null
+    damage_formula: string | null
+    duration_formula: string | null
+    action_change_formula: string | null
+    movement_formula: string | null
+
+    target_type: AbilityTargetType | null
+
+    element_type_ids: number[]
+
+    metadata: Record<string, unknown> | null
+
+    created_at: string | null
+    updated_at: string | null
+
+    children: AbilityRuleNode[]
+}
+
+export type AbilityNewForm = {
+    id: number
+    ability_id: number
+    form_type: AbilityFormType
+
+    title: string
+    description: string
+
+    mana_cost: number
+
+    activation_type: AbilityActivationType
+    action_cost: number
+
+    uses_per_turn: number | null
+    uses_per_combat: number | null
+
+    range_formula: string | null
+    area_formula: string | null
+
+    target_type: AbilityTargetType | null
+
+    element_type_ids: number[]
+
+    affects_allies: boolean
+    affects_enemies: boolean
+
+    rule_type: AbilityRuleType
+
+    actor_roll_formula: string | null
+    defender_roll_formula: string | null
+
+    actor_attribute_id: number | null
+    defender_attribute_id: number | null
+
+    rule_description: string | null
+
+    created_at: string | null
+    updated_at: string | null
+
+    rules: AbilityRuleNode[]
+}
+
+export type AbilityNew = {
+    id: number
+    required_race_id: number | null
+    required_order_id: number | null
+    created_at: string | null
+    updated_at: string | null
+
+    forms: Partial<Record<AbilityFormType, AbilityNewForm>>
+}
+
+export type LegacyCampaignCharacterAbility = {
     ability: Ability
     elements: number[]
+    schema: 'legacy'
 }
+
+export type NewCampaignCharacterAbility = {
+    ability: AbilityNew
+    elements: number[]
+    schema: 'new'
+}
+
+export type CampaignCharacterAbility =
+    | LegacyCampaignCharacterAbility
+    | NewCampaignCharacterAbility
 
 export type ElementType = {
     id: number
@@ -213,7 +361,7 @@ export type Ability = {
 }
 
 export type CharacterAbilitiesResponse = {
-    abilities: Ability[]
+    abilities: CampaignCharacterAbility[]
 }
 
 export type CharacterAbilityByIdResponse = {

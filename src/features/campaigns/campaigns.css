@@ -4418,3 +4418,810 @@
         padding: 4px 0 0;
     }
 }
+/* =========================================================
+   CHARACTER SHEET - ABILITY V2
+   ========================================================= */
+
+.sheet-ability-v2 {
+    width: 100%;
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+
+    background: #080d20;
+}
+
+.sheet-ability-v2__button {
+    width: 100%;
+    min-height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+    padding: 14px 16px;
+
+    border: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    color: #ffffff;
+    font-family: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.sheet-ability-v2__button:hover {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.045)
+        );
+}
+
+.sheet-ability-v2__button-main {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.sheet-ability-v2__button-main strong {
+    overflow: hidden;
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sheet-ability-v2__button-main span {
+    color: rgba(255, 255, 255, 0.48);
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.sheet-ability-v2__button-meta {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+
+    gap: 12px;
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-size: 12px;
+}
+
+.sheet-ability-v2__arrow {
+    display: inline-block;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 9px;
+
+    transition: transform 0.2s ease;
+}
+
+.sheet-ability-v2__arrow--open {
+    transform: rotate(180deg);
+}
+
+.sheet-ability-v2__content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    background: #10172b;
+}
+
+.sheet-ability-v2__form {
+    overflow: hidden;
+
+    padding: 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    color: #f5f7ff;
+}
+
+.sheet-ability-v2__form--arcane {
+    border-color: rgba(157, 112, 219, 0.26);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(92, 50, 140, 0.22),
+            rgba(16, 23, 43, 0.96)
+        );
+}
+
+.sheet-ability-v2__form-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    margin-bottom: 14px;
+}
+
+.sheet-ability-v2__form-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #8297d9;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.sheet-ability-v2__form--arcane
+    .sheet-ability-v2__form-label {
+    color: #c5a0ef;
+}
+
+.sheet-ability-v2__form-title {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 17px;
+    line-height: 1.25;
+}
+
+.sheet-ability-v2__form-mana {
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+
+    border: 1px solid rgba(116, 144, 226, 0.25);
+    border-radius: 999px;
+
+    background: rgba(52, 72, 141, 0.28);
+
+    color: #cad5ff;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.sheet-ability-v2__form--arcane
+    .sheet-ability-v2__form-mana {
+    border-color: rgba(185, 135, 235, 0.3);
+
+    background: rgba(105, 54, 151, 0.28);
+
+    color: #ead8ff;
+}
+
+.sheet-ability-v2__description {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.86);
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    white-space: pre-line;
+    overflow-wrap: break-word;
+}
+
+.sheet-ability-v2__meta {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(105px, 1fr)
+        );
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+.sheet-ability-v2__meta > div {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding: 9px 11px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.sheet-ability-v2__meta span {
+    color: rgba(255, 255, 255, 0.46);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.sheet-ability-v2__meta strong {
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    overflow-wrap: break-word;
+}
+
+.sheet-ability-v2__test-summary {
+    margin-top: 16px;
+
+    padding: 12px 14px;
+
+    border-left: 3px solid #526dbe;
+    border-radius: 7px;
+
+    background: rgba(43, 61, 121, 0.22);
+}
+
+.sheet-ability-v2__form--arcane
+    .sheet-ability-v2__test-summary {
+    border-left-color: #996ac9;
+
+    background: rgba(94, 55, 130, 0.2);
+}
+
+.sheet-ability-v2__test-summary p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.78);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.sheet-ability-v2__test-formula {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(130px, 1fr)
+        );
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.sheet-ability-v2__test-formula > span {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.sheet-ability-v2__test-formula small {
+    color: rgba(255, 255, 255, 0.42);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.sheet-ability-v2__test-formula strong {
+    color: #ffffff;
+
+    font-size: 12px;
+}
+
+.sheet-ability-v2__rule-picker {
+    margin-top: 18px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sheet-ability-v2__rule-picker label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: rgba(255, 255, 255, 0.58);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.sheet-ability-v2__rule-picker select {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #0d1428;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.sheet-ability-v2__rule-picker select:focus {
+    border-color: rgba(111, 143, 239, 0.75);
+}
+
+.sheet-ability-v2__form--arcane
+    .sheet-ability-v2__rule-picker select:focus {
+    border-color: rgba(180, 126, 231, 0.8);
+}
+
+.sheet-ability-v2__rule-picker option {
+    background: #0d1428;
+    color: #ffffff;
+}
+
+.sheet-ability-v2__selected-rule {
+    margin-top: 12px;
+}
+
+.sheet-ability-v2__rule {
+    padding: 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 9px;
+
+    background: #0c1326;
+}
+
+.sheet-ability-v2__rule--nested {
+    background: rgba(255, 255, 255, 0.035);
+
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.sheet-ability-v2__rule-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.sheet-ability-v2__rule-type {
+    color: #d2dcff;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.sheet-ability-v2__form--arcane
+    .sheet-ability-v2__rule-type {
+    color: #e4c8ff;
+}
+
+.sheet-ability-v2__rule-description {
+    margin: 8px 0 0;
+
+    color: rgba(255, 255, 255, 0.84);
+
+    font-size: 13px;
+    line-height: 1.55;
+
+    white-space: pre-line;
+    overflow-wrap: break-word;
+}
+
+.sheet-ability-v2__rule-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(100px, 1fr)
+        );
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+.sheet-ability-v2__rule-stats > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding: 8px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 7px;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.sheet-ability-v2__rule-stats span {
+    color: rgba(255, 255, 255, 0.44);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.sheet-ability-v2__rule-stats strong {
+    color: #ffffff;
+
+    font-size: 12px;
+
+    overflow-wrap: break-word;
+}
+
+.sheet-ability-v2__rule-children {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 12px;
+    padding-left: 10px;
+
+    border-left:
+        2px solid rgba(112, 139, 226, 0.22);
+}
+
+.sheet-ability-v2__form--arcane
+    .sheet-ability-v2__rule-children {
+    border-left-color:
+        rgba(177, 123, 225, 0.28);
+}
+
+@media (max-width: 480px) {
+    .sheet-ability-v2__button {
+        padding: 13px 14px;
+    }
+
+    .sheet-ability-v2__content {
+        padding: 8px;
+    }
+
+    .sheet-ability-v2__form {
+        padding: 14px;
+    }
+
+    .sheet-ability-v2__form-header {
+        gap: 10px;
+    }
+
+    .sheet-ability-v2__form-title {
+        font-size: 15px;
+    }
+
+    .sheet-ability-v2__description {
+        font-size: 13px;
+    }
+
+    .sheet-ability-v2__meta {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .sheet-ability-v2__rule-stats {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+}
+
+.sheet-ability-v2__form {
+    overflow: hidden;
+}
+
+.sheet-ability-v2__form-toggle {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.sheet-ability-v2__form-toggle:hover {
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.sheet-ability-v2__form-toggle-main {
+    min-width: 0;
+}
+
+.sheet-ability-v2__form-toggle-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.sheet-ability-v2__form-body {
+    padding: 0 14px 14px;
+}
+
+.sheet-ability-v2__form-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    opacity: 0.55;
+    transition:
+        transform 0.18s ease,
+        opacity 0.18s ease;
+}
+
+.sheet-ability-v2__form-toggle:hover
+.sheet-ability-v2__form-arrow {
+    opacity: 0.9;
+}
+
+.sheet-ability-v2__form-arrow--open {
+    transform: rotate(180deg);
+}
+
+.sheet-ability-v2__elements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 12px;
+}
+
+.sheet-ability-v2__element-tag {
+    --element-rgb: 148 163 184;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 4px 9px;
+
+    border: 1px solid
+        rgb(var(--element-rgb) / 0.28);
+
+    border-radius: 999px;
+
+    background:
+        rgb(var(--element-rgb) / 0.09);
+
+    color:
+        rgb(var(--element-rgb));
+
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+
+    text-transform: uppercase;
+    letter-spacing: 0.055em;
+}
+
+.sheet-ability-v2__element-tag::before {
+    content: '';
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background:
+        rgb(var(--element-rgb));
+
+    box-shadow:
+        0 0 8px
+        rgb(var(--element-rgb) / 0.55);
+}
+
+/* 1 - Normal */
+.sheet-ability-v2__element-tag[data-element-id='1'] {
+    --element-rgb: 203 213 225;
+}
+
+/* 2 - Fogo */
+.sheet-ability-v2__element-tag[data-element-id='2'] {
+    --element-rgb: 248 113 113;
+}
+
+/* 3 - Água */
+.sheet-ability-v2__element-tag[data-element-id='3'] {
+    --element-rgb: 96 165 250;
+}
+
+/* 4 - Grama */
+.sheet-ability-v2__element-tag[data-element-id='4'] {
+    --element-rgb: 74 222 128;
+}
+
+/* 5 - Elétrico */
+.sheet-ability-v2__element-tag[data-element-id='5'] {
+    --element-rgb: 250 204 21;
+}
+
+/* 6 - Terra */
+.sheet-ability-v2__element-tag[data-element-id='6'] {
+    --element-rgb: 180 126 74;
+}
+
+/* 7 - Pedra */
+.sheet-ability-v2__element-tag[data-element-id='7'] {
+    --element-rgb: 148 163 184;
+}
+
+/* 8 - Gelo */
+.sheet-ability-v2__element-tag[data-element-id='8'] {
+    --element-rgb: 103 232 249;
+}
+
+/* 9 - Voador */
+.sheet-ability-v2__element-tag[data-element-id='9'] {
+    --element-rgb: 125 211 252;
+}
+
+/* 10 - Lutador */
+.sheet-ability-v2__element-tag[data-element-id='10'] {
+    --element-rgb: 251 146 60;
+}
+
+/* 11 - Veneno */
+.sheet-ability-v2__element-tag[data-element-id='11'] {
+    --element-rgb: 192 132 252;
+}
+
+/* 12 - Inseto */
+.sheet-ability-v2__element-tag[data-element-id='12'] {
+    --element-rgb: 163 230 53;
+}
+
+/* 13 - Ferro */
+.sheet-ability-v2__element-tag[data-element-id='13'] {
+    --element-rgb: 148 163 184;
+}
+
+/* 14 - Psíquico */
+.sheet-ability-v2__element-tag[data-element-id='14'] {
+    --element-rgb: 244 114 182;
+}
+
+/* 15 - Fantasma */
+.sheet-ability-v2__element-tag[data-element-id='15'] {
+    --element-rgb: 167 139 250;
+}
+
+/* 16 - Sombrio */
+.sheet-ability-v2__element-tag[data-element-id='16'] {
+    --element-rgb: 129 140 248;
+}
+
+/* 17 - Fada */
+.sheet-ability-v2__element-tag[data-element-id='17'] {
+    --element-rgb: 249 168 212;
+}
+
+/* 18 - Dragão */
+.sheet-ability-v2__element-tag[data-element-id='18'] {
+    --element-rgb: 196 181 253;
+}
+
+/* 19 - Divino */
+.sheet-ability-v2__element-tag[data-element-id='19'] {
+    --element-rgb: 253 224 71;
+}
+
+/* 20 - Demônio */
+.sheet-ability-v2__element-tag[data-element-id='20'] {
+    --element-rgb: 239 68 68;
+}
+
+/* 21 - Luz */
+.sheet-ability-v2__element-tag[data-element-id='21'] {
+    --element-rgb: 254 240 138;
+}
+
+/* 22 - Arcano */
+.sheet-ability-v2__element-tag[data-element-id='22'] {
+    --element-rgb: 216 180 254;
+}
+
+/* 23 - Construto */
+.sheet-ability-v2__element-tag[data-element-id='23'] {
+    --element-rgb: 217 119 6;
+}
+
+/* 24 - Máquina */
+.sheet-ability-v2__element-tag[data-element-id='24'] {
+    --element-rgb: 45 212 191;
+}
+
+/* 25 - Morto-vivo */
+.sheet-ability-v2__element-tag[data-element-id='25'] {
+    --element-rgb: 134 239 172;
+}
+
+/* 26 - Tempo */
+.sheet-ability-v2__element-tag[data-element-id='26'] {
+    --element-rgb: 129 140 248;
+}
+
+/* 27 - Espaço */
+.sheet-ability-v2__element-tag[data-element-id='27'] {
+    --element-rgb: 168 85 247;
+}
+
+/* 28 - Som */
+.sheet-ability-v2__element-tag[data-element-id='28'] {
+    --element-rgb: 34 211 238;
+}
+
+/* 29 - Sangue */
+.sheet-ability-v2__element-tag[data-element-id='29'] {
+    --element-rgb: 220 38 38;
+}
