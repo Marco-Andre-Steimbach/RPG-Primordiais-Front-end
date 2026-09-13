@@ -5225,3 +5225,315 @@
 .sheet-ability-v2__element-tag[data-element-id='29'] {
     --element-rgb: 220 38 38;
 }
+.campaign-create-ability-button {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.campaign-create-ability-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ========================================================= */
+/* ABILITY SELECTION SECTIONS */
+/* ========================================================= */
+
+.ability-selection-section {
+  margin-top: 24px;
+}
+
+.ability-selection-section + .ability-selection-section {
+  margin-top: 36px;
+}
+
+.ability-selection-section-header {
+  margin-bottom: 12px;
+  padding: 0 4px 12px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+
+  border-bottom:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+}
+
+.ability-selection-section-header h2 {
+  margin: 3px 0 0;
+
+  font-size: 1rem;
+  font-weight: 800;
+
+  color: #f5f0e6;
+}
+
+.ability-selection-section-header p {
+  max-width: 600px;
+
+  margin: 6px 0 0;
+
+  font-size: 0.72rem;
+  line-height: 1.45;
+
+  color:
+    rgba(
+      245,
+      240,
+      230,
+      0.48
+    );
+}
+
+.ability-selection-section-kicker {
+  display: block;
+
+  font-size: 0.6rem;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color:
+    rgba(
+      245,
+      240,
+      230,
+      0.4
+    );
+}
+
+.ability-selection-section-count {
+  min-width: 28px;
+  height: 28px;
+
+  padding: 0 9px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+
+  border-radius: 999px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.04
+    );
+
+  color:
+    rgba(
+      245,
+      240,
+      230,
+      0.65
+    );
+
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+/* ========================================================= */
+/* DRAFT / NÃO AJUSTADA */
+/* ========================================================= */
+
+.ability-selection-section-draft {
+  padding-top: 8px;
+}
+
+.ability-selection-section-draft
+  .ability-selection-section-header {
+  border-bottom-color:
+    rgba(
+      207,
+      166,
+      90,
+      0.18
+    );
+}
+
+.ability-selection-section-draft
+  .ability-selection-section-kicker {
+  color:
+    rgba(
+      219,
+      184,
+      112,
+      0.68
+    );
+}
+
+.ability-selection-draft-wrapper {
+  position: relative;
+
+  padding-top: 10px;
+}
+
+.ability-selection-draft-wrapper
+  .sheet-ability-v2 {
+  opacity: 0.84;
+}
+
+.ability-selection-draft-badge {
+  position: absolute;
+
+  top: 0;
+  right: 12px;
+
+  z-index: 4;
+
+  padding: 5px 9px;
+
+  border:
+    1px solid
+    rgba(
+      220,
+      181,
+      101,
+      0.3
+    );
+
+  border-radius: 999px;
+
+  background:
+    #17172a;
+
+  color: #d9b879;
+
+  font-size: 0.58rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  pointer-events: none;
+}
+
+/* ========================================================= */
+/* CREATE ABILITY BUTTON */
+/* ========================================================= */
+
+.campaign-perks-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.campaign-create-ability-button {
+  min-height: 38px;
+
+  padding: 0 15px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+
+  border-radius: 8px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.05
+    );
+
+  color: #f5f0e6;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.campaign-create-ability-button:hover {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.09
+    );
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      0.2
+    );
+
+  transform:
+    translateY(-1px);
+}
+
+/* ========================================================= */
+/* MOBILE */
+/* ========================================================= */
+
+@media (
+  max-width: 600px
+) {
+  .campaign-perks-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .campaign-create-ability-button {
+    width: 100%;
+  }
+
+  .ability-selection-section-header {
+    align-items: flex-start;
+  }
+
+  .ability-selection-section-header h2 {
+    font-size: 0.95rem;
+  }
+
+  .ability-selection-section-header p {
+    font-size: 0.68rem;
+  }
+
+  .ability-selection-draft-badge {
+    right: 8px;
+  }
+}

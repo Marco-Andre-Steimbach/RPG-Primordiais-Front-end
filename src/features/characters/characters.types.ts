@@ -10,7 +10,13 @@ export type Order = {
   image?: string
 }
 
-export type ManaModifier = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha'
+export type ManaModifier =
+  | 'str'
+  | 'dex'
+  | 'con'
+  | 'int'
+  | 'wis'
+  | 'cha'
 
 export type CreateCharacterPayload = {
   name: string
@@ -48,21 +54,35 @@ export type ElementType = {
   name: string
 }
 
+export type AbilityStatus =
+  | 'draft'
+  | 'converted'
+
 export type Ability = {
   id: number
+
+  character_id: number | null
+
   title: string
   description: string
+
   arcane_title: string | null
   arcane_description: string | null
+
   mana_cost: number
   arcane_mana_cost: number | null
-  dice_formula: string
-  base_damage: number
-  bonus_speed: number
-  range: number
+
+  normal_element_types: number[]
+  arcane_element_types: number[]
+
   required_race_id: number | null
   required_order_id: number | null
-  element_types: ElementType[]
+
+  status: AbilityStatus
+  converted_ability_id: number | null
+
+  created_at: string | null
+  updated_at: string | null
 }
 
 export type CharacterFull = {
@@ -86,15 +106,16 @@ export type OrderResponse = {
 export type CreateAbilityPayload = {
   title: string
   description: string
+
   arcane_title: string | null
   arcane_description: string | null
+
   mana_cost: number
   arcane_mana_cost: number | null
-  dice_formula: string
-  base_damage: number
-  bonus_speed: number
-  range: number
-  element_types: number[]
+
+  normal_element_types: number[]
+  arcane_element_types: number[]
+
   required_race_id: number | null
   required_order_id: number | null
 }
