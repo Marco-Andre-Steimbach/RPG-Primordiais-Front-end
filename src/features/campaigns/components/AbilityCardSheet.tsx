@@ -656,6 +656,153 @@ function NewAbilityCard({
     )
 }
 
+function DraftAbilityCard({
+    entry,
+    elementsMap,
+    isOpen,
+    onToggle
+}: {
+    entry: Extract<
+        CampaignCharacterAbility,
+        { schema: 'draft' }
+    >
+    elementsMap: Map<number, Element>
+    isOpen: boolean
+    onToggle: () => void
+}) {
+    const ability = entry.ability
+
+    return (
+        <div className="sheet-ability-v2">
+            <button
+                type="button"
+                className="sheet-ability-v2__button"
+                onClick={onToggle}
+            >
+                <div className="sheet-ability-v2__button-main">
+                    <strong>
+                        {ability.title}
+                    </strong>
+
+                    <span>
+                        Aguardando ajuste
+                    </span>
+                </div>
+
+                <div className="sheet-ability-v2__button-meta">
+                    <span>
+                        Mana {ability.mana_cost}
+                    </span>
+
+                    <span
+                        className={
+                            isOpen
+                                ? 'sheet-ability-v2__arrow sheet-ability-v2__arrow--open'
+                                : 'sheet-ability-v2__arrow'
+                        }
+                    >
+                        ▼
+                    </span>
+                </div>
+            </button>
+
+            {isOpen && (
+                <div className="sheet-ability-v2__content">
+                    <section className="sheet-ability-v2__form sheet-ability-v2__form--normal">
+                        <div className="sheet-ability-v2__form-body">
+                            <span className="sheet-ability-v2__form-label">
+                                Habilidade
+                            </span>
+
+                            <h4 className="sheet-ability-v2__form-title">
+                                {ability.title}
+                            </h4>
+
+                            <p className="sheet-ability-v2__description">
+                                {ability.description}
+                            </p>
+
+                            <ElementTags
+                                elementTypeIds={
+                                    ability.normal_element_types
+                                }
+                                elementsMap={
+                                    elementsMap
+                                }
+                            />
+
+                            <div className="sheet-ability-v2__meta">
+                                <div>
+                                    <span>
+                                        Mana sugerida
+                                    </span>
+
+                                    <strong>
+                                        {ability.mana_cost}
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {ability.arcane_title && (
+                        <section className="sheet-ability-v2__form sheet-ability-v2__form--arcane">
+                            <div className="sheet-ability-v2__form-body">
+                                <span className="sheet-ability-v2__form-label">
+                                    Queima Arcana
+                                </span>
+
+                                <h4 className="sheet-ability-v2__form-title">
+                                    {ability.arcane_title}
+                                </h4>
+
+                                {ability.arcane_description && (
+                                    <p className="sheet-ability-v2__description">
+                                        {
+                                            ability.arcane_description
+                                        }
+                                    </p>
+                                )}
+
+                                <ElementTags
+                                    elementTypeIds={
+                                        ability.arcane_element_types
+                                    }
+                                    elementsMap={
+                                        elementsMap
+                                    }
+                                />
+
+                                {ability.arcane_mana_cost !== null && (
+                                    <div className="sheet-ability-v2__meta">
+                                        <div>
+                                            <span>
+                                                Mana Arcana sugerida
+                                            </span>
+
+                                            <strong>
+                                                {
+                                                    ability.arcane_mana_cost
+                                                }
+                                            </strong>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+                    )}
+
+                    <div className="sheet-ability-v2__draft-message">
+                        Esta habilidade ainda precisa ser ajustada
+                        para o novo sistema antes de poder ser
+                        adicionada ao personagem da campanha.
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
 function AbilityCardSheet({
     entry,
     elements,
@@ -691,6 +838,17 @@ function AbilityCardSheet({
                 onToggle={onToggle}
                 canAdd={canAdd}
                 onAdd={onAdd}
+            />
+        )
+    }
+
+    if (entry.schema === 'draft') {
+        return (
+            <DraftAbilityCard
+                entry={entry}
+                elementsMap={elementsMap}
+                isOpen={isOpen}
+                onToggle={onToggle}
             />
         )
     }

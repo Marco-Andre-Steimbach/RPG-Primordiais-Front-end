@@ -5537,3 +5537,18 @@
     right: 8px;
   }
 }
+
+.sheet-ability-v2__draft-message {
+  margin-top: 12px;
+  padding: 11px 13px;
+
+  border: 1px solid rgba(216, 183, 111, 0.22);
+  border-radius: 8px;
+
+  background: rgba(216, 183, 111, 0.06);
+
+  color: rgba(232, 203, 143, 0.82);
+
+  font-size: 0.72rem;
+  line-height: 1.5;
+}

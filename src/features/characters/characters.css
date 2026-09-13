@@ -1583,3 +1583,24 @@
     min-width: 0;
   }
 }
+
+.ability-card-small {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ability-card-draft-label {
+  padding: 4px 8px;
+
+  border: 1px solid rgba(216, 183, 111, 0.35);
+  border-radius: 999px;
+
+  color: #d8b76f;
+
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

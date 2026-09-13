@@ -1,16 +1,50 @@
-import type { Ability } from '../characters.types'
+import type {
+  Ability,
+  ElementType
+} from '../characters.types'
 
 type Props = {
   ability: Ability
   isOpen: boolean
   onToggle: () => void
+  elements?: ElementType[]
 }
 
-function AbilityCard({ ability, isOpen, onToggle }: Props) {
+function AbilityCard({
+  ability,
+  isOpen,
+  onToggle,
+  elements = []
+}: Props) {
+  const normalElements =
+    elements.filter(element =>
+      ability.normal_element_types.includes(
+        element.id
+      )
+    )
+
+  const arcaneElements =
+    elements.filter(element =>
+      ability.arcane_element_types.includes(
+        element.id
+      )
+    )
+
   return (
     <div className="ability-wrapper">
-      <div className="ability-card-small" onClick={onToggle}>
-        <span>{ability.title}</span>
+      <div
+        className="ability-card-small"
+        onClick={onToggle}
+      >
+        <span>
+          {ability.title}
+        </span>
+
+        {ability.status === 'draft' && (
+          <span className="ability-card-draft-label">
+            Não ajustada
+          </span>
+        )}
       </div>
 
       {isOpen && (
@@ -19,48 +53,67 @@ function AbilityCard({ ability, isOpen, onToggle }: Props) {
             {ability.description}
           </p>
 
-          {ability.arcane_title && (
-            <div className="ability-arcane">
-              <strong>{ability.arcane_title}</strong>
-              <p>{ability.arcane_description}</p>
-            </div>
-          )}
-
           <div className="ability-stats">
             <div>
-              <span>Dano: </span>
+              <span>
+                Mana:
+              </span>
+
               <strong>
-                {ability.dice_formula} + {ability.base_damage}
+                {ability.mana_cost}
               </strong>
             </div>
 
-            <div>
-              <span>Mana: </span>
-              <strong>{ability.mana_cost}</strong>
-            </div>
-
-            {ability.arcane_mana_cost && (
+            {ability.arcane_mana_cost !== null && (
               <div>
-                <span>Mana Arcana: </span>
-                <strong>{ability.arcane_mana_cost}</strong>
-              </div>
-            )}
+                <span>
+                  Mana Arcana:
+                </span>
 
-            {ability.bonus_speed > 0 && (
-              <div>
-                <span>Bônus Velocidade: </span>
-                <strong>+{ability.bonus_speed}</strong>
+                <strong>
+                  {ability.arcane_mana_cost}
+                </strong>
               </div>
             )}
           </div>
 
-          {ability.element_types.length > 0 && (
+          {normalElements.length > 0 && (
             <div className="ability-elements">
-              {ability.element_types.map(el => (
-                <span key={el.id} className="item-element-tag">
-                  {el.name}
+              {normalElements.map(element => (
+                <span
+                  key={element.id}
+                  className="item-element-tag"
+                >
+                  {element.name}
                 </span>
               ))}
+            </div>
+          )}
+
+          {ability.arcane_title && (
+            <div className="ability-arcane">
+              <strong>
+                {ability.arcane_title}
+              </strong>
+
+              {ability.arcane_description && (
+                <p>
+                  {ability.arcane_description}
+                </p>
+              )}
+
+              {arcaneElements.length > 0 && (
+                <div className="ability-elements">
+                  {arcaneElements.map(element => (
+                    <span
+                      key={element.id}
+                      className="item-element-tag"
+                    >
+                      {element.name}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

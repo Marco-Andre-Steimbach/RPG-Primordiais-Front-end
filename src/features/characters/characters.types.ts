@@ -1,3 +1,7 @@
+import type {
+  CampaignCharacterAbility
+} from '../campaigns/campaigns.types'
+
 export type Race = {
   id: number
   name: string
@@ -88,7 +92,7 @@ export type Ability = {
 export type CharacterFull = {
   character: CharacterBase
   owner: string
-  abilities: Ability[]
+  abilities: CampaignCharacterAbility[]
 }
 
 export type CharacterByIdResponse = {
