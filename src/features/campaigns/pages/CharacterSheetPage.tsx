@@ -1,11 +1,13 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+
 import {
     fetchCampaignById,
     fetchCharacterSheetInfo,
     fetchFullCharacterSheet,
     fetchAllElements
 } from '../campaigns.service'
+
 import type {
     CampaignWithCharacters,
     CharacterSheetInfo,
@@ -31,6 +33,7 @@ import '../campaigns.css'
 
 function calculateExpectedAbilities(level: number) {
     if (level <= 4) return level
+
     return 4 + Math.floor((level - 4) / 3)
 }
 
@@ -42,14 +45,17 @@ const DAMAGE_TYPE_MAP: Record<number, string> = {
 
 function getCharacterWeakDamageTypes(armors: any[]) {
     const chestArmor = armors.find(
-        a => a.is_equipped && a.armor.armor_slot_id === 2
+        armor =>
+            armor.is_equipped &&
+            armor.armor.armor_slot_id === 2
     )
 
     if (!chestArmor) {
         return [1, 2, 3]
     }
 
-    const weakType = chestArmor.armor.weak_damage_type_id
+    const weakType =
+        chestArmor.armor.weak_damage_type_id
 
     if (!weakType) {
         return []
@@ -59,150 +65,370 @@ function getCharacterWeakDamageTypes(armors: any[]) {
 }
 
 function CharacterSheetPage() {
-    const { campaignId, characterId } = useParams()
-    const navigate = useNavigate()
+    const {
+        campaignId,
+        characterId
+    } = useParams()
 
-    const [campaign, setCampaign] = useState<CampaignWithCharacters | null>(null)
-    const [infos, setInfos] = useState<CharacterSheetInfo | null>(null)
-    const [sheet, setSheet] = useState<FullCharacterSheet | null>(null)
-    const [elements, setElements] = useState<Element[]>([])
-    const [modal, setModal] = useState<null | {
+    const navigate =
+        useNavigate()
+
+    const [
+        campaign,
+        setCampaign
+    ] = useState<CampaignWithCharacters | null>(
+        null
+    )
+
+    const [
+        infos,
+        setInfos
+    ] = useState<CharacterSheetInfo | null>(
+        null
+    )
+
+    const [
+        sheet,
+        setSheet
+    ] = useState<FullCharacterSheet | null>(
+        null
+    )
+
+    const [
+        elements,
+        setElements
+    ] = useState<Element[]>([])
+
+    const [
+        modal,
+        setModal
+    ] = useState<null | {
         title: string
         message: string
         redirect: string
         canClose?: boolean
     }>(null)
 
+    const [
+        diceDrawerOpen,
+        setDiceDrawerOpen
+    ] = useState(false)
+
     useEffect(() => {
-        if (!campaignId || !characterId) return
+        if (
+            !campaignId ||
+            !characterId
+        ) {
+            return
+        }
 
-        fetchCampaignById(campaignId).then(res => {
-            setCampaign(res.campaign)
+        fetchCampaignById(
+            campaignId
+        ).then(res => {
+            setCampaign(
+                res.campaign
+            )
         })
 
-        fetchCharacterSheetInfo(campaignId, characterId).then(res => {
-            setInfos(res.infos)
+        fetchCharacterSheetInfo(
+            campaignId,
+            characterId
+        ).then(res => {
+            setInfos(
+                res.infos
+            )
         })
 
-        fetchFullCharacterSheet(campaignId, characterId).then(res => {
-            setSheet(res.sheet)
+        fetchFullCharacterSheet(
+            campaignId,
+            characterId
+        ).then(res => {
+            setSheet(
+                res.sheet
+            )
         })
 
         fetchAllElements().then(res => {
-            setElements(res.elements)
+            setElements(
+                res.elements
+            )
         })
-    }, [campaignId, characterId])
+    }, [
+        campaignId,
+        characterId
+    ])
 
     useEffect(() => {
-        if (!campaign || !infos || !sheet) return
-
-        const character = campaign.characters.find(
-            c => c.character_id === Number(characterId)
-        )
-
-        if (!character) return
-
-        const level = character.level
-        const expectedPerks = level
-        const expectedAbilities = calculateExpectedAbilities(level)
-
-        if (sheet.progression.pending_level_ups > 0) {
-            setModal({
-                title: 'Atributo para evoluir',
-                message: `Este personagem possui ${sheet.progression.pending_level_ups} ponto(s) de atributo pendente(s). Você precisa distribuí-los antes de continuar.`,
-                redirect: `/campaigns/${campaignId}`
-            })
+        if (
+            !campaign ||
+            !infos ||
+            !sheet
+        ) {
             return
         }
 
-        if (infos.perks < expectedPerks) {
-            setModal({
-                title: 'Perks pendentes',
-                message: `Este personagem possui ${infos.perks} perks, mas deveria possuir ${expectedPerks}. Você precisa distribuir ${expectedPerks - infos.perks} perk(s) antes de continuar.`,
-                redirect: `/campaign/${campaignId}/characters/${characterId}/perks`
-            })
+        const character =
+            campaign.characters.find(
+                character =>
+                    character.character_id ===
+                    Number(characterId)
+            )
+
+        if (!character) {
             return
         }
 
-        if (infos.abilities < expectedAbilities) {
+        const level =
+            character.level
+
+        const expectedPerks =
+            level
+
+        const expectedAbilities =
+            calculateExpectedAbilities(
+                level
+            )
+
+        if (
+            sheet.progression
+                .pending_level_ups > 0
+        ) {
             setModal({
-                title: 'Habilidades pendentes',
-                message: `Este personagem possui ${infos.abilities} habilidades, mas deveria possuir ${expectedAbilities}. Você ainda pode acessar a ficha e escolher as habilidades posteriormente.`,
-                redirect: `/campaign/${campaignId}/characters/${characterId}/abilities`,
-                canClose: true
+                title:
+                    'Atributo para evoluir',
+
+                message:
+                    `Este personagem possui ${sheet.progression.pending_level_ups} ponto(s) de atributo pendente(s). Você precisa distribuí-los antes de continuar.`,
+
+                redirect:
+                    `/campaigns/${campaignId}`
             })
+
+            return
+        }
+
+        if (
+            infos.perks <
+            expectedPerks
+        ) {
+            setModal({
+                title:
+                    'Perks pendentes',
+
+                message:
+                    `Este personagem possui ${infos.perks} perks, mas deveria possuir ${expectedPerks}. Você precisa distribuir ${expectedPerks - infos.perks} perk(s) antes de continuar.`,
+
+                redirect:
+                    `/campaign/${campaignId}/characters/${characterId}/perks`
+            })
+
+            return
+        }
+
+        if (
+            infos.abilities <
+            expectedAbilities
+        ) {
+            setModal({
+                title:
+                    'Habilidades pendentes',
+
+                message:
+                    `Este personagem possui ${infos.abilities} habilidades, mas deveria possuir ${expectedAbilities}. Você ainda pode acessar a ficha e escolher as habilidades posteriormente.`,
+
+                redirect:
+                    `/campaign/${campaignId}/characters/${characterId}/abilities`,
+
+                canClose:
+                    true
+            })
+
             return
         }
 
         setModal(null)
-    }, [campaign, infos, sheet, campaignId, characterId])
+    }, [
+        campaign,
+        infos,
+        sheet,
+        campaignId,
+        characterId
+    ])
 
-    const attributePerks = useMemo(() => {
-        if (!sheet) return []
+    const sheetRelatedPerkIds =
+        useMemo(() => {
+            const ids =
+                new Set<number>()
 
-        return sheet.perks.filter(
-            perk => perk.has_attributes && !perk.has_ability
-        )
-    }, [sheet])
+            if (!sheet) {
+                return ids
+            }
 
-    const combatPerks = useMemo(() => {
-        if (!sheet) return []
+            const perkSheets =
+                sheet.perk_sheets ?? []
 
-        return sheet.perks.filter(
-            perk => perk.has_ability || !perk.has_attributes
-        )
-    }, [sheet])
-    const elementsMap = useMemo(() => {
-        const map = new Map<number, Element>()
-        elements.forEach(el => map.set(el.id, el))
-        return map
-    }, [elements])
+            perkSheets.forEach(
+                perkSheet => {
+                    ids.add(
+                        perkSheet.perk_id
+                    )
 
-    const characterElementIds = useMemo(() => {
-        if (!sheet) return []
+                    perkSheet.perks.forEach(
+                        perk => {
+                            ids.add(
+                                perk.id
+                            )
+                        }
+                    )
+                }
+            )
 
-        const ids = new Set<number>()
+            return ids
+        }, [sheet])
 
-        sheet.armors.forEach(armor => {
-            armor.elements.forEach(elId => ids.add(elId))
-        })
+    const normalPerks =
+        useMemo(() => {
+            if (!sheet) {
+                return []
+            }
 
-        if (ids.size === 0) {
-            ids.add(1)
-        }
+            return sheet.perks.filter(
+                perk =>
+                    !sheetRelatedPerkIds.has(
+                        perk.id
+                    )
+            )
+        }, [
+            sheet,
+            sheetRelatedPerkIds
+        ])
 
-        return Array.from(ids)
-    }, [sheet])
+    const attributePerks =
+        useMemo(() => {
+            return normalPerks.filter(
+                perk =>
+                    perk.has_attributes &&
+                    !perk.has_ability
+            )
+        }, [normalPerks])
 
-    const [diceDrawerOpen, setDiceDrawerOpen] = useState(false)
+    const combatPerks =
+        useMemo(() => {
+            return normalPerks.filter(
+                perk =>
+                    perk.has_ability ||
+                    !perk.has_attributes
+            )
+        }, [normalPerks])
 
-    const characterElements = useMemo(() => {
-        return characterElementIds
-            .map(id => elementsMap.get(id))
-            .filter(Boolean) as Element[]
-    }, [characterElementIds, elementsMap])
+    const hasPerkSheets =
+        useMemo(() => {
+            return (
+                sheet?.perk_sheets?.length ??
+                0
+            ) > 0
+        }, [sheet])
 
-    const weakDamageTypeIds = useMemo(() => {
-        if (!sheet) return []
-        return getCharacterWeakDamageTypes(sheet.armors)
-    }, [sheet])
+    const elementsMap =
+        useMemo(() => {
+            const map =
+                new Map<number, Element>()
 
-    const weakDamageTypes = useMemo(() => {
-        return weakDamageTypeIds.map(id => ({
-            id,
-            name: DAMAGE_TYPE_MAP[id]
-        }))
-    }, [weakDamageTypeIds])
+            elements.forEach(
+                element =>
+                    map.set(
+                        element.id,
+                        element
+                    )
+            )
+
+            return map
+        }, [elements])
+
+    const characterElementIds =
+        useMemo(() => {
+            if (!sheet) {
+                return []
+            }
+
+            const ids =
+                new Set<number>()
+
+            sheet.armors.forEach(
+                armor => {
+                    armor.elements.forEach(
+                        elementId =>
+                            ids.add(
+                                elementId
+                            )
+                    )
+                }
+            )
+
+            if (ids.size === 0) {
+                ids.add(1)
+            }
+
+            return Array.from(
+                ids
+            )
+        }, [sheet])
+
+    const characterElements =
+        useMemo(() => {
+            return characterElementIds
+                .map(
+                    id =>
+                        elementsMap.get(
+                            id
+                        )
+                )
+                .filter(
+                    Boolean
+                ) as Element[]
+        }, [
+            characterElementIds,
+            elementsMap
+        ])
+
+    const weakDamageTypeIds =
+        useMemo(() => {
+            if (!sheet) {
+                return []
+            }
+
+            return getCharacterWeakDamageTypes(
+                sheet.armors
+            )
+        }, [sheet])
+
+    const weakDamageTypes =
+        useMemo(() => {
+            return weakDamageTypeIds.map(
+                id => ({
+                    id,
+                    name:
+                        DAMAGE_TYPE_MAP[
+                            id
+                        ]
+                })
+            )
+        }, [weakDamageTypeIds])
 
     if (modal) {
         return (
             <CharacterProgressionModal
                 title={modal.title}
                 message={modal.message}
-                onConfirm={() => navigate(modal.redirect)}
+                onConfirm={() =>
+                    navigate(
+                        modal.redirect
+                    )
+                }
                 onClose={
                     modal.canClose
-                        ? () => setModal(null)
+                        ? () =>
+                            setModal(null)
                         : undefined
                 }
             />
@@ -220,19 +446,42 @@ function CharacterSheetPage() {
     return (
         <div className="character-sheet-page">
             <button
+                type="button"
                 className="dice-drawer-button"
-                onClick={() => setDiceDrawerOpen(true)}
+                onClick={() =>
+                    setDiceDrawerOpen(
+                        true
+                    )
+                }
             >
                 Rolador de Dados
             </button>
+
+            {hasPerkSheets && (
+                <button
+                    type="button"
+                    className="lupida-button perk-sheets-button"
+                    onClick={() =>
+                        navigate(
+                            `/campaign/${campaignId}/characters/${characterId}/perk-sheets`
+                        )
+                    }
+                >
+                    Fichas Especiais
+                </button>
+            )}
+
             <button
+                type="button"
                 className="lupida-button"
                 onClick={() =>
                     navigate(
                         `/campaign/${campaignId}/characters/${characterId}/lupida`,
                         {
                             state: {
-                                modifiers: sheet.base.modifiers
+                                modifiers:
+                                    sheet.base
+                                        .modifiers
                             }
                         }
                     )
@@ -242,81 +491,168 @@ function CharacterSheetPage() {
             </button>
 
             <DiceRollerDrawer
-                isOpen={diceDrawerOpen}
-                onClose={() => setDiceDrawerOpen(false)}
+                isOpen={
+                    diceDrawerOpen
+                }
+                onClose={() =>
+                    setDiceDrawerOpen(
+                        false
+                    )
+                }
             />
 
             <CardInfosGerais
-                level={sheet.progression.level}
-                gold={sheet.progression.gold}
-                xpCurrent={sheet.progression.xp.current}
-                xpRequired={sheet.progression.xp.required_for_next_level}
-                xpRemaining={sheet.progression.xp.to_next_level}
-                pendingLevelUps={sheet.progression.pending_level_ups}
+                level={
+                    sheet.progression
+                        .level
+                }
+                gold={
+                    sheet.progression
+                        .gold
+                }
+                xpCurrent={
+                    sheet.progression
+                        .xp.current
+                }
+                xpRequired={
+                    sheet.progression
+                        .xp
+                        .required_for_next_level
+                }
+                xpRemaining={
+                    sheet.progression
+                        .xp
+                        .to_next_level
+                }
+                pendingLevelUps={
+                    sheet.progression
+                        .pending_level_ups
+                }
             />
 
             <CardInfosGameplay
-                level={sheet.base.level}
-                hpMax={sheet.base.hp_max}
-                manaMax={sheet.base.mana_max}
-                armorClass={sheet.derived.armor_class}
-                sanityMax={sheet.base.sanity.max}
-                speed={sheet.derived.speed}
+                level={
+                    sheet.base.level
+                }
+                hpMax={
+                    sheet.base.hp_max
+                }
+                manaMax={
+                    sheet.base.mana_max
+                }
+                armorClass={
+                    sheet.derived
+                        .armor_class
+                }
+                sanityMax={
+                    sheet.base.sanity.max
+                }
+                speed={
+                    sheet.derived.speed
+                }
             />
 
-            <CardTiposPersonagem elements={characterElements} />
+            <CardTiposPersonagem
+                elements={
+                    characterElements
+                }
+            />
 
-            <CardFraquezasDefensivas damageTypes={weakDamageTypes} />
+            <CardFraquezasDefensivas
+                damageTypes={
+                    weakDamageTypes
+                }
+            />
 
             <CardAtributos
-                attributes={sheet.base.attributes.final}
-                modifiers={sheet.base.modifiers}
+                attributes={
+                    sheet.base
+                        .attributes.final
+                }
+                modifiers={
+                    sheet.base
+                        .modifiers
+                }
             />
 
             <CollapsibleSection title="Habilidades">
                 <CardAbilidades
-                    abilities={sheet.abilities}
-                    elementsMap={elementsMap}
+                    abilities={
+                        sheet.abilities
+                    }
+                    elementsMap={
+                        elementsMap
+                    }
                 />
             </CollapsibleSection>
 
-            <CollapsibleSection title="Perks">
-                <CardPerks
-                    perks={combatPerks}
-                    elementsMap={elementsMap}
-                />
-            </CollapsibleSection>
+            {combatPerks.length > 0 && (
+                <CollapsibleSection title="Perks">
+                    <CardPerks
+                        perks={
+                            combatPerks
+                        }
+                        elementsMap={
+                            elementsMap
+                        }
+                    />
+                </CollapsibleSection>
+            )}
 
             {attributePerks.length > 0 && (
                 <CollapsibleSection title="Perks de Atributo">
                     <CardPerks
-                        perks={attributePerks}
-                        elementsMap={elementsMap}
+                        perks={
+                            attributePerks
+                        }
+                        elementsMap={
+                            elementsMap
+                        }
                     />
                 </CollapsibleSection>
             )}
 
             <CollapsibleSection title="Armadura">
                 <CardArmadura
-                    baseArmor={sheet.base.base_ca}
-                    armors={sheet.armors}
-                    elementsMap={elementsMap}
-                    campaignCharacterId={sheet.base.campaign_character_id}
+                    baseArmor={
+                        sheet.base.base_ca
+                    }
+                    armors={
+                        sheet.armors
+                    }
+                    elementsMap={
+                        elementsMap
+                    }
+                    campaignCharacterId={
+                        sheet.base
+                            .campaign_character_id
+                    }
                 />
             </CollapsibleSection>
 
             <CollapsibleSection title="Armas">
                 <CardArmas
-                    weapons={sheet.weapons}
-                    elementsMap={elementsMap}
+                    weapons={
+                        sheet.weapons
+                    }
+                    elementsMap={
+                        elementsMap
+                    }
                 />
             </CollapsibleSection>
 
             <CollapsibleSection title="Itens">
                 <CardItens
-                    items={sheet.items}
-                    elementsMap={elementsMap}
-                    campaignCharacterId={sheet.base.campaign_character_id}
+                    items={
+                        sheet.items
+                    }
+                    elementsMap={
+                        elementsMap
+                    }
+                    campaignCharacterId={
+                        sheet.base
+                            .campaign_character_id
+                    }
                 />
             </CollapsibleSection>
         </div>

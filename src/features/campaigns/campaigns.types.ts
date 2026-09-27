@@ -1,195 +1,552 @@
 export type Campaign = {
+
     id: number
+
     name: string
+
     description: string
+
     created_at: string
+
     master: string
+
     characters_count: number
+
 }
+
+
 
 export type CampaignCharacter = {
+
     campaign_character_id: number
+
     character_id: number
+
     name: string
+
     race_id: number
+
     order_id: number
+
     level: number
+
     controlled_by: string
+
 }
+
+
 
 export type CampaignWithCharacters = {
+
     id: number
+
     name: string
+
     description: string
+
     created_at: string
+
     master: string
+
     characters: CampaignCharacter[]
+
 }
+
+
 
 export type CampaignsResponse = {
+
     campaigns: Campaign[]
+
 }
+
+
 
 export type CampaignByIdResponse = {
+
     campaign: CampaignWithCharacters
+
 }
+
+
 
 export type User = {
+
     id: number
+
     first_name: string
+
     last_name: string
+
     nickname: string
+
     email: string
+
     created_at: string
+
     updated_at: string
+
 }
+
+
 
 export type UserMeResponse = {
+
     user: User
+
     roles: string[]
+
 }
+
+
 
 export type CharacterSheetInfo = {
+
     campaign_character_id: number
+
     level: number
+
     gold: number
 
+
+
     perks: number
+
     abilities: number
 
+
+
     armors: {
+
         armor_id: number
+
         armor_slot_id: number
+
     }[]
+
+
 
     weapons: {
+
         id: number
+
         weapon_id: number
+
         item_name: string
+
     }[]
+
 }
+
+
 
 export type CharacterSheetInfoResponse = {
+
     infos: CharacterSheetInfo
+
 }
+
+
 
 export type Character = {
+
     id: number
+
     name: string
+
     description: string
+
     race_id: number
+
     order_id: number
+
     mana_modifier: string
+
     created_by: number
+
     created_at: string
+
     updated_at: string
+
 }
+
+
 
 export type CharacterAbility = {
+
     id: number
+
     title: string
+
     description: string
+
     arcane_title: string | null
+
     arcane_description: string | null
+
     mana_cost: number
+
     arcane_mana_cost: number | null
+
     dice_formula: string | null
+
     base_damage: number
+
     bonus_speed: number
+
     required_race_id: number | null
+
     required_order_id: number | null
+
 }
+
+
 
 export type CharacterByIdResponse = {
+
     character: {
+
         character: Character
+
         owner: string
+
         abilities: CharacterAbility[]
+
     }
+
 }
+
+
 
 export type PerkAbility = {
+
     id: number
+
     perk_id: number
+
     name: string
+
     description: string
+
     dice_formula: string | null
+
     base_damage: number
+
     bonus_accuracy: number
+
     bonus_damage: number
+
     bonus_speed: number
+
     range: number
+
     created_at: string
+
     updated_at: string
+
 }
+
+
+
+export type PerkSheetEntityMode =
+    | 'independent'
+    | 'owner_overlay'
+
+
+
+export type PerkSheetHpSource =
+    | 'fixed'
+    | 'owner_max'
+    | 'owner_current'
+
+
+
+export type PerkSheetManaMode =
+    | 'derived'
+    | 'owner'
+
+
+
+export type PerkSheetArmorClassMode =
+    | 'fixed'
+    | 'add'
+
+
+
+export type PerkSheetSpeedMode =
+    | 'fixed'
+    | 'owner'
+
+
+
+export type PerkSheetActionsMode =
+    | 'fixed'
+    | 'owner'
+
+
+
+export type PerkSheetInitiativeMode =
+    | 'own'
+    | 'owner'
+
+
+
+export type PerkSheetDurationUnit =
+    | 'turn'
+    | 'round'
+    | 'combat'
+
+
+
+export type PerkSheetHpRevertMode =
+    | 'none'
+    | 'proportional'
+
+
+
+export type PerkSheetConfig = {
+
+    id: number
+
+    perk_id: number
+
+    sheet_type: string
+
+    entity_mode: PerkSheetEntityMode
+
+    hp_source: PerkSheetHpSource
+
+    base_hp: number
+
+    owner_hp_numerator: number
+
+    owner_hp_denominator: number
+
+    base_mana: number
+
+    owner_mana_numerator: number
+
+    owner_mana_denominator: number
+
+    mana_mode: PerkSheetManaMode
+
+    mana_cost_multiplier: number
+
+    armor_class: number
+
+    armor_class_mode: PerkSheetArmorClassMode
+
+    speed: number
+
+    speed_mode: PerkSheetSpeedMode
+
+    actions_per_turn: number
+
+    actions_mode: PerkSheetActionsMode
+
+    initiative_rule: string | null
+
+    initiative_mode: PerkSheetInitiativeMode
+
+    duration_formula: string | null
+
+    duration_unit: PerkSheetDurationUnit | null
+
+    hp_revert_mode: PerkSheetHpRevertMode
+
+    auto_spawn: boolean
+
+    restore_hp_on_spawn: boolean
+
+    restore_mana_on_spawn: boolean
+
+    created_at: string | null
+
+    updated_at: string | null
+
+}
+
+
+
+export type PerkSheetResolved = {
+
+    hp: number | null
+
+    hp_runtime: boolean
+
+    mana: number
+
+    mana_cost_multiplier: number
+
+    armor_class: number
+
+    speed: number
+
+    actions_per_turn: number | null
+
+    actions_from_owner: boolean
+
+    initiative_rule: string | null
+
+    initiative_from_owner: boolean
+
+    duration_formula: string | null
+
+    duration_unit: PerkSheetDurationUnit | null
+
+    hp_revert_mode: PerkSheetHpRevertMode
+
+    auto_spawn: boolean
+
+    restore_hp_on_spawn: boolean
+
+    restore_mana_on_spawn: boolean
+
+}
+
+
 
 export type Perk = {
+
     id: number
+
     name: string
+
     description: string
+
     type: 'passive' | 'active'
+
     mana_cost: number
+
     race_id: number | null
+
     order_id: number | null
+
     required_level: number
+
     element_types: number[]
+
     flags: string[]
+
     attributes: PerkAttribute[]
+
     ability: PerkAbility[]
+
+    required_perk_ids: number[]
+
+    sheet_perk_ids: number[]
+
+    sheet: PerkSheetConfig | null
+
     has_attributes?: boolean
+
     has_ability?: boolean
+
     created_at: string
+
     updated_at: string
+
 }
+
+
 
 export type PerkOrigin =
+
     | 'race'
+
     | 'order'
 
+
+
 export type AvailablePerk =
+
     Perk & {
+
         origin: PerkOrigin
+
     }
+
+
 
 export type PerkAttribute = {
+
     id?: number
+
     perk_id?: number
+
     attribute_name: string
+
     attribute_value: number
+
 }
+
+
 
 export type PerksResponse = {
+
     perks: Perk[]
+
 }
+
+
 
 export type AddPerkToCampaignCharacterPayload = {
+
     perk_id: number
+
 }
+
+
 
 export type AddAbilityToCampaignCharacterPayload = {
+
     ability_id: number
+
 }
+
+
 
 export type CampaignCharacterActionResponse = {
+
     success: boolean
+
     message: string
+
 }
+
+
 
 export type CharacterSheet = {
+
     perks: Perk[]
+
 }
+
+
 
 export type CharacterSheetResponse = {
+
     sheet: {
+
         perks: Perk[]
+
         abilities: CampaignCharacterAbility[]
+
     }
+
 }
 
+
+
 export type ElementType = {
+
     id: number
+
     name: string
+
 }
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -197,28 +554,53 @@ export type ElementType = {
 |--------------------------------------------------------------------------
 */
 
+
+
 export type Ability = {
+
     id: number
+
     title: string
+
     description: string
 
+
+
     arcane_title: string | null
+
     arcane_description: string | null
 
+
+
     mana_cost: number
+
     arcane_mana_cost: number | null
 
+
+
     range: number
+
     dice_formula: string
+
     base_damage: number
+
     bonus_damage: number
+
     bonus_speed: number
 
+
+
     required_race_id: number | null
+
     required_order_id: number | null
 
+
+
     element_types: ElementType[]
+
 }
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -226,168 +608,333 @@ export type Ability = {
 |--------------------------------------------------------------------------
 */
 
+
+
 export type AbilityFormType =
+
     | 'normal'
+
     | 'arcane'
 
+
+
 export type AbilityRuleNode = {
+
     id: number
+
     ability_form_id: number
+
     parent_id: number | null
 
+
+
     node_type:
-        | 'section'
-        | 'test'
-        | 'critical_success'
-        | 'success'
-        | 'failure'
-        | 'critical_failure'
-        | 'random_table'
-        | 'random_result'
-        | 'condition'
-        | 'effect'
-        | 'summon'
-        | 'attack'
-        | 'custom'
+
+    | 'section'
+
+    | 'test'
+
+    | 'critical_success'
+
+    | 'success'
+
+    | 'failure'
+
+    | 'critical_failure'
+
+    | 'random_table'
+
+    | 'random_result'
+
+    | 'condition'
+
+    | 'effect'
+
+    | 'summon'
+
+    | 'attack'
+
+    | 'custom'
+
+
 
     title: string | null
+
     description: string | null
+
+
 
     sort_order: number
 
+
+
     roll_formula: string | null
+
     roll_min: number | null
+
     roll_max: number | null
 
+
+
     rule_type:
-        | 'direct'
-        | 'improvement'
-        | 'ability_test'
-        | 'attack'
-        | 'opposed_test'
-        | 'random_table'
-        | 'custom'
-        | null
+
+    | 'direct'
+
+    | 'improvement'
+
+    | 'ability_test'
+
+    | 'attack'
+
+    | 'opposed_test'
+
+    | 'random_table'
+
+    | 'custom'
+
+    | null
+
+
 
     actor_roll_formula: string | null
+
     defender_roll_formula: string | null
 
+
+
     actor_attribute_id: number | null
+
     defender_attribute_id: number | null
 
+
+
     range_formula: string | null
+
     area_formula: string | null
 
+
+
     damage_formula: string | null
+
     duration_formula: string | null
 
+
+
     action_change_formula: string | null
+
     movement_formula: string | null
 
+
+
     target_type:
-        | 'self'
-        | 'single'
-        | 'multiple'
-        | 'area'
-        | 'all'
-        | 'ally'
-        | 'enemy'
-        | 'any'
-        | 'custom'
-        | null
+
+    | 'self'
+
+    | 'single'
+
+    | 'multiple'
+
+    | 'area'
+
+    | 'all'
+
+    | 'ally'
+
+    | 'enemy'
+
+    | 'any'
+
+    | 'custom'
+
+    | null
+
+
 
     element_type_ids: number[]
+
+
 
     metadata: unknown
 
+
+
     children: AbilityRuleNode[]
 
+
+
     created_at?: string | null
+
     updated_at?: string | null
+
 }
 
+
+
 export type AbilityNewForm = {
+
     id: number
+
     ability_id: number
+
+
 
     form_type: AbilityFormType
 
+
+
     title: string
+
     description: string
+
+
 
     mana_cost: number
 
+
+
     activation_type:
-        | 'action'
-        | 'free_action'
-        | 'reaction'
-        | 'automatic'
-        | 'custom'
+
+    | 'action'
+
+    | 'free_action'
+
+    | 'reaction'
+
+    | 'automatic'
+
+    | 'custom'
+
+
 
     action_cost: number
 
+
+
     uses_per_turn: number | null
+
     uses_per_combat: number | null
 
+
+
     range_formula: string | null
+
     area_formula: string | null
 
+
+
     target_type:
-        | 'self'
-        | 'single'
-        | 'multiple'
-        | 'area'
-        | 'all'
-        | 'ally'
-        | 'enemy'
-        | 'any'
-        | 'custom'
-        | null
+
+    | 'self'
+
+    | 'single'
+
+    | 'multiple'
+
+    | 'area'
+
+    | 'all'
+
+    | 'ally'
+
+    | 'enemy'
+
+    | 'any'
+
+    | 'custom'
+
+    | null
+
+
 
     affects_allies: boolean
+
     affects_enemies: boolean
 
+
+
     rule_type:
-        | 'direct'
-        | 'improvement'
-        | 'ability_test'
-        | 'attack'
-        | 'opposed_test'
-        | 'random_table'
-        | 'custom'
+
+    | 'direct'
+
+    | 'improvement'
+
+    | 'ability_test'
+
+    | 'attack'
+
+    | 'opposed_test'
+
+    | 'random_table'
+
+    | 'custom'
+
+
 
     actor_roll_formula: string | null
+
     defender_roll_formula: string | null
 
+
+
     actor_attribute_id: number | null
+
     defender_attribute_id: number | null
+
+
 
     rule_description: string | null
 
+
+
     element_type_ids: number[]
+
+
 
     rules: AbilityRuleNode[]
 
+
+
     created_at?: string | null
+
     updated_at?: string | null
+
 }
+
+
 
 export type AbilityNew = {
+
     id: number
 
+
+
     required_race_id: number | null
+
     required_order_id: number | null
 
+
+
     created_at: string | null
+
     updated_at: string | null
 
+
+
     forms: Partial<
+
         Record<
+
             AbilityFormType,
+
             AbilityNewForm
+
         >
+
     >
+
 }
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -395,37 +942,71 @@ export type AbilityNew = {
 |--------------------------------------------------------------------------
 */
 
+
+
 export type AbilityDraftStatus =
+
     | 'draft'
+
     | 'converted'
 
+
+
 export type AbilityDraft = {
+
     id: number
+
+
 
     character_id: number | null
 
+
+
     title: string
+
     description: string
 
+
+
     arcane_title: string | null
+
     arcane_description: string | null
 
+
+
     mana_cost: number
+
     arcane_mana_cost: number | null
 
+
+
     normal_element_types: number[]
+
     arcane_element_types: number[]
 
+
+
     required_race_id: number | null
+
     required_order_id: number | null
+
+
 
     status: AbilityDraftStatus
 
+
+
     converted_ability_id: number | null
 
+
+
     created_at: string | null
+
     updated_at: string | null
+
 }
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -433,494 +1014,1013 @@ export type AbilityDraft = {
 |--------------------------------------------------------------------------
 */
 
+
+
 export type LegacyCampaignCharacterAbility = {
+
     ability: Ability
+
     elements: number[]
+
     schema: 'legacy'
+
 }
+
+
 
 export type NewCampaignCharacterAbility = {
+
     ability: AbilityNew
+
     elements: number[]
+
     schema: 'new'
+
 }
+
+
 
 export type DraftCampaignCharacterAbility = {
+
     ability: AbilityDraft
+
     elements: number[]
+
     schema: 'draft'
+
 }
+
+
 
 export type CampaignCharacterAbility =
+
     | LegacyCampaignCharacterAbility
+
     | NewCampaignCharacterAbility
+
     | DraftCampaignCharacterAbility
 
+
+
 export type CharacterAbilitiesResponse = {
+
     abilities: CampaignCharacterAbility[]
+
 }
+
+
 
 export type CharacterAbilityByIdResponse = {
+
     ability: Ability
+
 }
+
+
 
 export type AddCharacterToCampaignAttributes = {
+
     str: number
+
     dex: number
+
     con: number
+
     intt: number
+
     wis: number
+
     cha: number
+
     sanity: number
+
 }
+
+
 
 export type AddCharacterToCampaignPayload = {
+
     character_id: number
+
     attributes: AddCharacterToCampaignAttributes
+
 }
+
+
 
 export type AddCharacterToCampaignResponse = {
+
     success: boolean
+
     message: string
+
 }
+
+
 
 export type MyCharacter = {
+
     id: number
+
     name: string
+
     race_id: number
+
     order_id: number
+
 }
+
+
 
 export type MyCharactersResponse = {
+
     characters: MyCharacter[]
+
 }
+
+
 
 export type BaseAttributes = {
+
     str: number
+
     dex: number
+
     con: number
+
     int: number
+
     wis: number
+
     cha: number
+
     free: number
+
 }
+
+
 
 export type Race = {
+
     id: number
+
     name: string
+
     description: string
+
     attributes: BaseAttributes
+
     created_at: string
+
     updated_at: string
+
 }
+
+
 
 export type RaceByIdResponse = {
+
     race: Race
+
 }
+
+
 
 export type Order = {
+
     id: number
+
     name: string
+
     description: string
+
     required_race_id: number | null
+
     attributes: BaseAttributes
+
     created_at: string
+
     updated_at: string
+
 }
+
+
 
 export type OrderByIdResponse = {
+
     order: Order
+
 }
+
+
 
 export type LevelUpAttribute =
+
     | 'str'
+
     | 'dex'
+
     | 'con'
+
     | 'intt'
+
     | 'wis'
+
     | 'cha'
 
+
+
 export type CampaignCharacterLevelUpPayload = {
+
     campaign_character_id: number
+
     attribute: LevelUpAttribute
+
 }
+
+
 
 export type CampaignCharacterLevelUpResponse = {
+
     message: string
+
 }
+
+
 
 export type SheetAttributes = {
+
     str: number
+
     dex: number
+
     con: number
+
     intt: number
+
     wis: number
+
     cha: number
+
 }
+
+
 
 export type CharacterAttributesBlock = {
+
     base: SheetAttributes
+
     race: SheetAttributes
+
     order: SheetAttributes
+
     perk: SheetAttributes
+
     final: SheetAttributes
+
 }
+
+
 
 export type CharacterModifiers = {
+
     str: number
+
     dex: number
+
     con: number
+
     intt: number
+
     wis: number
+
     cha: number
+
 }
+
+
 
 export type CharacterSanity = {
+
     current: number
+
     max: number
+
 }
+
+
 
 export type CharacterSheetBase = {
+
     campaign_character_id: number
+
     level: number
+
     attributes: CharacterAttributesBlock
+
     modifiers: CharacterModifiers
+
     hp_max: number
+
     mana_max: number
+
     base_ca: number
+
     sanity: CharacterSanity
+
 }
+
+
 
 export type SheetRace = {
+
     id: number
+
     name: string
+
     description: string
+
     attributes: any[]
+
     created_at: string
+
     updated_at: string
+
 }
+
+
 
 export type SheetOrder = {
+
     id: number
+
     name: string
+
     description: string
+
     required_race_id: number | null
+
     attributes: any[]
+
     created_at: string
+
     updated_at: string
+
 }
+
+
 
 export type CharacterDerived = {
+
     armor_class: number
+
     speed: number
+
 }
+
+
 
 export type SheetWeaponAbility = {
+
     id: number
+
     weapon_id: number
+
     title: string
+
     description: string
+
     dice_formula: string
+
     base_damage: number
+
     bonus_damage: number
+
     range: number
+
     bonus_accuracy: number
+
     bonus_speed: number
+
     element_types: number[]
+
     created_at: string
+
 }
+
+
 
 export type SheetWeapon = {
+
     id: number
+
     item_id: number
+
     item_name: string
+
     item_description: string
+
     weapon_damage_type_id: number
+
     damage_type: string
+
     dice_formula: string
+
     base_damage: number
+
     bonus_accuracy: number
+
     range: number
+
     bonus_speed: number
+
     ammo_item_id: number | null
+
     ammo_per_use: number
+
     created_at: string
+
     element_types: number[]
+
     abilities: SheetWeaponAbility[]
+
     is_equipped: boolean
+
 }
+
+
 
 export type SheetArmorAbility = {
+
     id: number
+
     title: string
+
     description: string
+
     dice_formula: string | null
+
     base_damage: number
+
     range: number
+
     armor_class_bonus: number
+
     bonus_speed: number
+
     created_at: string
+
     updated_at: string | null
+
 }
+
+
 
 export type SheetArmorSlot = {
+
     id: number
+
     name: string
+
     is_exclusive: number
+
     created_at: string
+
 }
+
+
 
 export type SheetArmor = {
+
     armor: {
+
         id: number
+
         item_id: number
+
         armor_slot_id: number
+
         armor_class_bonus: number
+
         min_strength_required: number
+
         speed_penalty: number
+
         weak_damage_type_id: number | null
+
         element_types: number[]
+
         armor_abilities: any[]
+
         created_at: string
+
         item_name: string
+
         item_description: string
+
     }
+
+
 
     slot: SheetArmorSlot
+
     elements: number[]
+
     abilities: SheetArmorAbility[]
+
     is_equipped: boolean
+
 }
+
+
 
 export type SheetItem = {
+
     item: {
+
         id: number
+
         name: string
+
         description: string
+
         value: number
+
         element_types: number[]
+
         item_abilities: any[]
+
         created_at: string
+
         updated_at: string
+
     }
 
+
+
     quantity: number
+
     elements: number[]
+
     abilities: any[]
+
 }
 
-export type FullCharacterSheet = {
-    base: CharacterSheetBase
-    race: SheetRace
-    order: SheetOrder
-    derived: CharacterDerived
+
+
+export type CharacterPerkSheet = {
+
+    perk_id: number
+
+    name: string | null
+
+    description: string | null
+
+    sheet_type: string | null
+
+    entity_mode: PerkSheetEntityMode | null
+
+    config: PerkSheetConfig
+
+    resolved: PerkSheetResolved
 
     perks: Perk[]
+
+}
+
+export type CampaignCharacterPerkSheetsResponse = {
+    perk_sheets: CharacterPerkSheet[]
+}
+
+
+export type FullCharacterSheet = {
+
+    base: CharacterSheetBase
+
+    race: SheetRace
+
+    order: SheetOrder
+
+    derived: CharacterDerived
+
+
+
+    perks: Perk[]
+
+    perk_sheets: CharacterPerkSheet[]
+
     weapons: SheetWeapon[]
+
     armors: SheetArmor[]
+
     items: SheetItem[]
+
+
 
     abilities: CampaignCharacterAbility[]
 
+
+
     progression: {
+
         level: number
+
         pending_level_ups: number
+
         gold: number
 
+
+
         xp: {
+
             current: number
+
             total: number
+
             to_next_level: number
+
             required_for_next_level: number
+
         }
+
     }
+
 }
+
+
 
 export type FullCharacterSheetResponse = {
+
     sheet: FullCharacterSheet
+
 }
+
+
 
 export type Element = {
+
     id: number
+
     name: string
+
     description: string
+
     created_at: string
+
 }
+
+
 
 export type ElementByIdResponse = {
+
     element: Element
+
 }
+
+
 
 export type ElementsResponse = {
+
     elements: Element[]
+
 }
+
+
 
 export type Item = {
+
     id: number
+
     name: string
+
     description: string
+
     value: number
+
     element_types: number[]
+
     item_abilities: any[]
+
     created_at: string
+
     updated_at: string
+
 }
+
+
 
 export type FetchItemByIdResponse = {
+
     item: Item
+
 }
+
+
 
 export type LupidaArmorAbility = {
+
     id: number
+
     title: string
+
     description: string
+
     dice_formula: string | null
+
     base_damage: number
+
     armor_class_bonus: number
+
     bonus_speed: number
+
     created_at: string
+
     updated_at: string | null
+
 }
+
+
 
 export type LupidaWeaponAbility = {
+
     id: number
+
     weapon_id: number
+
     title: string
+
     description: string
+
     dice_formula: string
+
     base_damage: number
+
     bonus_damage: number
+
     bonus_accuracy: number
+
     bonus_speed: number
+
     element_types: number[]
+
     created_at: string
+
 }
 
+
+
 export type LupidaArmor = {
+
     armor_id: number
+
     item_id: number
 
+
+
     item_name: string
+
     item_description: string
 
+
+
     armor_slot_id: number
+
     slot_name: string
 
+
+
     armor_class_bonus: number
+
     min_strength_required: number
+
     speed_penalty: number
+
+
 
     weak_damage_type_id: number | null
 
+
+
     value: number
 
+
+
     elements: number[]
+
     abilities: LupidaArmorAbility[]
+
 }
 
+
+
 export type WeaponRequiredModifier =
+
     | 'str'
+
     | 'dex'
+
     | 'con'
+
     | 'int'
+
     | 'wis'
+
     | 'cha'
 
+
+
 export type LupidaWeapon = {
+
     id: number
+
     item_id: number
 
+
+
     item_name: string
+
     item_description: string
 
+
+
     weapon_damage_type_id: number
+
     damage_type: string
 
+
+
     dice_formula: string
+
     base_damage: number
 
+
+
     bonus_accuracy: number
+
     bonus_speed: number
 
+
+
     ammo_item_id: number | null
+
     ammo_per_use: number
+
+
 
     created_at: string
 
+
+
     elements: number[]
 
+
+
     value: number
+
+
 
     abilities: LupidaWeaponAbility[]
 
+
+
     range: number
 
+
+
     required_modifier: WeaponRequiredModifier
+
     required_modifier_value: number
+
 }
 
+
+
 export type LupidaItem = {
+
     item_id: number
+
     item_name: string
+
     item_description: string
+
+
 
     quantity: number
 
+
+
     elements: number[]
+
     abilities: number[]
 
+
+
     value: number
+
 }
+
+
 
 export type LupidaPayload = {
+
     lupida: {
+
         campaign_id: number
+
         armors: LupidaArmor[]
+
         weapons: LupidaWeapon[]
+
         items: LupidaItem[]
+
     }
+
 }
+
+
 
 export type LupidaGoldState = {
+
     current: number
+
 }
+
+
 
 export type LupidaResponse =
+
     LupidaPayload
 
+
+
 export type LupidaSessionState = {
+
     gold: number
+
     boughtArmorIds: number[]
+
     boughtWeaponIds: number[]
+
     boughtItemIds: number[]
+
 }
+
+
 
 export type BuyLupidaItemPayload = {
+
     type:
-        | 'armor'
-        | 'weapon'
-        | 'item'
+
+    | 'armor'
+
+    | 'weapon'
+
+    | 'item'
+
+
 
     id: number
+
     price: number
+
 }
+
+
 
 export type SpendGoldPayload = {
+
     campaign_character_id: number
+
     amount: number
+
     operation:
-        | 'add'
-        | 'remove'
+
+    | 'add'
+
+    | 'remove'
+
 }
+
+
 
 export type EquippedWeaponInfo = {
+
     id: number
+
     weapon_id: number
+
     item_id: number
+
 }
 
+
+
 export type WeaponDetails = {
+
     id: number
+
     item_name: string
+
     campaign_weapon_id: number
+
 }

@@ -25,49 +25,171 @@ import CampaignsAllPage from '../../features/campaigns/pages/CampaignsAllPage'
 import CampaignPage from '../../features/campaigns/pages/CampaignPage'
 import CharacterSheetPage from '../../features/campaigns/pages/CharacterSheetPage'
 import CampaignCharacterPerksPage from '../../features/campaigns/pages/CampaignCharacterPerksPage'
+import CampaignCharacterPerkSheetsPage from '../../features/campaigns/pages/CampaignCharacterPerkSheetsPage'
 import CampaignCharacterAbilitiesPage from '../../features/campaigns/pages/CampaignCharacterAbilitiesPage'
 import CampaignCharacterAddPage from '../../features/campaigns/pages/CampaignCharacterAddPage'
 import LupidaPage from '../../features/campaigns/pages/LupidaPage'
 import MyCampaignsPage from '../../features/campaigns/pages/MyCampaignsPage'
 import MasterPage from '../../features/master/pages/MasterPage'
+
 function Router() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/campaign/:id/master" element={<MasterPage />} />
-        <Route element={<MainLayout />}>
-          <Route path="/info" element={<InfoPage />} />
-          <Route path="/races" element={<RacesPage />} />
-          <Route path="/races/:id" element={<RaceDetailPage />} />
-          <Route path="/perks/:id" element={<PerkDetailPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/orders/:id" element={<OrderDetailPage />} />
-          <Route path="/items" element={<ItemsPage />} />
-          <Route path="/items/all" element={<ItemsAllPage />} />
-          <Route path="/items/weapons" element={<WeaponsAllPage />} />
-          <Route path="/items/armors" element={<ArmorsAllPage />} />
-          <Route path="/characters" element={<CharactersMenuPage />} />
-          <Route path="/characters/create" element={<CharacterCreatePage />} />
-          <Route path="/characters/my" element={<CharacterMePage />} />
-          <Route path="/characters/:id" element={<CharacterPage />} />
-          <Route path="/character/:id/ability" element={<CreateAbilityPage />} />
-          <Route path="/character/all" element={<CharacterAllPage />} />
-          <Route path="/campaigns" element={<CampaignsMenuPage />} />
-          <Route path="/campaigns/all" element={<CampaignsAllPage />} />
-          <Route path="/campaigns/my" element={<MyCampaignsPage />} />
-          <Route path="/campaigns/:id" element={<CampaignPage />} />
-          <Route path="/campaign/:campaignId/characters/:characterId/sheet" element={<CharacterSheetPage />} />
-          <Route path="/campaign/:campaignId/characters/:characterId/perks" element={<CampaignCharacterPerksPage />} />
-          <Route path="/campaign/:campaignId/characters/:characterId/abilities" element={<CampaignCharacterAbilitiesPage />} />
-          <Route path="/campaign/:campaignId/characters/:characterId/lupida" element={<LupidaPage />} />
-          <Route path="/campaign/:id/characters" element={<CampaignCharacterAddPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path="/login"
+                    element={<LoginPage />}
+                />
+
+                <Route
+                    path="/register"
+                    element={<RegisterPage />}
+                />
+
+                <Route
+                    path="/"
+                    element={<HomePage />}
+                />
+
+                <Route
+                    path="/campaign/:id/master"
+                    element={<MasterPage />}
+                />
+
+                <Route element={<MainLayout />}>
+                    <Route
+                        path="/info"
+                        element={<InfoPage />}
+                    />
+
+                    <Route
+                        path="/races"
+                        element={<RacesPage />}
+                    />
+
+                    <Route
+                        path="/races/:id"
+                        element={<RaceDetailPage />}
+                    />
+
+                    <Route
+                        path="/perks/:id"
+                        element={<PerkDetailPage />}
+                    />
+
+                    <Route
+                        path="/orders"
+                        element={<OrdersPage />}
+                    />
+
+                    <Route
+                        path="/orders/:id"
+                        element={<OrderDetailPage />}
+                    />
+
+                    <Route
+                        path="/items"
+                        element={<ItemsPage />}
+                    />
+
+                    <Route
+                        path="/items/all"
+                        element={<ItemsAllPage />}
+                    />
+
+                    <Route
+                        path="/items/weapons"
+                        element={<WeaponsAllPage />}
+                    />
+
+                    <Route
+                        path="/items/armors"
+                        element={<ArmorsAllPage />}
+                    />
+
+                    <Route
+                        path="/characters"
+                        element={<CharactersMenuPage />}
+                    />
+
+                    <Route
+                        path="/characters/create"
+                        element={<CharacterCreatePage />}
+                    />
+
+                    <Route
+                        path="/characters/my"
+                        element={<CharacterMePage />}
+                    />
+
+                    <Route
+                        path="/characters/:id"
+                        element={<CharacterPage />}
+                    />
+
+                    <Route
+                        path="/character/:id/ability"
+                        element={<CreateAbilityPage />}
+                    />
+
+                    <Route
+                        path="/character/all"
+                        element={<CharacterAllPage />}
+                    />
+
+                    <Route
+                        path="/campaigns"
+                        element={<CampaignsMenuPage />}
+                    />
+
+                    <Route
+                        path="/campaigns/all"
+                        element={<CampaignsAllPage />}
+                    />
+
+                    <Route
+                        path="/campaigns/my"
+                        element={<MyCampaignsPage />}
+                    />
+
+                    <Route
+                        path="/campaigns/:id"
+                        element={<CampaignPage />}
+                    />
+
+                    <Route
+                        path="/campaign/:campaignId/characters/:characterId/sheet"
+                        element={<CharacterSheetPage />}
+                    />
+
+                    <Route
+                        path="/campaign/:campaignId/characters/:characterId/perks"
+                        element={<CampaignCharacterPerksPage />}
+                    />
+
+                    <Route
+                        path="/campaign/:campaignId/characters/:characterId/perk-sheets"
+                        element={<CampaignCharacterPerkSheetsPage />}
+                    />
+
+                    <Route
+                        path="/campaign/:campaignId/characters/:characterId/abilities"
+                        element={<CampaignCharacterAbilitiesPage />}
+                    />
+
+                    <Route
+                        path="/campaign/:campaignId/characters/:characterId/lupida"
+                        element={<LupidaPage />}
+                    />
+
+                    <Route
+                        path="/campaign/:id/characters"
+                        element={<CampaignCharacterAddPage />}
+                    />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
 export default Router

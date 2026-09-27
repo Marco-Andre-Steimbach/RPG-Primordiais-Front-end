@@ -20,43 +20,51 @@ function PerkAbilityCard({
     ability,
     manaCost
 }: PerkAbilityCardProps) {
-    const rawDetails: (AbilityDetail | null)[] = [
+    const rawDetails: (
+        AbilityDetail | null
+    )[] = [
         ability.dice_formula
             ? {
                 label: 'Dado',
                 value: ability.dice_formula
             }
             : null,
+
         ability.base_damage > 0
             ? {
                 label: 'Dano base',
                 value: ability.base_damage
             }
             : null,
+
         ability.bonus_accuracy !== 0
             ? {
                 label: 'Bônus de acerto',
                 value: ability.bonus_accuracy
             }
             : null,
+
         ability.bonus_damage !== 0
             ? {
                 label: 'Bônus de dano',
                 value: ability.bonus_damage
             }
             : null,
+
         ability.bonus_speed !== 0
             ? {
                 label: 'Bônus de velocidade',
                 value: ability.bonus_speed
             }
             : null,
+
         ability.range > 0
             ? {
                 label: 'Alcance',
                 value: ability.range
             }
             : null,
+
         manaCost > 0
             ? {
                 label: 'Custo de Mana',
@@ -65,7 +73,10 @@ function PerkAbilityCard({
             : null
     ]
 
-    const details = rawDetails.filter(isAbilityDetail)
+    const details =
+        rawDetails.filter(
+            isAbilityDetail
+        )
 
     return (
         <div className="perk-ability-card">
@@ -75,7 +86,9 @@ function PerkAbilityCard({
                         Habilidade
                     </span>
 
-                    <h3>{ability.name}</h3>
+                    <h3>
+                        {ability.name}
+                    </h3>
                 </div>
             </div>
 
@@ -90,8 +103,13 @@ function PerkAbilityCard({
                             key={detail.label}
                             className="perk-ability-detail"
                         >
-                            <span>{detail.label}</span>
-                            <strong>{detail.value}</strong>
+                            <span>
+                                {detail.label}
+                            </span>
+
+                            <strong>
+                                {detail.value}
+                            </strong>
                         </div>
                     ))}
                 </div>

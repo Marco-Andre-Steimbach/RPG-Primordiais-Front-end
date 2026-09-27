@@ -1,4 +1,8 @@
-import type { Perk } from '../campaigns.types'
+import type {
+    Perk,
+    PerkAbility,
+    PerkAttribute
+} from '../campaigns.types'
 
 import PerkAbilityCard from './PerkAbilityCard'
 import PerkAttributeCard from './PerkAttributeCard'
@@ -7,9 +11,55 @@ interface PerkDetailsCardProps {
     perk: Perk
 }
 
-function PerkDetailsCard({ perk }: PerkDetailsCardProps) {
-    const hasAttributes = perk.attributes.length > 0
-    const hasAbilities = perk.ability.length > 0
+function normalizeAbilities(
+    ability:
+        | PerkAbility
+        | PerkAbility[]
+        | null
+        | undefined
+): PerkAbility[] {
+    if (!ability) {
+        return []
+    }
+
+    if (Array.isArray(ability)) {
+        return ability
+    }
+
+    return [ability]
+}
+
+function normalizeAttributes(
+    attributes:
+        | PerkAttribute[]
+        | null
+        | undefined
+): PerkAttribute[] {
+    if (!Array.isArray(attributes)) {
+        return []
+    }
+
+    return attributes
+}
+
+function PerkDetailsCard({
+    perk
+}: PerkDetailsCardProps) {
+    const abilities =
+        normalizeAbilities(
+            perk.ability
+        )
+
+    const attributes =
+        normalizeAttributes(
+            perk.attributes
+        )
+
+    const hasAbilities =
+        abilities.length > 0
+
+    const hasAttributes =
+        attributes.length > 0
 
     return (
         <div className="perk-details-card">
@@ -26,13 +76,21 @@ function PerkDetailsCard({ perk }: PerkDetailsCardProps) {
                     </span>
 
                     <div className="perk-details-section-content">
-                        {perk.ability.map(ability => (
-                            <PerkAbilityCard
-                                key={ability.id}
-                                ability={ability}
-                                manaCost={perk.mana_cost}
-                            />
-                        ))}
+                        {abilities.map(
+                            ability => (
+                                <PerkAbilityCard
+                                    key={
+                                        ability.id
+                                    }
+                                    ability={
+                                        ability
+                                    }
+                                    manaCost={
+                                        perk.mana_cost
+                                    }
+                                />
+                            )
+                        )}
                     </div>
                 </section>
             )}
@@ -46,12 +104,19 @@ function PerkDetailsCard({ perk }: PerkDetailsCardProps) {
                     </span>
 
                     <div className="perk-attributes-grid">
-                        {perk.attributes.map((attribute, index) => (
-                            <PerkAttributeCard
-                                key={`${attribute.attribute_name}-${index}`}
-                                attribute={attribute}
-                            />
-                        ))}
+                        {attributes.map(
+                            (
+                                attribute,
+                                index
+                            ) => (
+                                <PerkAttributeCard
+                                    key={`${attribute.attribute_name}-${index}`}
+                                    attribute={
+                                        attribute
+                                    }
+                                />
+                            )
+                        )}
                     </div>
                 </section>
             )}

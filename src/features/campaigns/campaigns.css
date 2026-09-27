@@ -5552,3 +5552,816 @@
   font-size: 0.72rem;
   line-height: 1.5;
 }
+
+/* =========================================================
+   FICHAS ESPECIAIS
+   ========================================================= */
+
+.campaign-perk-sheets-page {
+    min-height: 100%;
+    padding: 24px 16px 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    color: #ffffff;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.campaign-perk-sheets-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139, 107, 62, 0.14),
+            rgba(15, 23, 42, 0.96) 45%,
+            rgba(8, 13, 32, 0.98)
+        );
+
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.24);
+}
+
+.campaign-perk-sheets-header > div {
+    min-width: 0;
+}
+
+.campaign-perk-sheets-eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: rgba(215, 168, 75, 0.82);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.campaign-perk-sheets-header h1 {
+    margin: 0;
+
+    color: #f5f0e6;
+
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+.campaign-perk-sheets-header p {
+    max-width: 650px;
+
+    margin: 8px 0 0;
+
+    color: rgba(245, 240, 230, 0.62);
+
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+/* =========================================================
+   VOLTAR
+   ========================================================= */
+
+.campaign-perk-sheets-back {
+    flex-shrink: 0;
+
+    min-height: 42px;
+
+    padding: 0 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    color: #f5f0e6;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.campaign-perk-sheets-back:hover {
+    background: rgba(255, 255, 255, 0.09);
+
+    border-color:
+        rgba(255, 255, 255, 0.22);
+
+    transform: translateY(-1px);
+}
+
+.campaign-perk-sheets-back:active {
+    transform: translateY(0);
+}
+
+/* =========================================================
+   LISTA DE FICHAS
+   ========================================================= */
+
+.campaign-perk-sheets-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 22px;
+}
+
+/* =========================================================
+   CARD DA FICHA
+   ========================================================= */
+
+.campaign-perk-sheet-card {
+    width: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(215, 168, 75, 0.18);
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #10172b,
+            #080d20
+        );
+
+    box-shadow:
+        0 12px 34px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================================================
+   CABEÇALHO DA FICHA
+   ========================================================= */
+
+.campaign-perk-sheet-card__header {
+    padding: 20px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    background:
+        radial-gradient(
+            circle at 0% 0%,
+            rgba(215, 168, 75, 0.13),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.01)
+        );
+}
+
+.campaign-perk-sheet-card__header h2 {
+    margin: 7px 0 0;
+
+    color: #ffffff;
+
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.campaign-perk-sheet-card__header p {
+    margin: 10px 0 0;
+
+    color: rgba(255, 255, 255, 0.68);
+
+    font-size: 0.88rem;
+    line-height: 1.6;
+
+    white-space: pre-line;
+}
+
+.campaign-perk-sheet-card__type {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    border: 1px solid rgba(215, 168, 75, 0.25);
+    border-radius: 999px;
+
+    background: rgba(151, 109, 35, 0.18);
+
+    color: #e6c67c;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   STATUS DA FICHA
+   ========================================================= */
+
+.campaign-perk-sheet-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(150px, 1fr)
+        );
+
+    gap: 10px;
+
+    padding: 18px 20px;
+}
+
+.campaign-perk-sheet-stat {
+    min-width: 0;
+    min-height: 70px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 12px 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.campaign-perk-sheet-stat span {
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.campaign-perk-sheet-stat strong {
+    color: #f5f0e6;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    line-height: 1.3;
+
+    overflow-wrap: break-word;
+}
+
+/* =========================================================
+   ÁREA DE PERKS DA FICHA
+   ========================================================= */
+
+.campaign-perk-sheet-perks {
+    padding: 20px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    background:
+        rgba(0, 0, 0, 0.12);
+}
+
+.campaign-perk-sheet-perks__header {
+    margin-bottom: 14px;
+}
+
+.campaign-perk-sheet-perks__header > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.campaign-perk-sheet-perks__header span {
+    color: rgba(255, 255, 255, 0.68);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.campaign-perk-sheet-perks__header strong {
+    min-width: 30px;
+    height: 30px;
+
+    padding: 0 9px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(215, 168, 75, 0.2);
+    border-radius: 999px;
+
+    background: rgba(151, 109, 35, 0.16);
+
+    color: #dfbd6f;
+
+    font-size: 12px;
+}
+
+/* =========================================================
+   PERK INDIVIDUAL DA FICHA
+   ========================================================= */
+
+.campaign-perk-sheet-perk {
+    width: 100%;
+
+    overflow: hidden;
+
+    margin-top: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 11px;
+
+    background: #080d20;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease;
+}
+
+.campaign-perk-sheet-perk:first-of-type {
+    margin-top: 0;
+}
+
+.campaign-perk-sheet-perk--expanded {
+    border-color:
+        rgba(215, 168, 75, 0.2);
+
+    background: #10172b;
+}
+
+.campaign-perk-sheet-perk__header {
+    width: 100%;
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 14px 16px;
+
+    border: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.065),
+            rgba(255, 255, 255, 0.02)
+        );
+
+    color: #ffffff;
+
+    font-family: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease;
+}
+
+.campaign-perk-sheet-perk__header:hover {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(215, 168, 75, 0.12),
+            rgba(255, 255, 255, 0.035)
+        );
+}
+
+.campaign-perk-sheet-perk__header > div {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.campaign-perk-sheet-perk__header strong {
+    overflow: hidden;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.campaign-perk-sheet-perk__header div > span {
+    flex-shrink: 0;
+
+    padding: 4px 8px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(57, 91, 190, 0.25);
+
+    color: #bdcaff;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.campaign-perk-sheet-perk__header > span {
+    flex-shrink: 0;
+
+    color: rgba(255, 255, 255, 0.48);
+
+    font-size: 10px;
+}
+
+.campaign-perk-sheet-perk__content {
+    padding: 10px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+
+    background:
+        #10172b;
+}
+
+.campaign-perk-sheet-perk__content
+.perk-details-card {
+    border-radius: 9px;
+}
+
+/* =========================================================
+   EMPTY / ERROR
+   ========================================================= */
+
+.campaign-perk-sheets-empty,
+.campaign-perk-sheet-perks__empty,
+.campaign-perk-sheets-error {
+    padding: 18px;
+
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color:
+        rgba(245, 240, 230, 0.55);
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.campaign-perk-sheets-error {
+    border-color:
+        rgba(198, 59, 45, 0.35);
+
+    background:
+        rgba(198, 59, 45, 0.08);
+
+    color: #eaa39c;
+}
+
+/* =========================================================
+   BOTÃO NA FICHA PRINCIPAL
+   ========================================================= */
+
+.perk-sheets-button {
+    background:
+        linear-gradient(
+            135deg,
+            #725423,
+            #4d391b
+        );
+
+    border-color:
+        rgba(215, 168, 75, 0.3);
+}
+
+.perk-sheets-button:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #916d30,
+            #65491f
+        );
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+    .campaign-perk-sheets-page {
+        padding:
+            18px 12px 32px;
+
+        gap: 16px;
+    }
+
+    .campaign-perk-sheets-header {
+        flex-direction: column;
+
+        padding: 17px;
+
+        gap: 16px;
+    }
+
+    .campaign-perk-sheets-header h1 {
+        font-size: 1.45rem;
+    }
+
+    .campaign-perk-sheets-back {
+        width: 100%;
+    }
+
+    .campaign-perk-sheet-card__header {
+        padding: 17px;
+    }
+
+    .campaign-perk-sheet-card__header h2 {
+        font-size: 1.2rem;
+    }
+
+    .campaign-perk-sheet-stats {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        padding: 14px;
+    }
+
+    .campaign-perk-sheet-stat {
+        min-height: 66px;
+
+        padding: 10px 11px;
+    }
+
+    .campaign-perk-sheet-stat strong {
+        font-size: 13px;
+    }
+
+    .campaign-perk-sheet-perks {
+        padding: 14px;
+    }
+
+    .campaign-perk-sheet-perk__header {
+        padding: 13px 14px;
+    }
+
+    .campaign-perk-sheet-perk__header > div {
+        gap: 7px;
+    }
+
+    .campaign-perk-sheet-perk__header strong {
+        font-size: 13px;
+    }
+
+    .campaign-perk-sheet-perk__content {
+        padding: 7px;
+    }
+}
+
+@media (max-width: 420px) {
+    .campaign-perk-sheet-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .campaign-perk-sheet-card__header p {
+        font-size: 0.82rem;
+    }
+
+    .campaign-perk-sheet-perk__header > div {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .campaign-perk-sheet-perk__header strong {
+        max-width: 100%;
+    }
+}
+
+/* =========================================================
+   FICHA ESPECIAL - ACCORDION PRINCIPAL
+   ========================================================= */
+
+.campaign-perk-sheet-card {
+    overflow: hidden;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.campaign-perk-sheet-card--expanded {
+    border-color:
+        rgba(215, 168, 75, 0.32);
+}
+
+.campaign-perk-sheet-card__toggle {
+    width: 100%;
+    min-height: 84px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 16px 18px;
+
+    border: 0;
+
+    background:
+        radial-gradient(
+            circle at 0% 50%,
+            rgba(215, 168, 75, 0.11),
+            transparent 42%
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    color: #ffffff;
+
+    font-family: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+.campaign-perk-sheet-card__toggle:hover {
+    background:
+        radial-gradient(
+            circle at 0% 50%,
+            rgba(215, 168, 75, 0.17),
+            transparent 46%
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.075),
+            rgba(255, 255, 255, 0.02)
+        );
+}
+
+.campaign-perk-sheet-card__heading {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 5px;
+}
+
+.campaign-perk-sheet-card__heading > strong {
+    max-width: 100%;
+
+    overflow: hidden;
+
+    color: #ffffff;
+
+    font-size: 1.05rem;
+    font-weight: 800;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.campaign-perk-sheet-card__summary {
+    color: rgba(255, 255, 255, 0.44);
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.campaign-perk-sheet-card__arrow {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 10px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.campaign-perk-sheet-card__arrow--open {
+    transform: rotate(180deg);
+
+    background:
+        rgba(151, 109, 35, 0.2);
+
+    color: #dfbd6f;
+}
+
+.campaign-perk-sheet-card__body {
+    border-top:
+        1px solid rgba(255, 255, 255, 0.07);
+}
+
+.campaign-perk-sheet-card__description {
+    padding: 18px 20px 0;
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-size: 0.88rem;
+    line-height: 1.65;
+
+    white-space: pre-line;
+    overflow-wrap: break-word;
+}
+
+/* ficha fechada fica bem compacta */
+
+.campaign-perk-sheet-card:not(
+    .campaign-perk-sheet-card--expanded
+) {
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .campaign-perk-sheet-card__toggle {
+        min-height: 76px;
+
+        padding: 14px 15px;
+
+        gap: 12px;
+    }
+
+    .campaign-perk-sheet-card__heading > strong {
+        font-size: 0.98rem;
+    }
+
+    .campaign-perk-sheet-card__summary {
+        font-size: 10px;
+    }
+
+    .campaign-perk-sheet-card__arrow {
+        width: 32px;
+        height: 32px;
+    }
+
+    .campaign-perk-sheet-card__description {
+        padding:
+            15px 14px 0;
+
+        font-size: 0.82rem;
+    }
+}

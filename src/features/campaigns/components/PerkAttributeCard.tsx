@@ -23,7 +23,9 @@ function PerkAttributeCard({
     attribute
 }: PerkAttributeCardProps) {
     const label =
-        attributeLabels[attribute.attribute_name] ??
+        attributeLabels[
+            attribute.attribute_name
+        ] ??
         attribute.attribute_name
 
     const value =

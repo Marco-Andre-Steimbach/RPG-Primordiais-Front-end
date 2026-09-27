@@ -20,6 +20,7 @@ import type {
     CampaignCharacterLevelUpPayload,
     CampaignCharacterLevelUpResponse,
     FullCharacterSheetResponse,
+    CharacterPerkSheet,
     ElementByIdResponse,
     ElementsResponse,
     FetchItemByIdResponse,
@@ -49,16 +50,28 @@ export function fetchCharacterSheetInfo(
     )
 }
 
-export function fetchCharacterById(characterId: string | number) {
-    return apiFetch<CharacterByIdResponse>(`/character/${characterId}`)
+export function fetchCharacterById(
+    characterId: string | number
+) {
+    return apiFetch<CharacterByIdResponse>(
+        `/character/${characterId}`
+    )
 }
 
-export function fetchPerksByRace(raceId: string | number) {
-    return apiFetch<PerksResponse>(`/races/${raceId}/perks`)
+export function fetchPerksByRace(
+    raceId: string | number
+) {
+    return apiFetch<PerksResponse>(
+        `/races/${raceId}/perks`
+    )
 }
 
-export function fetchPerksByOrder(orderId: string | number) {
-    return apiFetch<PerksResponse>(`/orders/${orderId}/perks`)
+export function fetchPerksByOrder(
+    orderId: string | number
+) {
+    return apiFetch<PerksResponse>(
+        `/orders/${orderId}/perks`
+    )
 }
 
 export function addPerkToCampaignCharacter(
@@ -96,7 +109,9 @@ export function fetchCharacterSheet(
     )
 }
 
-export function fetchCharacterAbilities(characterId: string | number) {
+export function fetchCharacterAbilities(
+    characterId: string | number
+) {
     return apiFetch<CharacterAbilitiesResponse>(
         `/character/${characterId}/abilities`
     )
@@ -125,15 +140,25 @@ export function addCharacterToCampaign(
 }
 
 export function fetchMyCharacters() {
-    return apiFetch<MyCharactersResponse>('/character/me')
+    return apiFetch<MyCharactersResponse>(
+        '/character/me'
+    )
 }
 
-export function fetchRaceById(raceId: string | number) {
-    return apiFetch<RaceByIdResponse>(`/races/${raceId}`)
+export function fetchRaceById(
+    raceId: string | number
+) {
+    return apiFetch<RaceByIdResponse>(
+        `/races/${raceId}`
+    )
 }
 
-export function fetchOrderById(orderId: string | number) {
-    return apiFetch<OrderByIdResponse>(`/orders/${orderId}`)
+export function fetchOrderById(
+    orderId: string | number
+) {
+    return apiFetch<OrderByIdResponse>(
+        `/orders/${orderId}`
+    )
 }
 
 export function levelUpCampaignCharacter(
@@ -157,23 +182,42 @@ export function fetchFullCharacterSheet(
     )
 }
 
-export function fetchElementById(elementId: string | number) {
+export function fetchCampaignCharacterPerkSheets(
+    campaignId: string | number,
+    characterId: string | number
+) {
+    return apiFetch<{
+        perk_sheets: CharacterPerkSheet[]
+    }>(
+        `/campaign/${campaignId}/character/${characterId}/perk-sheets`
+    )
+}
+
+export function fetchElementById(
+    elementId: string | number
+) {
     return apiFetch<ElementByIdResponse>(
         `/elements/${elementId}`
     )
 }
 
 export function fetchAllElements() {
-    return apiFetch<ElementsResponse>('/elements')
+    return apiFetch<ElementsResponse>(
+        '/elements'
+    )
 }
 
-export function fetchItemById(itemId: string | number) {
+export function fetchItemById(
+    itemId: string | number
+) {
     return apiFetch<FetchItemByIdResponse>(
         `/items/${itemId}`
     )
 }
 
-export function fetchLupida(campaignId: string | number) {
+export function fetchLupida(
+    campaignId: string | number
+) {
     return apiFetch<LupidaResponse>(
         `/campaign/${campaignId}/lupida`
     )
@@ -233,10 +277,17 @@ export function addWeaponToCampaignCharacter(
     )
 }
 
-export function fetchWeaponById(id: number) {
-    return apiFetch<{ weapon: WeaponDetails }>(`/weapons/${id}`, {
-        method: 'GET'
-    })
+export function fetchWeaponById(
+    id: number
+) {
+    return apiFetch<{
+        weapon: WeaponDetails
+    }>(
+        `/weapons/${id}`,
+        {
+            method: 'GET'
+        }
+    )
 }
 
 export function addItemToCampaignCharacter(
@@ -255,10 +306,12 @@ export function addItemToCampaignCharacter(
     )
 }
 
-export function useCampaignCharacterItem(payload: {
-    campaign_character_id: number
-    item_id: number
-}) {
+export function useCampaignCharacterItem(
+    payload: {
+        campaign_character_id: number
+        item_id: number
+    }
+) {
     return apiFetch(
         '/campaign/item/use',
         {
@@ -269,7 +322,9 @@ export function useCampaignCharacterItem(payload: {
 }
 
 export function fetchMyCampaigns() {
-    return apiFetch<CampaignsResponse>('/campaign/my')
+    return apiFetch<CampaignsResponse>(
+        '/campaign/my'
+    )
 }
 
 export function confirmCampaignCharacterLevelUp(
