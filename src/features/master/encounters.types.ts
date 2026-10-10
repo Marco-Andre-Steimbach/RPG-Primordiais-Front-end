@@ -130,8 +130,12 @@ export type EncounterCombatPlayer = {
   name: string
   current_hp: number
   max_hp: number
+  bonus_hp: number
+  total_hp: number
   current_mana: number
   max_mana: number
+  bonus_mana: number
+  total_mana: number
   current_sanity: number
   max_sanity: number
   armor_class: number
@@ -195,8 +199,12 @@ export type UpdatedEncounterPlayerResources = {
   encounter_player_id: number
   current_hp: number
   max_hp: number
+  bonus_hp: number
+  total_hp: number
   current_mana: number
   max_mana: number
+  bonus_mana: number
+  total_mana: number
   current_sanity: number
   max_sanity: number
 }
